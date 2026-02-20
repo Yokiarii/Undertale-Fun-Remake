@@ -67,5 +67,8 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Undertale-Fun-Remake.slnx"
+    "dotnet.defaultSolution": "Undertale-Fun-Remake.slnx",
+    "cSpell.words": [
+        "Rigidbody"
+    ]
 }
