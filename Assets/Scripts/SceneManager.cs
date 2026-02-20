@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
+    private static SceneManager _instance;
+    public static SceneManager Instance => _instance;
+
     public Scenes CurrentScene = Scenes.Menu;
     public Sprite[] DefaultSpritesForButtons;
     public Sprite[] OnSpritesForButtons;
@@ -14,19 +18,21 @@ public class SceneManager : MonoBehaviour
     public Dictionary<int, Image> Buttons = new();
     public bool IsFighting = false;
     public GameObject FightScene;
+    public GameObject Answer;
 
-    public Vector2 MenuPosition = new Vector2(1550,377);
+    Vector2 MenuPosition = new Vector2(1550,377);
     Vector2 FightPosition = new Vector2(526f,377f);
 
     public GameObject[] ButtonsHearts;
     public GameObject MainPanel;
+    public TextMeshProUGUI NameText;
     private int CurrentButton = 0;
 
     bool IsChangingButton = false;
 
     void Start()
     {
-        Main.SM = this;
+        _instance = this;
         for (int i = 0; i < 4; i++)
         {
             Buttons.Add(i, _buttons[i]);
@@ -45,6 +51,10 @@ public class SceneManager : MonoBehaviour
         if (Keyboard.current.xKey.isPressed)
         {
             CurrentScene = Scenes.Menu;
+            if (IsFighting)
+            {
+                StartCoroutine(CloseFightPanel());
+            }
         }
         if (CurrentScene != Scenes.Menu || IsFighting)
         {
@@ -125,16 +135,22 @@ public class SceneManager : MonoBehaviour
     {
         CurrentScene = (Scenes)CurrentButton+1;
         Debug.Log(CurrentButton + " " + CurrentScene);
-        if(CurrentScene == Scenes.Attack)
-        {
-            DoFightPanel();
-        }
     }
     public void DoFightPanel()
     {
         MainPanel.GetComponent<RectTransform>().DOSizeDelta(FightPosition,0.5f);
         FightScene.SetActive(true);
+        Player.Instance.PlayerGameObject.GetComponent<Transform>().localPosition = new Vector2(0,0);
         IsFighting = true;
+        Answer.SetActive(false);
+    }
+    public IEnumerator CloseFightPanel()
+    {
+        MainPanel.GetComponent<RectTransform>().DOSizeDelta(MenuPosition,0.5f);
+        FightScene.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        IsFighting = false;
+        Answer.SetActive(true);
     }
 }
 

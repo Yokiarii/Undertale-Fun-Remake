@@ -441,12 +441,12 @@ GameObject:
   - component: {fileID: 336815250}
   - component: {fileID: 336815249}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &336815248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -454,17 +454,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336815247}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 636154095}
+  m_Father: {fileID: 1004118273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 2.6699219, y: 1.4349976}
-  m_SizeDelta: {x: -122.31, y: -101.27002}
+  m_SizeDelta: {x: 1327.69, y: 175.72998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &336815249
 MonoBehaviour:
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081d8289b6dab48468997c595eaa57c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  Speed: 2.25
+  Speed: 7.27
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,14 +1152,13 @@ RectTransform:
   m_LocalScale: {x: 0.84, y: 0.84, z: 0.84}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1166894669}
-  - {fileID: 336815248}
   - {fileID: 917917392}
+  - {fileID: 1004118273}
   m_Father: {fileID: 1504420937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 964.57, y: 361.00024}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4.5700073, y: -178.99976}
   m_SizeDelta: {x: 1550, y: 377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &636154096
@@ -1526,7 +1525,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0004272461, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0.00048828125, y: 0}
   m_SizeDelta: {x: -0.00073242, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &917917393
@@ -1832,6 +1831,43 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1004118272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004118273}
+  m_Layer: 5
+  m_Name: Answer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1004118273
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004118272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1166894669}
+  - {fileID: 336815248}
+  m_Father: {fileID: 636154095}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1023202457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,12 +2170,12 @@ GameObject:
   - component: {fileID: 1166894670}
   - component: {fileID: 1166894672}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1166894669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2147,17 +2183,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166894668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 636154095}
+  m_Father: {fileID: 1004118273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 15.109985, y: 0.89001465}
-  m_SizeDelta: {x: -271.55, y: -102.36}
+  m_SizeDelta: {x: 1178.45, y: 174.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1166894670
 MonoBehaviour:
@@ -3127,7 +3163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5499878, y: 1.050003}
+  m_AnchoredPosition: {x: -1.5499268, y: 1.0499878}
   m_SizeDelta: {x: -26.1, y: -29.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779902577
@@ -4061,6 +4097,7 @@ GameObject:
   - component: {fileID: 2080344674}
   - component: {fileID: 2080344676}
   - component: {fileID: 2080344675}
+  - component: {fileID: 2080344677}
   m_Layer: 0
   m_Name: Global Behavior
   m_TagString: Untagged
@@ -4113,13 +4150,14 @@ MonoBehaviour:
   - {fileID: 892703320}
   IsFighting: 0
   FightScene: {fileID: 917917391}
-  MenuPosition: {x: 4.57, y: -179}
+  Answer: {fileID: 1004118272}
   ButtonsHearts:
   - {fileID: 12677831}
   - {fileID: 1786641554}
   - {fileID: 1655155222}
   - {fileID: 212833270}
   MainPanel: {fileID: 636154094}
+  NameText: {fileID: 1308910599}
 --- !u!114 &2080344676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4132,6 +4170,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460d4e3ea803f174ea693e71dc1aae2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main
+--- !u!114 &2080344677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080344673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003eb40568839464e97c7b94c3c7dc01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  PlayerGameObject: {fileID: 498515605}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
