@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
             Main.Instance.AllSpace.transform.DOShakePosition(0.5f,6,15,50);
             IsTakeDamage = true;
             StartCoroutine(FadeAnimationHeart());
+            SoundManagerUi.Instance.PlaySound("damagePlayer");
         }
         SliderHP.value = HP[0];
         TextHP.text = HP[0].ToString();

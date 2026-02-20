@@ -78,6 +78,7 @@ public class SceneManager : MonoBehaviour
         if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
             ActivateButton();
+            SoundManagerUi.Instance.PlaySound("accept");
         }
         ButtonsUpdate();
     }
@@ -104,6 +105,7 @@ public class SceneManager : MonoBehaviour
         if (IsChangingButton)
             yield break;
         IsChangingButton = true;
+        SoundManagerUi.Instance.PlaySound("click");
         if (negative)
         {
             CurrentButton--;
@@ -135,6 +137,10 @@ public class SceneManager : MonoBehaviour
     {
         CurrentScene = (Scenes)CurrentButton+1;
         Debug.Log(CurrentButton + " " + CurrentScene);
+        if(CurrentButton == 0)
+        {
+              DoFightPanel();  
+        }
     }
     public void DoFightPanel()
     {
