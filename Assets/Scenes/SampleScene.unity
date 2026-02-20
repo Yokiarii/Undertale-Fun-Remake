@@ -761,6 +761,7 @@ GameObject:
   - component: {fileID: 498515609}
   - component: {fileID: 498515610}
   - component: {fileID: 498515611}
+  - component: {fileID: 498515612}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -901,6 +902,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   Speed: 7.27
+--- !u!225 &498515612
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498515605}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4170,6 +4183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460d4e3ea803f174ea693e71dc1aae2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main
+  AllSpace: {fileID: 1504420936}
 --- !u!114 &2080344677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   PlayerGameObject: {fileID: 498515605}
+  SliderHP: {fileID: 913455298}
+  TextHP: {fileID: 1830098124}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

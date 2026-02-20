@@ -1,10 +1,15 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Main : MonoBehaviour
 {
     private static Main _instance;
     public static Main Instance => _instance;
+    bool Tempbool = false;
+    public GameObject AllSpace;
+
     void Awake()
     {
         _instance = this;
@@ -13,11 +18,21 @@ public class Main : MonoBehaviour
     void Start()
     {
         SceneManager.Instance.DoFightPanel();
-        StartCoroutine(Temp());
     }
+
+    void FixedUpdate()
+    {
+        if(Keyboard.current.hKey.isPressed)
+            StartCoroutine(Temp());
+    }
+
     IEnumerator Temp()
     {
-        yield return new WaitForSeconds(5);
-        Player.Instance.ChangeHP(-5);
+        if(Tempbool)
+            yield break;
+        Tempbool = true;
+        Player.Instance.ChangeHP(-2);
+        yield return new WaitForSeconds(2);
+        Tempbool = false;
     }
 }
