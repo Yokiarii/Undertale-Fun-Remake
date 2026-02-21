@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +11,8 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if(Player.Instance.IsDead)
+            return;
         if (Keyboard.current.upArrowKey.isPressed)
             Rb.AddForceY(Speed);
         if (Keyboard.current.downArrowKey.isPressed)

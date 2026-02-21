@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,10 +21,6 @@ public class SoundManagerUi : MonoBehaviour
         foreach (var item in obj)
         {
             AllSounds.Add(item.name,item);
-        }
-        foreach (var item in AllSounds)
-        {
-            Debug.Log(item.Key);
         }
     }
     public void PlaySound(string name)

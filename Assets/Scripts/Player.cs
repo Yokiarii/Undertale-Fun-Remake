@@ -9,12 +9,18 @@ public class Player : MonoBehaviour
     public string Name {get;private set;}
     public int[] HP {get;private set;} = new int[2]{20,20};
 
+    public bool IsDead {get;private set;} = false;
+
     private static Player _instance;
     public static Player Instance => _instance;
+    
     public GameObject PlayerGameObject;
     public Slider SliderHP;
     public TextMeshProUGUI TextHP;
     bool IsTakeDamage = false;
+
+    
+
     void Awake()
     {
         _instance = this;
@@ -23,13 +29,21 @@ public class Player : MonoBehaviour
     public void ChangeName(string name) => Name = name;
     public void ChangeHP(int vector)
     {
-        if(IsTakeDamage)
+        if(IsTakeDamage || IsDead)
             return;
 
         var temp = HP[0];
         HP[0] += vector;
         if(HP[0] < 0)
+        {
             HP[0] = 0;
+            IsDead = true;
+            SoundManagerUi.Instance.PlaySound("dead");
+            SliderHP.value = HP[0];
+            TextHP.text = HP[0].ToString();
+            DeadAnimation();
+            return;
+        }
         if(HP[0] > HP[1])
             HP[0] = HP[1];
         if(temp > HP[0])
@@ -44,18 +58,44 @@ public class Player : MonoBehaviour
     }
     public IEnumerator FadeAnimationHeart()
     {
+        var duration = 0.1f;
         var canvasGroup = PlayerGameObject.GetComponent<CanvasGroup>();
-        canvasGroup.DOFade(0.05f,0.2f);
-        yield return new WaitForSeconds(0.2f);
-        canvasGroup.DOFade(1,0.2f);
-        yield return new WaitForSeconds(0.2f);
-        canvasGroup.DOFade(0.05f,0.2f);
-        yield return new WaitForSeconds(0.2f);
-        canvasGroup.DOFade(1,0.2f);
-        yield return new WaitForSeconds(0.2f);
-        canvasGroup.DOFade(0.05f,0.2f);
-        yield return new WaitForSeconds(0.2f);
-        canvasGroup.DOFade(1,0.2f);
+        canvasGroup.DOFade(0.05f,duration);
+        yield return new WaitForSeconds(duration);
+        canvasGroup.DOFade(1,duration);
+        yield return new WaitForSeconds(duration);
+        canvasGroup.DOFade(0.05f,duration);
+        yield return new WaitForSeconds(duration);
+        canvasGroup.DOFade(1,duration);
+        yield return new WaitForSeconds(duration);
+        canvasGroup.DOFade(0.05f,duration);
+        yield return new WaitForSeconds(duration);
+        canvasGroup.DOFade(1,duration);
         IsTakeDamage = false;
+    }
+    void DeadAnimation()
+    {
+        PlayerGameObject.transform.SetParent(Main.Instance.MainCanvas.transform);
+        Main.Instance.AllSpace.SetActive(false);
+        StartCoroutine(GameOverAnimation());
+    }
+    IEnumerator GameOverAnimation()
+    {
+        yield return new WaitForSeconds(3.5f);
+        var tempObj = Main.Instance.GameOver;
+        tempObj.SetActive(true);
+        var temp = tempObj.GetComponent<SpriteRenderer>();
+        temp.DOFade(0.6f,5f);
+    }
+    public void ReturnPLayer()
+    {
+       PlayerGameObject.transform.SetParent(Main.Instance.FightScene.transform);
+    }
+    public void Revive()
+    {
+        IsDead = false;
+        HP[0] = HP[1];
+        SliderHP.value = HP[0];
+        TextHP.text = HP[0].ToString();
     }
 }
