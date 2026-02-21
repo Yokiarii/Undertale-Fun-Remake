@@ -131,12 +131,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Left_Broken_Heart
+      name: Heart
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 10
+        x: 1
+        y: 42
+        width: 18
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -153,12 +153,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heart
+      name: Broken_Heart
       rect:
         serializedVersion: 2
-        x: 1
-        y: 32
-        width: 18
+        x: 0
+        y: 21
+        width: 20
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -170,28 +170,6 @@ TextureImporter:
       bones: []
       spriteID: c62ebd83e5ad39260800000000000000
       internalID: 7103261135509119596
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Right_Broken_Heart
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 16
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d793b22180878a8e0800000000000000
-      internalID: -1681962484762986115
       vertices: []
       indices: 
       edges: []
@@ -222,10 +200,10 @@ TextureImporter:
       name: Shard_1
       rect:
         serializedVersion: 2
-        x: 26
-        y: 4
-        width: 8
-        height: 7
+        x: 30
+        y: 3
+        width: 10
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,7 +222,7 @@ TextureImporter:
       name: Shard_2
       rect:
         serializedVersion: 2
-        x: 45
+        x: 55
         y: 3
         width: 9
         height: 10
@@ -266,10 +244,10 @@ TextureImporter:
       name: Shard_3
       rect:
         serializedVersion: 2
-        x: 66
-        y: 4
-        width: 8
-        height: 7
+        x: 80
+        y: 3
+        width: 10
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,7 +266,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 50e6bac0d4e6eb64f9bcecc8062ee585
     internalID: 0
     vertices: []
     indices: 
@@ -298,9 +276,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Heart: 7103261135509119596
-      Left_Broken_Heart: -5139071896508228601
-      Right_Broken_Heart: -1681962484762986115
+      0: -1681962484762986115
+      Broken_Heart: 7103261135509119596
+      Heart: -5139071896508228601
       Shard_0: 7185708999007764790
       Shard_1: 2670169516922909599
       Shard_2: 2809600886794141325

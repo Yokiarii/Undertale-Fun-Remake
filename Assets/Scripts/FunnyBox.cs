@@ -15,17 +15,15 @@ public class FunnyBox : MonoBehaviour
     public bool Fighting {get;private set;} = false;
 
     #endregion
-
     void Awake()
     {
         _instance = this;
         InitBoxes();
     }
-
     #region Init Boxes
     void InitBoxes()
     {
-        AddBox(390,377);
+        AddBox(522,377); // Чуть больше квадрата
     }
     #endregion
     void AddBox(float width, float height)

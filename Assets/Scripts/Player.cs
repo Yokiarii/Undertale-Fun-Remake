@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +14,13 @@ public class Player : MonoBehaviour
 
     private static Player _instance;
     public static Player Instance => _instance;
-    
+
     public GameObject PlayerGameObject;
     public Slider SliderHP;
     public TextMeshProUGUI TextHP;
     bool IsTakeDamage = false;
-
-    
+    public Animator Anim;
+    public GameObject ShatteredHeart;
 
     void Awake()
     {
@@ -81,7 +82,12 @@ public class Player : MonoBehaviour
     }
     IEnumerator GameOverAnimation()
     {
-        yield return new WaitForSeconds(3.5f);
+        Anim.Play("Shattered Heart");
+        yield return new WaitForSeconds(2f);
+        var shardHeart = Instantiate(ShatteredHeart,Main.Instance.MainCanvas.transform);
+        shardHeart.transform.position = PlayerGameObject.transform.position;
+        PlayerGameObject.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
         var tempObj = Main.Instance.GameOver;
         tempObj.SetActive(true);
         var temp = tempObj.GetComponent<SpriteRenderer>();
@@ -97,5 +103,6 @@ public class Player : MonoBehaviour
         HP[0] = HP[1];
         SliderHP.value = HP[0];
         TextHP.text = HP[0].ToString();
+        Anim.Play("idle");
     }
 }

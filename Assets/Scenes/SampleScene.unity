@@ -688,13 +688,14 @@ GameObject:
   - component: {fileID: 498515610}
   - component: {fileID: 498515611}
   - component: {fileID: 498515612}
+  - component: {fileID: 498515613}
   m_Layer: 5
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &498515606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -734,7 +735,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7103261135509119596, guid: 2d5902daea633d6478cada6a424f2dd4, type: 3}
+  m_Sprite: {fileID: -5139071896508228601, guid: 2d5902daea633d6478cada6a424f2dd4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -840,6 +841,28 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &498515613
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498515605}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8469084e020105d4089c1f3e4acb30c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &917917392
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1814,7 +1837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1004118273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4137,6 +4160,8 @@ MonoBehaviour:
   PlayerGameObject: {fileID: 498515605}
   SliderHP: {fileID: 913455298}
   TextHP: {fileID: 1830098124}
+  Anim: {fileID: 498515613}
+  ShatteredHeart: {fileID: 8331364646578246418, guid: 32e82dd16e8562344852f934a4fa10d9, type: 3}
 --- !u!82 &2080344678
 AudioSource:
   m_ObjectHideFlags: 0
