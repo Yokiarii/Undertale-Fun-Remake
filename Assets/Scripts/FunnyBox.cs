@@ -44,7 +44,6 @@ public class FunnyBox : MonoBehaviour
         {
             if(item.Key == nameOfBox)
             {
-                Debug.Log(item.Value.Size);
                 gameObject.GetComponent<RectTransform>().DOSizeDelta(item.Value.Size,0.5f);
             }
         }
