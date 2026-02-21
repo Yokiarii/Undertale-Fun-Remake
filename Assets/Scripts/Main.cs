@@ -15,5 +15,9 @@ public class Main : MonoBehaviour
         _instance = this;
         Application.targetFrameRate = 60;
     }
+    void Start()
+    {
+        FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
+    }
 
 }

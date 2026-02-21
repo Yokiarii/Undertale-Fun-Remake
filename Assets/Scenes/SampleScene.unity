@@ -694,7 +694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &498515606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -704,14 +704,14 @@ RectTransform:
   m_GameObject: {fileID: 498515605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.82, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 917917392}
+  m_Father: {fileID: 636154095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0.00048806623, y: -0.000030517578}
   m_SizeDelta: {x: 47, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &498515607
@@ -727,14 +727,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 19a77559e5503b94fbc5c4754f7cd7b7, type: 3}
+  m_Sprite: {fileID: 7103261135509119596, guid: 2d5902daea633d6478cada6a424f2dd4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1072,8 +1072,9 @@ GameObject:
   - component: {fileID: 636154095}
   - component: {fileID: 636154097}
   - component: {fileID: 636154096}
+  - component: {fileID: 636154098}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Funny Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,6 +1092,7 @@ RectTransform:
   m_LocalScale: {x: 0.84, y: 0.84, z: 0.84}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 498515606}
   - {fileID: 917917392}
   - {fileID: 1004118273}
   m_Father: {fileID: 1504420937}
@@ -1138,6 +1140,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636154094}
   m_CullTransparentMesh: 1
+--- !u!114 &636154098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636154094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a77876598ef554ea06df73a8df15ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FunnyBox
+  AllColliders:
+  - {fileID: 917917391}
+  Answer: {fileID: 1004118272}
 --- !u!1 &892703317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1457,7 @@ GameObject:
   - component: {fileID: 917917393}
   - component: {fileID: 917917396}
   m_Layer: 5
-  m_Name: FightScene
+  m_Name: FightCollider3:4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1458,7 +1475,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 498515606}
   - {fileID: 1779902576}
   m_Father: {fileID: 636154095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3913,6 +3929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886246708}
+  - component: {fileID: 1886246709}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -3940,6 +3957,18 @@ RectTransform:
   m_AnchoredPosition: {x: 7.1881104, y: 76.91516}
   m_SizeDelta: {x: -15.343872, y: -156.43025}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1886246709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886246707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b52906f48dfd79499e16ac014465665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
 --- !u!1 &1948512863
 GameObject:
   m_ObjectHideFlags: 0
@@ -4077,31 +4106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneManager
   CurrentScene: 0
-  DefaultSpritesForButtons:
-  - {fileID: 21300000, guid: 75f39148248581540961120c5396d881, type: 3}
-  - {fileID: 21300000, guid: 928144e7a59309b4287806bcf4774a5e, type: 3}
-  - {fileID: 21300000, guid: 4c4fe8a52600f15408e6bf58e7a38c62, type: 3}
-  - {fileID: 21300000, guid: c6c8dccaeccb2ed4dbcb8916442c1fcf, type: 3}
-  OnSpritesForButtons:
-  - {fileID: 21300000, guid: 83f558bb25b25164598fa6f7dc59b20a, type: 3}
-  - {fileID: 21300000, guid: c913ad135beb3a24893487a9a6667eb2, type: 3}
-  - {fileID: 21300000, guid: da23d1b816052a8439587edc9438d32d, type: 3}
-  - {fileID: 21300000, guid: dbc20e27a5dfd7946928bd9f4e79bdd5, type: 3}
-  _buttons:
-  - {fileID: 1138593496}
-  - {fileID: 1655142341}
-  - {fileID: 1639973920}
-  - {fileID: 892703320}
-  IsFighting: 0
-  FightScene: {fileID: 917917391}
-  Answer: {fileID: 1004118272}
-  ButtonsHearts:
-  - {fileID: 12677831}
-  - {fileID: 1786641554}
-  - {fileID: 1655155222}
-  - {fileID: 212833270}
-  MainPanel: {fileID: 636154094}
-  NameText: {fileID: 1308910599}
 --- !u!114 &2080344676
 MonoBehaviour:
   m_ObjectHideFlags: 0
