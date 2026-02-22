@@ -8,21 +8,32 @@ public class Answer : MonoBehaviour
     public static Answer Instance => _instance;
 
     [SerializeField] private TextMeshProUGUI TextField;
+    [SerializeField] private TextMeshProUGUI TextFieldStar;
 
     string CurrentText = "";
-    string TempCurrentText = "Привет! Как дела? Что нового? Я знаю, что это не диалоговое окно.";
+    string TempCurrentText = "";
     float DurationPerSymbol = 0.06f;
-    string TypingSound = "click"; 
+    string TypingSound = "typing"; 
     bool IsTyping = false;
     bool Wait = true;
+    bool IsActive = false;
 
     void Awake()
     {
         _instance = this;
     }
-    
+    void OnEnable()
+    {
+        SwitchActive(true);
+        TypeAgain();
+    }
+
     void Update()
     {
+        if (!IsActive)
+        {
+            return;
+        }
         if(IsTyping && Wait)
             return;
         if(CurrentText == TempCurrentText)
@@ -40,7 +51,7 @@ public class Answer : MonoBehaviour
         IsTyping = true;
         TextField.text = "";
 
-        for (int i = 0; i < CurrentText.Length-1; i++)
+        for (int i = 0; i < CurrentText.Length; i++)
         {
             TextField.text += CurrentText[i];
             SoundManagerUi.Instance.PlaySound(TypingSound);
@@ -56,11 +67,23 @@ public class Answer : MonoBehaviour
         }
         IsTyping = false;
     }
-    public void Type(string text, bool wait = true, float duration = 0.06f, string sound = "click")
+
+    public void Type(string text, bool wait = true, float duration = 0.06f, string sound = "typing")
     {
         TempCurrentText = text;
         DurationPerSymbol = duration;
         TypingSound = sound;
         Wait = wait;
+    }
+    public void SwitchActive(bool value)
+    {
+        IsActive = value;
+        TextField.gameObject.SetActive(value);
+        TextFieldStar.gameObject.SetActive(value);
+        TypeAgain();
+    }
+    public void TypeAgain()
+    {
+        CurrentText = "";
     }
 }

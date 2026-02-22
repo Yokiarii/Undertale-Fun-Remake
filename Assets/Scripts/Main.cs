@@ -22,14 +22,11 @@ public class Main : MonoBehaviour
         _instance = this;
         Application.targetFrameRate = 60;
     }
-    void Start()
-    {
-        
-    }
+
 
     public IEnumerator ShakeCA()
     {
-        if (postProcessVolume.profile.TryGet<ChromaticAberration>(out CA))
+        if (postProcessVolume.profile.TryGet(out CA))
         {
             DOTween.To(() => CA.intensity.value,
                        x => CA.intensity.value = x,

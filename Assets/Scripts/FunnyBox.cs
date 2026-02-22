@@ -12,6 +12,7 @@ public class FunnyBox : MonoBehaviour
     Vector2 DefaultSize = new Vector2(1550,377);
     public Dictionary<string, FightBox> Boxes { get; private set; } = new();
     public GameObject Answer;
+    
     public bool Fighting {get;private set;} = false;
 
     #endregion
