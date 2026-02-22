@@ -285,12 +285,12 @@ GameObject:
   - component: {fileID: 80955598}
   - component: {fileID: 80955597}
   m_Layer: 5
-  m_Name: Image
+  m_Name: RangeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &80955596
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3980,6 +3980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c3b4ec51ed73c428845670b0bd465b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  RangeImage: {fileID: 0}
 --- !u!1 &1504420936
 GameObject:
   m_ObjectHideFlags: 0
@@ -5620,15 +5621,15 @@ RectTransform:
   m_GameObject: {fileID: 1948512863}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.74, y: 0.74, z: 0.74}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1886246708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 637.5001, y: 254}
-  m_SizeDelta: {x: 707, y: 508}
+  m_AnchoredPosition: {x: 536.47, y: 242.1}
+  m_SizeDelta: {x: 588.17, y: 826.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1948512865
 CanvasGroup:
@@ -5662,7 +5663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 97c5144b61aa7a646b05593e22ef00ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3846aa22ed0cf434385957d0254b4ec5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

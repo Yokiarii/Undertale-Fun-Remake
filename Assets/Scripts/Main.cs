@@ -22,8 +22,7 @@ public class Main : MonoBehaviour
         _instance = this;
         Application.targetFrameRate = 60;
     }
-
-
+    
     public IEnumerator ShakeCA()
     {
         if (postProcessVolume.profile.TryGet(out CA))
