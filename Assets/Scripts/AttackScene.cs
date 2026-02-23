@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,17 +13,32 @@ public class AttackScene : MonoBehaviour
     [SerializeField] public GameObject[] Cells = new GameObject[4];
     [SerializeField] public TextMeshProUGUI[] Texts = new TextMeshProUGUI[4];
     [SerializeField] public GameObject[] Stars = new GameObject[4];
+    [SerializeField] public GameObject PlayerAttackPanel;
+    bool IsReady = false;
 
     void Awake()
     {
         _instance = this;
     }
 
+    void OnEnable()
+    {
+        IsReady = false;
+    }
+
     void FixedUpdate()
     {
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed )
+        if (!IsReady)
         {
-            
+            StartCoroutine(Delay());
+            return;
+        }
+        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        {
+            PlayerAttackPanel.SetActive(true);
+            SoundManagerUi.Instance.PlaySound("accept");
+            SceneManager.Instance.ChangeScene(Scenes.Fight);
+            gameObject.SetActive(false);
         }
     }
 
@@ -34,5 +50,10 @@ public class AttackScene : MonoBehaviour
                 continue;
             Stars[i].SetActive(false);
         }
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        IsReady = true;
     }
 }

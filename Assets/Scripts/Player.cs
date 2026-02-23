@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public string Name { get; private set; }
     public int[] HP { get; private set; } = new int[2] { 20, 20 };
+    public int Damage {get; private set; } = 20;
 
     public bool IsDead { get; private set; } = false;
 
