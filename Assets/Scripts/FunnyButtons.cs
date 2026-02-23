@@ -42,7 +42,7 @@ public class FunnyButtons : MonoBehaviour
             IsChanging = false;
         }
 
-        if (Keyboard.current.xKey.isPressed && !IsActive)
+        if (Keyboard.current.xKey.isPressed && !IsActive && SceneManager.Instance.CurrentScene != Scenes.Fight)
         {
             Menu();
             UpdateButtonAndHeart();
