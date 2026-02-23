@@ -1,11 +1,13 @@
 using System.Collections;
-using System.Threading;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+
+    private static PlayerAttack _instance;
+    public static PlayerAttack Instance => _instance;
 
     public GameObject RangeImage;
     public GameObject Line;
@@ -14,9 +16,16 @@ public class PlayerAttack : MonoBehaviour
     public bool PlayerClick = false;
     public bool IsReady = false;
     public bool IsFollowing = true;
-    
+    public Vector3 OriginalPosLine;
+
+    void Awake()
+    {
+        _instance = this;
+        OriginalPosLine = Line.transform.position;
+    }
     void OnEnable()
     {
+        Line.transform.position = OriginalPosLine;
         Line.SetActive(true);
         LineStop.SetActive(false);
         PlayerClick = false;
@@ -49,12 +58,15 @@ public class PlayerAttack : MonoBehaviour
 
     void StopLine()
     {
+        SoundManagerUi.Instance.PlaySound("slash");
+        PlayerClick = true;
+
         IsFollowing = false;
         Line.SetActive(false);
         LineStop.SetActive(true);
         
         var deviation = LineStop.transform.position.x;
-        Enemy.Instance.ChangeHp(DamageCalculator.CalculateDamageInt(deviation));
+        Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation));
     }
     void FollowLine()
     {
@@ -62,7 +74,7 @@ public class PlayerAttack : MonoBehaviour
     }
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.3f);
         IsReady = true;
     }
 }

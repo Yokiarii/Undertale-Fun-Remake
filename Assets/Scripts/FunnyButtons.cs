@@ -98,7 +98,7 @@ public class FunnyButtons : MonoBehaviour
 
         UpdateButtonAndHeart();
     }
-    void UpdateButtonAndHeart()
+    public void UpdateButtonAndHeart()
     {
         for (int g = 0; g < Buttons.Length; g++)
         {
@@ -116,7 +116,7 @@ public class FunnyButtons : MonoBehaviour
             }
         }
     }
-    void TurnOffButtons()
+    public void TurnOffButtons()
     {
         for (int g = 0; g < Buttons.Length; g++)
         {

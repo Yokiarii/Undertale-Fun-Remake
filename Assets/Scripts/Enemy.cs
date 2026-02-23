@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,59 +14,103 @@ public class Enemy : MonoBehaviour
         _instance = this;
     }
 
-    public string Name {get; private set;} = "";
-    public int[] HP {get; private set;} = new int[2]{300,300};
-    public int Damage {get; private set;} = 1;
-    
+    public string Name { get; private set; } = "Protivnic";
+    public int[] HP { get; private set; } = new int[2] { 300, 300 };
+    public int Damage { get; private set; } = 1;
+
     public GameObject DamageAnimation;
     public GameObject EnemyImage;
+    public GameObject DamageInfo;
+
+    public Image FirstNumber;
+    public Image SecondNumber;
+    public Sprite[] Numbers;
+    public Slider EnemyHp;
 
     public void ChangeHp(int value)
     {
         var temp = HP[0];
         HP[0] += value;
 
-        if(HP[0] < 0)
+        if (HP[0] < 0)
             HP[0] = 0;
-        if(HP[0] > HP[1])
+        if (HP[0] > HP[1])
             HP[0] = HP[1];
 
-        if(temp > HP[0]) //Deal damage
+        if (temp > HP[0]) //Deal damage
         {
-            StartCoroutine(DealDamageAnimation());
+            StartCoroutine(DealDamageAnimation(value));
         }
-        Debug.Log(temp - HP[0]);
     }
 
-    public IEnumerator DealDamageAnimation()
+    public IEnumerator DealDamageAnimation(int damage)
     {
         DamageAnimation.SetActive(true);
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1f); //режет противника
+        SoundManagerUi.Instance.PlaySound("damageEnemy");
         DamageAnimation.SetActive(false);
+
+        EnemyImage.transform.DOShakePosition(2f, 10).SetEase(Ease.Linear); // противник трясется 
+
+        damage = Math.Abs(damage);
+
+        if (damage.ToString().Length != 2)
+        {
+            FirstNumber.sprite = Numbers[0];
+            var temp3 = damage.ToString();
+            var temp4 = temp3[0].ToString();
+            SecondNumber.sprite = Numbers[int.Parse(temp4)];
+        }
+        else
+        {
+            string temp = damage.ToString();
+            string temp2 = temp[0].ToString();
+            FirstNumber.sprite = Numbers[int.Parse(temp2)]; //делаем цифры
+
+            temp = damage.ToString();
+            temp2 = temp[1].ToString();
+            SecondNumber.sprite = Numbers[int.Parse(temp2)];
+        }
+
+        EnemyHp.maxValue = HP[1];
+        EnemyHp.value = HP[1];
+        EnemyHp.DOValue(HP[0], 1.2f); // Поменять значение слайдера хп врага 
+
+        DamageInfo.SetActive(true);
+        var dmg = DamageInfo.transform.localPosition; // анимация цифр
+        DamageInfo.transform.DOLocalJump(dmg, 65, 1, 0.56f);
+
+        yield return new WaitForSeconds(2);
+
+        PlayerAttack.Instance.LineStop.SetActive(false);
+        PlayerAttack.Instance.RangeImage.transform.DOScaleX(0, 0.5f);
+        Fight.Instance.Init();
+
+        yield return new WaitForSeconds(0.5f);
+
+        PlayerAttack.Instance.gameObject.SetActive(false);
+        PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1);
+
+        FunnyButtons.Instance.TurnOffButtons();
+        Player.Instance.PlayerGameObject.SetActive(true);
+
     }
 
 }
 
 public class DamageCalculator
 {
-    /// <summary>
-    /// Рассчитывает урон в зависимости от отклонения от центра.
-    /// </summary>
-    /// <param name="deviation">Отклонение (может быть отрицательным).</param>
-    /// <param name="baseDamage">Базовый урон при точном попадании (по умолчанию 20).</param>
-    /// <param name="factor">Коэффициент крутизны (по умолчанию 56, получен из примера).</param>
-    /// <returns>Итоговый урон (вещественное число).</returns>
-    public static double CalculateDamage(double deviation, double baseDamage = 20, double factor = 56)
+    public static float CalculateDamage(float value, float baseDamage, float falloffFactor)
     {
-        return baseDamage / (1 + Math.Abs(deviation) / factor);
-    }
+        float distance = Math.Abs(value);
+        // Чем больше falloffFactor, тем быстрее падает урон
 
-    /// <summary>
-    /// Целочисленная версия с округлением до ближайшего целого.
-    /// </summary>
-    public static int CalculateDamageInt(float deviation, int baseDamage = 20, int factor = 56)
+        return baseDamage / (1f + falloffFactor * distance);
+    }
+    public static int CalculateDamageInt(float value, float baseDamage = 20, float falloffFactor = 0.5f)
     {
-        double damage = (double)baseDamage / (1 + (double)Math.Abs(deviation) / factor);
-        return (int)Math.Round(damage);
+        float distance = Math.Abs(value);
+        // Чем больше falloffFactor, тем быстрее падает урон
+        return (int)Math.Round(baseDamage / (1f + falloffFactor * distance));
     }
 }

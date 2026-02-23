@@ -16,7 +16,7 @@ public class Answer : MonoBehaviour
     string TypingSound = "typing"; 
     bool IsTyping = false;
     bool Wait = true;
-    bool IsActive = false;
+    public bool IsActive = false;
 
     void Awake()
     {
@@ -24,6 +24,7 @@ public class Answer : MonoBehaviour
     }
     void OnEnable()
     {
+        TextField.text = "";
         SwitchActive(true);
         TypeAgain();
     }
@@ -53,6 +54,11 @@ public class Answer : MonoBehaviour
 
         for (int i = 0; i < CurrentText.Length; i++)
         {
+            if (!IsActive)
+            {
+                IsTyping = false;
+                yield break;
+            }
             TextField.text += CurrentText[i];
             SoundManagerUi.Instance.PlaySound(TypingSound);
             
@@ -77,10 +83,17 @@ public class Answer : MonoBehaviour
     }
     public void SwitchActive(bool value)
     {
-        IsActive = value;
         TextField.gameObject.SetActive(value);
         TextFieldStar.gameObject.SetActive(value);
-        TypeAgain();
+        if(value == true)
+        {
+            TypeAgain();
+        }
+        if(value == false)
+        {
+            TextField.text = "";
+        }
+        IsActive = value;
     }
     public void TypeAgain()
     {

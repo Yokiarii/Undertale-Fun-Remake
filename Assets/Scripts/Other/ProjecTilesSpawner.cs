@@ -4,6 +4,12 @@ using UnityEngine.InputSystem;
 
 public class ProjecTilesSpawner : MonoBehaviour
 {
+    private static ProjecTilesSpawner _instance;
+    public static ProjecTilesSpawner Instance => _instance;
+    void Awake()
+    {
+        _instance = this;
+    }
     public GameObject prefabBall;
     void FixedUpdate()
     {
@@ -12,7 +18,7 @@ public class ProjecTilesSpawner : MonoBehaviour
             StartCoroutine(SpawnManyProjectTiles(10));
         }
     }
-    IEnumerator SpawnManyProjectTiles(int g = 1)
+    public IEnumerator SpawnManyProjectTiles(int g = 1)
     {
         for (int i = 0; i < g; i++)
         {

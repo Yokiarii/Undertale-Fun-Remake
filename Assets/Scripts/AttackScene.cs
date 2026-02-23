@@ -24,6 +24,7 @@ public class AttackScene : MonoBehaviour
     void OnEnable()
     {
         IsReady = false;
+        Texts[0].text = Enemy.Instance.Name;
     }
 
     void FixedUpdate()
