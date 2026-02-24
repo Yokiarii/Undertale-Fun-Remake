@@ -108,6 +108,11 @@ public class Player : MonoBehaviour
         PlayerGameObject.transform.SetParent(Main.Instance.FightScene.transform);
     }
 
+    public void ReturnPlayerPosition()
+    {
+        PlayerGameObject.transform.localPosition = new Vector3(0,0,PlayerGameObject.transform.localPosition.z);
+    }
+
     public void Revive()
     {
         IsDead = false;

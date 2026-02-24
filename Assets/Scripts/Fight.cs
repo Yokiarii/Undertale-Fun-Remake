@@ -20,6 +20,8 @@ public class Fight : MonoBehaviour
 
         FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
         FunnyBox.Instance.TurnOnFightColliderByPreset("FightCollider3:4");
+        Player.Instance.PlayerGameObject.SetActive(true);
+        Player.Instance.ReturnPlayerPosition();
         
         StartCoroutine(Delay());
     }

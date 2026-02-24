@@ -66,7 +66,7 @@ public class PlayerAttack : MonoBehaviour
         LineStop.SetActive(true);
         
         var deviation = LineStop.transform.position.x;
-        Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation));
+        Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation,Player.Instance.Damage));
     }
     void FollowLine()
     {

@@ -9,6 +9,10 @@ public class Main : MonoBehaviour
 {
     private static Main _instance;
     public static Main Instance => _instance;
+
+    public static string Version = "Build v0.04-demo PC";
+    public static string Tag_Version = "demo_4";
+
     public GameObject AllSpace;
     public GameObject MainCanvas;
     public GameObject GameOver;
@@ -20,6 +24,7 @@ public class Main : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
     

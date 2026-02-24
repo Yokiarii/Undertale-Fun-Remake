@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     public void ChangeHp(int value)
     {
         var temp = HP[0];
+        
         HP[0] += value;
 
         if (HP[0] < 0)
@@ -94,7 +95,6 @@ public class Enemy : MonoBehaviour
         PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1);
 
         FunnyButtons.Instance.TurnOffButtons();
-        Player.Instance.PlayerGameObject.SetActive(true);
 
     }
 
