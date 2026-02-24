@@ -31,8 +31,15 @@ public class Enemy : MonoBehaviour
     public void ChangeHp(int value)
     {
         var temp = HP[0];
-        
+
         HP[0] += value;
+
+        var plus = Math.Abs(value);
+        if(plus == Player.Instance.Damage || plus+1 == Player.Instance.Damage)
+        {
+            StartCoroutine(PerfectDamageAnimation());
+            value = -(Player.Instance.Damage*2);
+        }
 
         if (HP[0] < 0)
             HP[0] = 0;
@@ -77,7 +84,7 @@ public class Enemy : MonoBehaviour
         EnemyHp.maxValue = HP[1];
         EnemyHp.value = LastHp;
         EnemyHp.DOValue(HP[0], 1.2f); // Поменять значение слайдера хп врага
-        LastHp = HP[0]; 
+        LastHp = HP[0];
 
         DamageInfo.SetActive(true);
         var dmg = DamageInfo.transform.localPosition; // анимация цифр
@@ -95,10 +102,35 @@ public class Enemy : MonoBehaviour
         PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1);
 
         FunnyButtons.Instance.TurnOffButtons();
+    }
 
+    public IEnumerator PerfectDamageAnimation()
+    {
+        var duration = 0.25f;
+        for (int i = 0; i < 3; i++)
+        {
+            FirstNumber.DOColor(Color.blue, duration);
+            SecondNumber.DOColor(Color.blue, duration);
+            yield return new WaitForSeconds(duration);
+            FirstNumber.DOColor(Color.red, duration);
+            SecondNumber.DOColor(Color.red, duration);
+            yield return new WaitForSeconds(duration);
+            FirstNumber.DOColor(Color.yellow, duration);
+            SecondNumber.DOColor(Color.yellow, duration);
+            yield return new WaitForSeconds(duration);
+            FirstNumber.DOColor(Color.purple, duration);
+            SecondNumber.DOColor(Color.purple, duration);
+            yield return new WaitForSeconds(duration);
+            FirstNumber.DOColor(Color.green, duration);
+            SecondNumber.DOColor(Color.green, duration);
+            yield return new WaitForSeconds(duration);
+        }
+        FirstNumber.DOColor(Color.red,0.1f);
+        SecondNumber.DOColor(Color.red,0.1f);
     }
 
 }
+
 
 public class DamageCalculator
 {
