@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
 
     public string Name { get; private set; } = "Protivnic";
     public int[] HP { get; private set; } = new int[2] { 300, 300 };
+    int LastHp = 300;
     public int Damage { get; private set; } = 1;
 
     public GameObject DamageAnimation;
@@ -73,8 +74,9 @@ public class Enemy : MonoBehaviour
         }
 
         EnemyHp.maxValue = HP[1];
-        EnemyHp.value = HP[1];
-        EnemyHp.DOValue(HP[0], 1.2f); // Поменять значение слайдера хп врага 
+        EnemyHp.value = LastHp;
+        EnemyHp.DOValue(HP[0], 1.2f); // Поменять значение слайдера хп врага
+        LastHp = HP[0]; 
 
         DamageInfo.SetActive(true);
         var dmg = DamageInfo.transform.localPosition; // анимация цифр
