@@ -1,24 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AttackScene : ListenInputBase, IScene
+public class Mercy : ListenInputBase, IScene
 {
-    private static AttackScene _instance;
-    public static AttackScene Instance => _instance;
-    public Scenes Name {get;private set;} = Scenes.Attack;
+    public Scenes Name {get;private set;} = Scenes.Mercy;
+
     public bool IsActiveRightNow {get;private set;} = false;
 
-    void Awake()
-    {
-        _instance = this;
-    }
     void FixedUpdate()
     {
         ListenInput();
     }
+
+    public override void Accept()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void InitializeScene()
     {
         gameObject.SetActive(true);
@@ -26,10 +25,6 @@ public class AttackScene : ListenInputBase, IScene
         StartCoroutine(Delay());
     }
 
-    public override void Accept()
-    {
-        throw new System.NotImplementedException();
-    }
     public void QuitScene()
     {
         isReady = false;

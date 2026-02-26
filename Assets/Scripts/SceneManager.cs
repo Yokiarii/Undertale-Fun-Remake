@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,10 +13,11 @@ public class SceneManager : MonoBehaviour
     public static SceneManager Instance => _instance;
 
     public Scenes CurrentScene = Scenes.Menu;
+    public Dictionary<string,IScene> AllScenes = new Dictionary<string, IScene>();
     public Enemy CurrentEnemy;
 
-    public GameObject[] ScenesGameObjects = new GameObject[]{};
-    
+    public GameObject[] ScenesGameObjects = new GameObject[] { };
+
     void Awake()
     {
         _instance = this;
@@ -23,22 +25,12 @@ public class SceneManager : MonoBehaviour
 
     void Start()
     {
-        InitializeMenu();
-    }
+        AllScenes.Add("Attack",ScenesGameObjects[0].GetComponent<AttackScene>());
+        AllScenes.Add("Act",ScenesGameObjects[1].GetComponent<Act>());
+        AllScenes.Add("Items",ScenesGameObjects[2].GetComponent<Item>());
+        AllScenes.Add("Mercy",ScenesGameObjects[3].GetComponent<Mercy>());
 
-    void Update()
-    {
-        Menu();
-        Attack();
-        Act();
-        Items();
-        Mercy();
-        Fight();
-    }
-
-    public void InitializeMenu()
-    {
-        ChangeScene(Scenes.Menu);
+        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
     }
 
     public void QuitMenu()
@@ -50,58 +42,234 @@ public class SceneManager : MonoBehaviour
     public void ChangeScene(Scenes scene)
     {
         CurrentScene = scene;
+        foreach (var item in AllScenes)
+        {
+            item.Value.QuitScene();
+            if(item.Value.Name == CurrentScene)
+                item.Value.InitializeScene();
+        }
     }
-    
-    #region Scenes
-    void Menu()
+
+}
+
+public interface IScene
+{
+    public Scenes Name { get; }
+    public bool IsActiveRightNow { get; }
+    public void InitializeScene();
+    public void QuitScene();
+}
+
+public abstract class ListenInputBase : MonoBehaviour
+{
+    // Поля для хранения состояния 
+    protected bool isListening = true;
+    protected bool isChanging;
+    protected bool isReady;
+    protected bool isAccepting;
+    [SerializeField] protected int currentCell;
+    [SerializeField] protected string[] textOfCells;
+    protected List<CellLine> cellLines = new List<CellLine>();
+
+    //реализовать в наследнике.
+    [SerializeField] public GameObject[] cellObjects;
+    [SerializeField] public TextMeshProUGUI[] rawCellTexts;
+    [SerializeField] public GameObject[] rawHearts;
+
+    // Свойства 
+    public virtual bool IsListening => isListening;
+    public virtual bool IsChanging => isChanging;
+    public virtual bool IsAccepting => isAccepting;
+    public virtual bool IsReady => isReady;
+    public virtual int CurrentCell => currentCell;
+    public virtual string[] TextOfCells => textOfCells;
+    public virtual List<CellLine> CellLines => cellLines;
+    public virtual void SetListening(bool value) => isListening = value;
+    public virtual void ChangeCellStatement(int i)
     {
-        if(CurrentScene != Scenes.Menu)
+        isChanging = true;
+        currentCell += i;
+        var temp = cellLines[0].CellList.Count + CellLines[1].CellList.Count;
+        if (currentCell > temp - 1)
+        {
+            currentCell = 0;
+        }
+        if (currentCell < 0)
+        {
+            currentCell = temp - 1;
+        }
+        UpdateHeartStatement();
+        SoundManagerUi.Instance.PlaySound("click");
+    }
+    public virtual void ChangeCellStatementHorizontal()
+    {
+        isChanging = true;
+        switch (currentCell)
+        {
+            case 0:
+                if(cellObjects.Length < 3)
+                    break;
+                SoundManagerUi.Instance.PlaySound("click");
+                currentCell = 2;
+                break;
+            case 1:
+                if(cellObjects.Length < 4)
+                    break;
+                SoundManagerUi.Instance.PlaySound("click");
+                currentCell = 3;
+                break;
+            case 2:
+                SoundManagerUi.Instance.PlaySound("click");
+                currentCell = 0;
+                break;
+            case 3:
+                SoundManagerUi.Instance.PlaySound("click");
+                currentCell = 1;
+                break;
+            default:
+                break;
+        }
+        UpdateHeartStatement();
+    }
+    public virtual IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        isReady = true;
+    }
+
+    public abstract void Accept();
+
+    public virtual void CellAcceptingInput()
+    {
+        if (!Keyboard.current.zKey.isPressed
+            && !Keyboard.current.enterKey.isPressed)
+        {
+            isAccepting = false;
+        }
+        if (!IsListening || IsAccepting) return;
+        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        {
+            Accept();
+            isAccepting = true;
+        }
+    }
+
+    public virtual void CellChangingInput()
+    {
+        if (!Keyboard.current.upArrowKey.isPressed
+            && !Keyboard.current.downArrowKey.isPressed
+            && !Keyboard.current.leftArrowKey.isPressed
+            && !Keyboard.current.rightArrowKey.isPressed)
+        {
+            isChanging = false;
+        }
+        if (!IsListening || IsChanging) 
             return;
-
-        Answer.Instance.Type("Какой то текст, что бы заполнить пустоту в сердце!"); //temp
-        ScenesGameObjects[0].SetActive(false);
+        if (Keyboard.current.upArrowKey.isPressed)
+        {
+            ChangeCellStatement(-1);
+        }
+        if (Keyboard.current.downArrowKey.isPressed)
+        {
+            ChangeCellStatement(1);
+        }
+        if (Keyboard.current.leftArrowKey.isPressed)
+        {
+            ChangeCellStatementHorizontal();
+        }
+        if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            ChangeCellStatementHorizontal();
+        }
     }
 
-    void Attack()
+
+    public void InitializeCells(TextMeshProUGUI[] RawCellText, GameObject[] RawHeart, GameObject[] CellObjects)
     {
-        if(CurrentScene != Scenes.Attack)
-            return;
-        ScenesGameObjects[0].SetActive(true);
-        
+        cellLines.Clear();
+
+        cellLines.Add(new CellLine());
+        cellLines.Add(new CellLine());
+
+        // Заполняем линии
+        for (int i = 0; i < CellObjects.Length; i++)
+        {
+            if (i < 2)
+            {
+                cellLines[0].CellList.Add(new Cell(RawCellText[i], RawHeart[i], CellObjects[i]));
+                cellLines[0].CellList[i].Text.text = TextOfCells[i];
+                cellLines[0].CellList[i].CellObject.SetActive(true);
+                continue;
+            }
+            if (i < 4)
+            {
+                cellLines[1].CellList.Add(new Cell(RawCellText[i], RawHeart[i], CellObjects[i]));
+                cellLines[1].CellList[i - 2].Text.text = TextOfCells[i];
+                cellLines[1].CellList[i - 2].CellObject.SetActive(true);
+            }
+
+        }
     }
 
-    void Act()
+    public void ListenInput()
     {
-        if(CurrentScene != Scenes.Act)
-            return;
-        
+        if (!IsReady) return;
+        CellAcceptingInput();
+        CellChangingInput();
     }
 
-    void Items()
+    public void UpdateHeartStatement()
     {
-        if(CurrentScene != Scenes.Items)
-            return;
-        
-    }
+        // выключаем все сердца
+        foreach (var line in cellLines)
+            foreach (var cell in line.CellList)
+                cell.Heart.SetActive(false);
 
-    void Mercy()
-    {
-        if(CurrentScene != Scenes.Mercy)
-            return;
-        
+        // включаем нужное 
+        switch (CurrentCell)
+        {
+            case 0: cellLines[0].CellList[0].Heart.SetActive(true); break;
+            case 1: cellLines[0].CellList[1].Heart.SetActive(true); break;
+            case 2: cellLines[1].CellList[0].Heart.SetActive(true); break;
+            case 3: cellLines[1].CellList[1].Heart.SetActive(true); break;
+            default: break;
+        }
     }
-
-    void Fight()
+    public void ChangeCellText(int number, string value)
     {
-        if(CurrentScene != Scenes.Fight)
-            return;
-        
+        switch (number)
+        {
+            case 0:
+                CellLines[0].CellList[0].Text.text = value;
+                break;
+            case 1:
+                CellLines[0].CellList[1].Text.text = value;
+                break;
+            case 2:
+                CellLines[1].CellList[0].Text.text = value;
+                break;
+            case 3:
+                CellLines[1].CellList[1].Text.text = value;
+                break;
+            default:
+                break;
+        }
     }
-    #endregion
-
-    public void ClearSpace()
+}
+public class CellLine
+{
+    public List<Cell> CellList = new List<Cell>();
+}
+public class Cell
+{
+    public TextMeshProUGUI Text;
+    public GameObject Heart;
+    public GameObject CellObject;
+    public Cell(TextMeshProUGUI text, GameObject heart, GameObject cellObject)
     {
-        Answer.Instance.SwitchActive(false);
+        Text = text;
+        Heart = heart;
+        CellObject = cellObject;
     }
 }
 

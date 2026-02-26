@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -15,9 +14,8 @@ public class Answer : MonoBehaviour
     string TempCurrentText = "";
     float DurationPerSymbol = 0.06f;
     string TypingSound = "typing";
-    bool IsTyping = false;
-    bool Wait = true;
     public bool IsActive = false;
+    public bool IsBreak = true;
 
     void Awake()
     {
@@ -27,32 +25,34 @@ public class Answer : MonoBehaviour
     {
         TextField.text = "";
         SwitchActive(true);
-        TypeAgain();
     }
 
     void Update()
     {
-        if (!IsActive)
-        {
-            return;
-        }
-        if (IsTyping && Wait)
-            return;
-        if (CurrentText == TempCurrentText)
-        {
-            return;
-        }
-        else
-        {
-            CurrentText = TempCurrentText;
-            StartCoroutine(TypingAnimation());
-        }
+        
+    }
+
+    public void Type(string text, float duration = 0.06f, string sound = "typing")
+    {
+        IsBreak = true;
+        TempCurrentText = text;
+        DurationPerSymbol = duration;
+        TypingSound = sound;
+        CurrentText = TempCurrentText;
+        StopTyping();
+        StartCoroutine(TypingAnimation());
+    }
+
+    void StopTyping()
+    {
+        StopCoroutine(TypingAnimation());
+        StopAllCoroutines();
     }
 
     IEnumerator TypingAnimation()
     {
-        IsTyping = true;
-
+        yield return new WaitForSeconds(0.25f);
+        IsBreak = false;
         TextField.text = "";
 
         string currentText = "";
@@ -61,7 +61,8 @@ public class Answer : MonoBehaviour
 
         foreach (string word in words)
         {
-
+            if(IsBreak || !IsActive)
+                yield break;
             // Проверяем перенос
             if (!WillWordFit(currentText, word))
             {
@@ -72,51 +73,33 @@ public class Answer : MonoBehaviour
             // Печатаем слово ПОСИМВОЛЬНО
             foreach (char c in word)
             {
-                if (!IsActive)
-                {
-                    IsTyping = false;
+                if(IsBreak || !IsActive)
                     yield break;
-                }
                 currentText += c;
                 TextField.text = currentText;
-                SoundManagerUi.Instance.PlaySound("typing");
+                SoundManagerUi.Instance.PlaySound(TypingSound);
                 yield return new WaitForSeconds(DurationPerSymbol);
             }
-
+            if(IsBreak || !IsActive)
+                yield break;
             // Пробел после слова
             currentText += " ";
             TextField.text = currentText;
             yield return new WaitForSeconds(DurationPerSymbol);
-
         }
-
-        IsTyping = false;
     }
 
-    public void Type(string text, bool wait = true, float duration = 0.06f, string sound = "typing")
-    {
-        TempCurrentText = text;
-        DurationPerSymbol = duration;
-        TypingSound = sound;
-        Wait = wait;
-    }
     public void SwitchActive(bool value)
     {
         TextField.gameObject.SetActive(value);
         TextFieldStar.gameObject.SetActive(value);
-        if (value == true)
-        {
-            TypeAgain();
-        }
         if (value == false)
         {
             TextField.text = "";
+            CurrentText = "";
+            TempCurrentText = "";
         }
         IsActive = value;
-    }
-    public void TypeAgain()
-    {
-        CurrentText = "";
     }
 
     bool WillWordFit(string currentText, string nextWord)
