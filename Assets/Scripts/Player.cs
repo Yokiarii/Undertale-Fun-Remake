@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
             SoundManagerUi.Instance.PlaySound("damagePlayer");
             StartCoroutine(Main.Instance.ShakeCA());
         }
+        if(temp < HP[0])
+        {
+            SoundManagerUi.Instance.PlaySound("healing");
+        }
         UpdateSlider();
     }
     

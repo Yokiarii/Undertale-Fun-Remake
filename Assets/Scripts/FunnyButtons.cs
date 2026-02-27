@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -17,6 +16,8 @@ public class FunnyButtons : MonoBehaviour
     public int CurrentActiveButton = 0;
     public bool IsActive = true;
     public bool IsChanging = false;
+    public bool CanCancel = true;
+    public bool IsReady = false;
 
     void Awake()
     {
@@ -37,12 +38,16 @@ public class FunnyButtons : MonoBehaviour
     {
         if(Keyboard.current.enterKey.isPressed && Keyboard.current.xKey.isPressed)
             return;
+        if(Keyboard.current.zKey.isPressed && Keyboard.current.xKey.isPressed)
+            return;
         if(!Keyboard.current.leftArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed)
         {
             IsChanging = false;
         }
 
-        if (Keyboard.current.xKey.isPressed && !IsActive && SceneManager.Instance.CurrentScene != Scenes.Fight)
+        if (Keyboard.current.xKey.isPressed && !IsActive 
+            && SceneManager.Instance.CurrentScene != Scenes.Fight
+            && CanCancel)
         {
             Menu();
             UpdateButtonAndHeart();
@@ -61,7 +66,11 @@ public class FunnyButtons : MonoBehaviour
         {
             ChangeCurrentButton(false);
         }
-
+        if (!IsReady)
+        {
+            StartCoroutine(Delay());
+            return;
+        }
         if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
             switch (CurrentActiveButton)
@@ -125,6 +134,7 @@ public class FunnyButtons : MonoBehaviour
                 .sprite = DefaultButtons[g];
             Hearts[g].SetActive(false);
         }
+        IsReady = false;
     }
     void TurnOffButtonsWithOutHeart()
     {
@@ -172,5 +182,11 @@ public class FunnyButtons : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Menu);
         IsActive = true;
         Answer.Instance.SwitchActive(true);
+        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        IsReady = true;
     }
 }
