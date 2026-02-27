@@ -17,6 +17,7 @@ public class FunnyButtons : MonoBehaviour
     public bool IsActive = true;
     public bool IsChanging = false;
     public bool CanCancel = true;
+    public bool IsReady = false;
 
     void Awake()
     {
@@ -65,7 +66,11 @@ public class FunnyButtons : MonoBehaviour
         {
             ChangeCurrentButton(false);
         }
-
+        if (!IsReady)
+        {
+            StartCoroutine(Delay());
+            return;
+        }
         if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
             switch (CurrentActiveButton)
@@ -129,6 +134,7 @@ public class FunnyButtons : MonoBehaviour
                 .sprite = DefaultButtons[g];
             Hearts[g].SetActive(false);
         }
+        IsReady = false;
     }
     void TurnOffButtonsWithOutHeart()
     {
@@ -177,5 +183,10 @@ public class FunnyButtons : MonoBehaviour
         IsActive = true;
         Answer.Instance.SwitchActive(true);
         Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        IsReady = true;
     }
 }

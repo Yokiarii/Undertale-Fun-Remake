@@ -8,6 +8,7 @@ public class AttackScene : ListenInputBase, IScene
 {
     private static AttackScene _instance;
     public static AttackScene Instance => _instance;
+    public GameObject PlayerAttackGameObject;
     public Scenes Name {get;private set;} = Scenes.Attack;
     public bool IsActiveRightNow {get;private set;} = false;
 
@@ -28,7 +29,8 @@ public class AttackScene : ListenInputBase, IScene
 
     public override void Accept()
     {
-        throw new System.NotImplementedException();
+        SceneManager.Instance.ChangeScene(Scenes.Fight);
+        PlayerAttackGameObject.SetActive(true);
     }
     public void QuitScene()
     {

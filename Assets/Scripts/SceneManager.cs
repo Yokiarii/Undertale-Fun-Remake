@@ -46,7 +46,9 @@ public class SceneManager : MonoBehaviour
         {
             item.Value.QuitScene();
             if(item.Value.Name == CurrentScene)
+            {
                 item.Value.InitializeScene();
+            }
         }
     }
 
@@ -67,6 +69,8 @@ public abstract class ListenInputBase : MonoBehaviour
     protected bool isChanging;
     protected bool isReady;
     protected bool isAccepting;
+    protected bool isSilent;
+    protected bool next;
     [SerializeField] protected int currentCell;
     [SerializeField] protected string[] textOfCells;
     protected List<CellLine> cellLines = new List<CellLine>();
@@ -81,7 +85,9 @@ public abstract class ListenInputBase : MonoBehaviour
     public virtual bool IsChanging => isChanging;
     public virtual bool IsAccepting => isAccepting;
     public virtual bool IsReady => isReady;
+    public virtual bool IsSilent => isSilent;
     public virtual int CurrentCell => currentCell;
+    public virtual bool Next => next;
     public virtual string[] TextOfCells => textOfCells;
     public virtual List<CellLine> CellLines => cellLines;
     public virtual void SetListening(bool value) => isListening = value;
@@ -99,7 +105,8 @@ public abstract class ListenInputBase : MonoBehaviour
             currentCell = temp - 1;
         }
         UpdateHeartStatement();
-        SoundManagerUi.Instance.PlaySound("click");
+        if(!isSilent)
+            SoundManagerUi.Instance.PlaySound("click");
     }
     public virtual void ChangeCellStatementHorizontal()
     {
@@ -109,21 +116,25 @@ public abstract class ListenInputBase : MonoBehaviour
             case 0:
                 if(cellObjects.Length < 3)
                     break;
-                SoundManagerUi.Instance.PlaySound("click");
+                if(!isSilent)
+                    SoundManagerUi.Instance.PlaySound("click");
                 currentCell = 2;
                 break;
             case 1:
                 if(cellObjects.Length < 4)
                     break;
-                SoundManagerUi.Instance.PlaySound("click");
+                if(!isSilent)
+                    SoundManagerUi.Instance.PlaySound("click");
                 currentCell = 3;
                 break;
             case 2:
-                SoundManagerUi.Instance.PlaySound("click");
+                if(!isSilent)
+                    SoundManagerUi.Instance.PlaySound("click");
                 currentCell = 0;
                 break;
             case 3:
-                SoundManagerUi.Instance.PlaySound("click");
+                if(!isSilent)
+                    SoundManagerUi.Instance.PlaySound("click");
                 currentCell = 1;
                 break;
             default:
@@ -138,7 +149,7 @@ public abstract class ListenInputBase : MonoBehaviour
     }
 
     public abstract void Accept();
-
+    public virtual void AcceptNext(){}
     public virtual void CellAcceptingInput()
     {
         if (!Keyboard.current.zKey.isPressed
@@ -146,11 +157,17 @@ public abstract class ListenInputBase : MonoBehaviour
         {
             isAccepting = false;
         }
-        if (!IsListening || IsAccepting) return;
+        if (!IsListening || IsAccepting || next) return;
         if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
             Accept();
             isAccepting = true;
+            next = true;
+            isReady = false;
+            StartCoroutine(Delay());
+
+            if(!isSilent)
+                SoundManagerUi.Instance.PlaySound("accept");
         }
     }
 
@@ -191,6 +208,10 @@ public abstract class ListenInputBase : MonoBehaviour
         cellLines.Add(new CellLine());
         cellLines.Add(new CellLine());
 
+        isSilent = false;
+        next = false;
+        
+
         // Заполняем линии
         for (int i = 0; i < CellObjects.Length; i++)
         {
@@ -209,15 +230,34 @@ public abstract class ListenInputBase : MonoBehaviour
             }
 
         }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
-
+    public void ChangePresence(bool value)
+    {
+        foreach (var item in cellLines)
+        {
+            foreach (var cell in item.CellList)
+            {
+                cell.CellObject.SetActive(value);
+            }
+        }
+        isSilent = true;
+    }
     public void ListenInput()
     {
-        if (!IsReady) return;
+        if (!IsReady || next) return;
         CellAcceptingInput();
         CellChangingInput();
     }
-
+    public void ListenNext()
+    {
+        if(!next || !isReady)
+            return;
+        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        {
+            AcceptNext();
+        }
+    }
     public void UpdateHeartStatement()
     {
         // выключаем все сердца
@@ -254,6 +294,16 @@ public abstract class ListenInputBase : MonoBehaviour
             default:
                 break;
         }
+    }
+    public void Type(string text)
+    {
+        FunnyButtons.Instance.TurnOffButtons();
+        FunnyButtons.Instance.CanCancel = false;
+        FunnyButtons.Instance.IsActive = false;
+        Answer.Instance.SwitchActive(true);
+        ChangePresence(false);
+        isSilent = true;
+        Answer.Instance.Type(text);
     }
 }
 public class CellLine

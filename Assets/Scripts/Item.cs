@@ -12,13 +12,21 @@ public class Item : ListenInputBase, IScene
     void FixedUpdate()
     {
         ListenInput();
+        ListenNext();
     }
 
     public override void Accept()
     {
-        throw new System.NotImplementedException();
+        Type("Скушано...");
     }
-
+    public override void AcceptNext()
+    {
+        FunnyButtons.Instance.Menu();
+        FunnyButtons.Instance.CanCancel = true;
+        FunnyButtons.Instance.UpdateButtonAndHeart();
+        Numbers[CurrentCell] -= 1;
+        SoundManagerUi.Instance.PlaySound("healing");
+    }
     public void InitializeScene()
     {
         gameObject.SetActive(true);
