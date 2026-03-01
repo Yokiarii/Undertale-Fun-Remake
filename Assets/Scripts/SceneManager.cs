@@ -164,6 +164,8 @@ public abstract class ListenInputBase : MonoBehaviour
             isAccepting = true;
             next = true;
             isReady = false;
+            if(!gameObject.activeSelf)
+                return;
             StartCoroutine(Delay());
 
             if(!isSilent)

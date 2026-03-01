@@ -30,6 +30,7 @@ public class AttackScene : ListenInputBase, IScene
     public override void Accept()
     {
         SceneManager.Instance.ChangeScene(Scenes.Fight);
+        SoundManagerUi.Instance.PlaySound("accept");
         PlayerAttackGameObject.SetActive(true);
     }
     public void QuitScene()

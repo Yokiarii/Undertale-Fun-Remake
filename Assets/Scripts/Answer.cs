@@ -2,20 +2,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Answer : MonoBehaviour
+public class Answer : TextGenerator
 {
     private static Answer _instance;
     public static Answer Instance => _instance;
-
-    [SerializeField] private TextMeshProUGUI TextField;
     [SerializeField] private TextMeshProUGUI TextFieldStar;
-
-    string CurrentText = "";
-    string TempCurrentText = "";
-    float DurationPerSymbol = 0.06f;
-    string TypingSound = "typing";
-    public bool IsActive = false;
-    public bool IsBreak = true;
 
     void Awake()
     {
@@ -25,68 +16,6 @@ public class Answer : MonoBehaviour
     {
         TextField.text = "";
         SwitchActive(true);
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void Type(string text, float duration = 0.06f, string sound = "typing")
-    {
-        IsBreak = true;
-        TempCurrentText = text;
-        DurationPerSymbol = duration;
-        TypingSound = sound;
-        CurrentText = TempCurrentText;
-        StopTyping();
-        StartCoroutine(TypingAnimation());
-    }
-
-    void StopTyping()
-    {
-        StopCoroutine(TypingAnimation());
-        StopAllCoroutines();
-    }
-
-    IEnumerator TypingAnimation()
-    {
-        yield return new WaitForSeconds(0.25f);
-        IsBreak = false;
-        TextField.text = "";
-
-        string currentText = "";
-
-        string[] words = CurrentText.Split(' ');
-
-        foreach (string word in words)
-        {
-            if(IsBreak || !IsActive)
-                yield break;
-            // Проверяем перенос
-            if (!WillWordFit(currentText, word))
-            {
-                currentText += "\n";
-                TextField.text = currentText;
-            }
-
-            // Печатаем слово ПОСИМВОЛЬНО
-            foreach (char c in word)
-            {
-                if(IsBreak || !IsActive)
-                    yield break;
-                currentText += c;
-                TextField.text = currentText;
-                SoundManagerUi.Instance.PlaySound(TypingSound);
-                yield return new WaitForSeconds(DurationPerSymbol);
-            }
-            if(IsBreak || !IsActive)
-                yield break;
-            // Пробел после слова
-            currentText += " ";
-            TextField.text = currentText;
-            yield return new WaitForSeconds(DurationPerSymbol);
-        }
     }
 
     public void SwitchActive(bool value)
@@ -102,7 +31,84 @@ public class Answer : MonoBehaviour
         IsActive = value;
     }
 
-    bool WillWordFit(string currentText, string nextWord)
+}
+
+public class TextGenerator : MonoBehaviour
+{
+    [SerializeField] public TextMeshProUGUI TextField;
+    protected string CurrentText = "";
+    protected string TempCurrentText = "";
+    protected float DefaultDurationPerSymbol = 0.06f;
+    protected string TypingSound = "typing";
+    protected bool IsActive = false;
+    protected bool IsBreak = true;
+    protected bool IsComplete = false;
+    public void Type(string text, float duration = 0.06f, string sound = "typing")
+    {
+        IsBreak = true;
+        TempCurrentText = text;
+        DefaultDurationPerSymbol = duration;
+        TypingSound = sound;
+        CurrentText = TempCurrentText;
+        IsComplete = false;
+        StopTyping();
+        StartCoroutine(TypingAnimation());
+    }
+    protected void StopTyping()
+    {
+        StopCoroutine(TypingAnimation());
+        StopAllCoroutines();
+    }
+    protected IEnumerator TypingAnimation()
+    {
+        yield return new WaitForSeconds(0.25f);
+        IsBreak = false;
+        TextField.text = "";
+
+        string currentText = "";
+
+        string[] words = CurrentText.Split(' ');
+
+        foreach (string word in words)
+        {
+            if (IsBreak || !IsActive)
+            {
+                IsComplete = true;
+                yield break;
+            }
+            // Проверяем перенос
+            if (!WillWordFit(currentText, word))
+            {
+                currentText += "\n";
+                TextField.text = currentText;
+            }
+
+            // Печатаем слово ПОСИМВОЛЬНО
+            foreach (char c in word)
+            {
+                if (IsBreak || !IsActive)
+                {
+                    IsComplete = true;
+                    yield break;
+                }
+                currentText += c;
+                TextField.text = currentText;
+                SoundManagerUi.Instance.PlaySound(TypingSound);
+                yield return new WaitForSeconds(DefaultDurationPerSymbol);
+            }
+            if (IsBreak || !IsActive)
+            {
+                IsComplete = true;
+                yield break;
+            }
+            // Пробел после слова
+            currentText += " ";
+            TextField.text = currentText;
+            yield return new WaitForSeconds(DefaultDurationPerSymbol);
+        }
+        IsComplete = true;
+    }
+    protected bool WillWordFit(string currentText, string nextWord)
     {
         TextField.text = currentText + " " + nextWord;
         TextField.ForceMeshUpdate();

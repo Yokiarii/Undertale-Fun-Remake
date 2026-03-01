@@ -17,6 +17,8 @@ public class Item : ListenInputBase, IScene
 
     public override void Accept()
     {
+        if(CurrentCell == 2)
+            Speech.Instance.Say("Ээй! Откуда у тебя ПИЦЦА!?!?!?");
         Type("Скушано...");
     }
     public override void AcceptNext()

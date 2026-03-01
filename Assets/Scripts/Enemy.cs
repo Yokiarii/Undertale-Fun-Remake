@@ -92,6 +92,8 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
+        Speech.Instance.Say("Ты правда думаешь, что сможешь меня победить?",true,0.03f,-190);
+
         PlayerAttack.Instance.LineStop.SetActive(false);
         PlayerAttack.Instance.RangeImage.transform.DOScaleX(0, 0.5f);
         Fight.Instance.Init();
