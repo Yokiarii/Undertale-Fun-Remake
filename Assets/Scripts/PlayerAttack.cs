@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -12,10 +13,12 @@ public class PlayerAttack : MonoBehaviour
     public GameObject RangeImage;
     public GameObject Line;
     public GameObject LineStop;
+    public GameObject Miss;
 
     public bool PlayerClick = false;
     public bool IsReady = false;
     public bool IsFollowing = true;
+    public bool IsMiss = false;
     public Vector3 OriginalPosLine;
 
     void Awake()
@@ -25,9 +28,11 @@ public class PlayerAttack : MonoBehaviour
     }
     void OnEnable()
     {
+        IsMiss = false;
         Line.transform.position = OriginalPosLine;
         Line.SetActive(true);
         LineStop.SetActive(false);
+        Miss.SetActive(false);
         PlayerClick = false;
         IsReady = false;
         IsFollowing = true;
@@ -41,6 +46,15 @@ public class PlayerAttack : MonoBehaviour
         {
             FollowLine();
         }
+        if(LineStop.GetComponent<RectTransform>().localPosition.x > 738)
+        {
+            IsMiss = true;
+        }
+        if (IsMiss && IsFollowing)
+        {
+            StartCoroutine(DoMiss());
+            return;
+        }
         if(!IsReady)
             return;
         if(PlayerClick)
@@ -49,6 +63,29 @@ public class PlayerAttack : MonoBehaviour
         {
             StopLine();
         }
+    }
+
+    IEnumerator DoMiss()
+    {
+        IsFollowing = false;
+        Miss.SetActive(true);
+        Miss.GetComponent<RectTransform>().DOLocalJump(Miss.GetComponent<RectTransform>().localPosition, 65, 1, 0.56f);
+        PlayerClick = true;
+
+        Line.SetActive(false);
+        LineStop.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
+
+        RangeImage.transform.DOScaleX(0, 0.5f);
+        Fight.Instance.Init();
+
+        yield return new WaitForSeconds(0.5f);
+
+        gameObject.SetActive(false);
+        RangeImage.transform.DOScaleX(2.71f, 1);
+
+        FunnyButtons.Instance.TurnOffButtons();
     }
 
     void StartLine()

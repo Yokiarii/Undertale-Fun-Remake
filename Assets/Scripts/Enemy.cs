@@ -94,16 +94,18 @@ public class Enemy : MonoBehaviour
 
         Speech.Instance.Say("Ты правда думаешь, что сможешь меня победить?",true,0.03f,-190);
 
+        #region ЭТОГО ТУТ БЫТЬ НЕ ДОЛЖНО!!!!!
         PlayerAttack.Instance.LineStop.SetActive(false);
-        PlayerAttack.Instance.RangeImage.transform.DOScaleX(0, 0.5f);
+        PlayerAttack.Instance.RangeImage.transform.DOScaleX(0, 0.5f); //выключает панель с атакой 
         Fight.Instance.Init();
 
         yield return new WaitForSeconds(0.5f);
 
         PlayerAttack.Instance.gameObject.SetActive(false);
-        PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1);
+        PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1); //выключает оставшиеся с панель с атакой 
 
         FunnyButtons.Instance.TurnOffButtons();
+        #endregion
     }
 
     public IEnumerator PerfectDamageAnimation()
