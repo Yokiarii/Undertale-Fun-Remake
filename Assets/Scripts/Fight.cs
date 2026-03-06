@@ -16,6 +16,7 @@ public class Fight : MonoBehaviour
 
     public void Init()
     {
+        SceneManager.Instance.ChangeScene(Scenes.Fight);
         Enemy.Instance.DamageInfo.SetActive(false);
 
         FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
@@ -29,7 +30,7 @@ public class Fight : MonoBehaviour
     public IEnumerator Delay()
     {
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(ProjecTilesSpawner.Instance.SpawnManyProjectTiles(10));
+        StartCoroutine(ProjecTilesSpawner.Instance.SpawnManyProjectTiles(10)); // временно 
         yield return new WaitForSeconds(TimeForFight);
 
         StartCoroutine(QuitFight());

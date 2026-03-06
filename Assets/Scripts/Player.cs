@@ -133,3 +133,27 @@ public class Player : MonoBehaviour
         TextHP.text = HP[0].ToString();
     }
 }
+
+public class Inventory
+{
+    
+}
+
+public class WorldItem :  IHaveCounter
+{
+    public string Name {get; private set;}
+    public int Phase = 0;
+    public string[] Answers {get; private set;}
+
+    public int Count {get;private set;} = 0;
+
+    public WorldItem(string name, object[] texts)
+    {
+        Name = name;
+        Answers = (string[]) texts;
+    }
+
+    public void PhaseUp(){Count++;}
+    public void PhaseDown() {Count--;}
+    public void Return(){Count = 0;}
+}

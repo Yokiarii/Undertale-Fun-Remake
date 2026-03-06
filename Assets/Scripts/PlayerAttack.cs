@@ -61,7 +61,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         if(Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
-            StopLine();
+            StartCoroutine(StopLine());
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerAttack : MonoBehaviour
         Line.transform.DOLocalMoveX(740f,2.5f).SetEase(Ease.InOutQuad);
     }
 
-    void StopLine()
+    IEnumerator StopLine()
     {
         SoundManagerUi.Instance.PlaySound("slash");
         PlayerClick = true;
@@ -103,7 +103,22 @@ public class PlayerAttack : MonoBehaviour
         LineStop.SetActive(true);
         
         var deviation = LineStop.transform.position.x;
-        Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation,Player.Instance.Damage));
+        Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation,Player.Instance.Damage)); // Отнимает хп у врага
+
+        yield return new WaitForSeconds(3);
+
+        LineStop.SetActive(false);
+        RangeImage.transform.DOScaleX(0, 0.5f); //выключает панель с атакой 
+        
+        SceneManager.Instance.FightSceneObserver.EnterFight();
+
+        yield return new WaitForSeconds(0.5f);
+
+        gameObject.SetActive(false);
+        RangeImage.transform.DOScaleX(2.71f, 1); //выключает оставшуюся панель с атакой 
+
+        FunnyButtons.Instance.TurnOffButtons();
+
     }
     void FollowLine()
     {

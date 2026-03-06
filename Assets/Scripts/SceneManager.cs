@@ -15,6 +15,7 @@ public class SceneManager : MonoBehaviour
     public Scenes CurrentScene = Scenes.Menu;
     public Dictionary<string,IScene> AllScenes = new Dictionary<string, IScene>();
     public Enemy CurrentEnemy;
+    public FightScene FightSceneObserver = new();
 
     public GameObject[] ScenesGameObjects = new GameObject[] { };
 
@@ -60,6 +61,13 @@ public interface IScene
     public bool IsActiveRightNow { get; }
     public void InitializeScene();
     public void QuitScene();
+}
+public interface IHaveCounter
+{
+    public int Count {get;}
+    public void PhaseUp();
+    public void PhaseDown();
+    public void Return();
 }
 
 public abstract class ListenInputBase : MonoBehaviour
@@ -322,6 +330,19 @@ public class Cell
         Text = text;
         Heart = heart;
         CellObject = cellObject;
+    }
+}
+
+public class FightScene
+{
+    public void EnterFight()
+    {
+        Fight.Instance.Init();
+
+    }
+    public void QuitFight()
+    {
+        Fight.Instance.QuitFight();
     }
 }
 

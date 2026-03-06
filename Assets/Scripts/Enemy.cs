@@ -93,19 +93,6 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         Speech.Instance.Say("Ты правда думаешь, что сможешь меня победить?",true,0.03f,-190);
-
-        #region ЭТОГО ТУТ БЫТЬ НЕ ДОЛЖНО!!!!!
-        PlayerAttack.Instance.LineStop.SetActive(false);
-        PlayerAttack.Instance.RangeImage.transform.DOScaleX(0, 0.5f); //выключает панель с атакой 
-        Fight.Instance.Init();
-
-        yield return new WaitForSeconds(0.5f);
-
-        PlayerAttack.Instance.gameObject.SetActive(false);
-        PlayerAttack.Instance.RangeImage.transform.DOScaleX(2.71f, 1); //выключает оставшиеся с панель с атакой 
-
-        FunnyButtons.Instance.TurnOffButtons();
-        #endregion
     }
 
     public IEnumerator PerfectDamageAnimation()
@@ -150,5 +137,18 @@ public class DamageCalculator
         float distance = Math.Abs(value);
         // Чем больше falloffFactor, тем быстрее падает урон
         return (int)Math.Round(baseDamage / (1f + falloffFactor * distance));
+    }
+}
+
+public class Attack //Обычная атака.
+{
+    public string Name {get; private set;}
+    public GameObject Prefab;
+    public float TimeForAttack = -1;
+    public Attack(string name, GameObject prefab, float timeForAttack = -1)
+    {
+        Name = name;
+        Prefab = prefab;
+        TimeForAttack = timeForAttack;
     }
 }
