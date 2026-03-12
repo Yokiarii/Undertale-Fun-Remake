@@ -1,0 +1,28 @@
+{
+    "Name": "Sharoku",
+    "Relation": 0,
+    "StateRelation": {
+        "Normal": {
+            "Moveset": {
+                "ListOfAttack": {
+                    "attack number onee": {
+                        "Damage": 25,
+                        "TimeForAttack": 4.0,
+                        "Name": "attack number onee"
+                    }
+                }
+            },
+            "RetortManager": {
+                "Retortion": {
+                    "i0": {
+                        "Name": "i0", 
+                        "TargetAction": "act",
+                        "TargetPhase": 0,
+                        "Answer": "Вы что то сделали",
+                        "Speech": "Я что-то говорю!"
+                    }
+                }
+            }
+        }
+    }
+}

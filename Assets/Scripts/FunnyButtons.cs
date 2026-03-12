@@ -136,7 +136,7 @@ public class FunnyButtons : MonoBehaviour
         }
         IsReady = false;
     }
-    void TurnOffButtonsWithOutHeart()
+    public void TurnOffButtonsWithOutHeart()
     {
         for (int g = 0; g < Buttons.Length; g++)
         {

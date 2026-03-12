@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 public class Answer : TextGenerator
@@ -29,6 +30,35 @@ public class Answer : TextGenerator
             TempCurrentText = "";
         }
         IsActive = value;
+    }
+
+    public void EnterAnswer() // ааа эээ 
+    {
+        
+        //переключаем на главную сцену.
+        SceneManager.Instance.ChangeScene(Scenes.Menu);
+
+        //получаем массив классов наследников с интерфейсом IScene
+        var temp = SceneManager.Instance.ScenesInterface;
+
+        //закрываем каждую сцену
+        foreach (var item in temp)
+        {
+            item.QuitScene();
+        }
+
+        //отключаем нижнии кнопки и отключаем сердечко у кнопок (на всякий случай)
+        FunnyButtons.Instance.TurnOffButtons();
+
+        //отключаем возможность назад нажать.
+        FunnyButtons.Instance.CanCancel = false;
+
+        //включаем ансвер
+        SwitchActive(true);
+    }
+    public void ExitAnswer(bool fightAfter)
+    {
+        
     }
 
 }

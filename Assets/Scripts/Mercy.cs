@@ -4,9 +4,16 @@ using UnityEngine.InputSystem;
 
 public class Mercy : ListenInputBase, IScene
 {
+    private static Mercy _instance;
+    public static Mercy Instance => _instance;
     public Scenes Name {get;private set;} = Scenes.Mercy;
 
     public bool IsActiveRightNow {get;private set;} = false;
+
+    void Awake()
+    {
+        _instance = this;
+    }
 
     void FixedUpdate()
     {
@@ -15,7 +22,8 @@ public class Mercy : ListenInputBase, IScene
 
     public override void Accept()
     {
-        throw new System.NotImplementedException();
+        Answer.Instance.EnterAnswer();
+        Answer.Instance.Type("Вы пытаетесь пощадить.");
     }
 
     public void InitializeScene()

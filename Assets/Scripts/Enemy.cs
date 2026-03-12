@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class Enemy : MonoBehaviour
 {
     private static Enemy _instance;
     public static Enemy Instance => _instance;
+
+    public static EnemyBase CurrentEnemy;
 
     void Awake()
     {
@@ -128,8 +132,8 @@ public class DamageCalculator
     public static float CalculateDamage(float value, float baseDamage, float falloffFactor)
     {
         float distance = Math.Abs(value);
+        
         // Чем больше falloffFactor, тем быстрее падает урон
-
         return baseDamage / (1f + falloffFactor * distance);
     }
     public static int CalculateDamageInt(float value, float baseDamage = 20, float falloffFactor = 0.5f)
@@ -139,16 +143,99 @@ public class DamageCalculator
         return (int)Math.Round(baseDamage / (1f + falloffFactor * distance));
     }
 }
-
-public class Attack //Обычная атака.
+#region Enemy Abstraction
+public class EnemyBase
 {
-    public string Name {get; private set;}
-    public GameObject Prefab;
-    public float TimeForAttack = -1;
-    public Attack(string name, GameObject prefab, float timeForAttack = -1)
+    public string Name {get; private set;} = "test";
+    public int Relation = 0;
+    public Dictionary<string,StateRelationBase> StateRelation = new();
+
+    public EnemyBase(string name)
     {
         Name = name;
-        Prefab = prefab;
+    }
+
+}
+#region StateRelationBase
+public class StateRelationBase
+{
+    public MovesetBase Moveset {get; private set;} = new();
+    public RetortManagerBase RetortManager {get; private set;} = new();
+}
+#endregion
+#region Moveset
+public class MovesetBase
+{
+    public Dictionary<string, Attack> ListOfAttack = new();
+    public Attack Get(string name) => ListOfAttack[name];
+    public void Add(Attack attack) => ListOfAttack.Add(attack.Name, attack); 
+}
+#endregion
+#region Attack
+public class Attack //Обычная атака. Атака босса 
+{
+    public string Name;
+    public int Damage;
+
+    //ссылка на инициализированный объект атаки или линк
+    [SerializeField] private GameObject Link;
+    public float TimeForAttack = 1;
+    public Attack(string name, float timeForAttack = 1)
+    {
+        Name = name;
         TimeForAttack = timeForAttack;
     }
+    public void Start()
+    {
+        //получаем трансформ родителя
+        var place = FunnyBox.Instance.gameObject.transform;
+
+        //создаем объект на сцене
+        var obj = Resources.Load<GameObject>("Data/Enemies/" + Enemy.CurrentEnemy.Name + "/Moveset/" + Name);
+        Link = UnityEngine.Object.Instantiate(obj,place);
+
+        //записываем объект в лист текущих атак
+
+        //стартуем таймер !! или не стартуем, пусть что то выше этим занимается
+    }
+
+    public void Stop()
+    {
+        //проверяем готов ли объект к удалению.
+        if(Link == null) {throw new Exception($"The object has already been deleted. ({Name})");}
+        
+        //уничтожаем линк
+        UnityEngine.Object.Destroy(Link);
+    }
 }
+#endregion
+#region RetortManagerBase
+public class RetortManagerBase //хранилище ответов
+{
+    public Dictionary<string, EnemyRetort> Retortion = new();
+    public void Add(EnemyRetort enemyRetort) => Retortion.Add(enemyRetort.Name, enemyRetort);
+    public EnemyRetort Get(string name) => Retortion[name];
+    public void Clear() => Retortion.Clear();
+}
+#endregion
+#region Enemy RetortBase
+public class EnemyRetort //ответ это текст в веселой коробке после действия игрока и 
+// фраза врага после того, как текст в веселой коробке появится.
+{
+    public string Name {get; private set;} // имя ответа 
+    public string TargetAction {get; private set;} // Действие игрока. Item, Mercy, Act или название определенного предмета
+    public int TargetPhase {get; private set;} // фаза на которой ответ сработает. Фаза именно действия игрока.
+    public string Answer {get; private set;} // текст в веселой коробке 
+    public string Speech {get; private set;} // фраза персонажа
+    public EnemyRetort(string name,string targetAction, int targetPhase, string answer, string speech)
+    {
+        Name = name;
+        TargetAction = targetAction;
+        TargetPhase = targetPhase;
+        Answer = answer;
+        Speech = speech;
+    } 
+}
+#endregion
+#endregion
+

@@ -18,6 +18,7 @@ public class SceneManager : MonoBehaviour
     public FightScene FightSceneObserver = new();
 
     public GameObject[] ScenesGameObjects = new GameObject[] { };
+    public IScene[] ScenesInterface;
 
     void Awake()
     {
@@ -26,6 +27,14 @@ public class SceneManager : MonoBehaviour
 
     void Start()
     {
+        ScenesInterface = new IScene[]
+        {
+            ScenesGameObjects[0].GetComponent<IScene>(),
+            ScenesGameObjects[1].GetComponent<IScene>(),
+            ScenesGameObjects[2].GetComponent<IScene>(),
+            ScenesGameObjects[3].GetComponent<IScene>(),
+        };
+
         AllScenes.Add("Attack",ScenesGameObjects[0].GetComponent<AttackScene>());
         AllScenes.Add("Act",ScenesGameObjects[1].GetComponent<Act>());
         AllScenes.Add("Items",ScenesGameObjects[2].GetComponent<Item>());

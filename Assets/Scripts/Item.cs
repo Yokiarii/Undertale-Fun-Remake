@@ -5,9 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Item : ListenInputBase, IScene
 {
+    private static Item _instance;
+    public static Item Instance => _instance;
     public Scenes Name {get;private set;} = Scenes.Items;
     public bool IsActiveRightNow {get;private set;} = false;
     public int[] Numbers = new int[4]{2,4,1,8};
+
+    void Awake()
+    {
+        _instance = this;
+    }
 
     void FixedUpdate()
     {

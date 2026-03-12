@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class Act : ListenInputBase, IScene
 {
+    private static Act _instance;
+    public static Act Instance => _instance;
     public Scenes Name {get;private set;} = Scenes.Act;
 
     public bool IsActiveRightNow {get;private set;} = false;
+    void Awake()
+    {
+        _instance = this;
+    }
 
     void FixedUpdate()
     {

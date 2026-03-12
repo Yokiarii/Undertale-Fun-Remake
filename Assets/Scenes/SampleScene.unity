@@ -12082,8 +12082,9 @@ GameObject:
   - component: {fileID: 2080344675}
   - component: {fileID: 2080344677}
   - component: {fileID: 2080344679}
-  - component: {fileID: 2080344678}
+  - component: {fileID: 2080344681}
   - component: {fileID: 2080344680}
+  - component: {fileID: 2080344678}
   m_Layer: 0
   m_Name: Global Behavior
   m_TagString: Untagged
@@ -12283,6 +12284,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuitApplication
   text: {fileID: 821504686}
   IsUpdating: 0
+--- !u!114 &2080344681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080344673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb364397d0360714aaef489de73374d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Data
 --- !u!1 &2082177901
 GameObject:
   m_ObjectHideFlags: 0

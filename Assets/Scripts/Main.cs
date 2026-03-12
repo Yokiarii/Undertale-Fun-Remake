@@ -1,9 +1,13 @@
 
 using System.Collections;
+using System.IO;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System;
 
 public class Main : MonoBehaviour
 {
@@ -26,8 +30,15 @@ public class Main : MonoBehaviour
         _instance = this;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+
+
     }
-    
+
+    void Start()
+    {
+        Debug.Log(Data.Instance.EnemyData.Get("Sharoku").StateRelation["Normal"].Moveset.Get("attack number onee").Damage);
+    }
+
     public IEnumerator ShakeCA()
     {
         if (postProcessVolume.profile.TryGet(out CA))
@@ -36,7 +47,7 @@ public class Main : MonoBehaviour
                        x => CA.intensity.value = x,
                        0.30f,
                        0.16f);
-                   
+
             yield return new WaitForSeconds(0.16f);
             DOTween.To(() => CA.intensity.value,
                        x => CA.intensity.value = x,
