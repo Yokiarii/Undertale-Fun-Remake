@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +19,7 @@ public class Enemy : MonoBehaviour
         _instance = this;
     }
 
-    public string Name { get; private set; } = "Protivnic";
-    public int[] HP { get; private set; } = new int[2] { 300, 300 };
     int LastHp = 300;
-    public int Damage { get; private set; } = 1;
 
     public GameObject DamageAnimation;
     public GameObject EnemyImage;
@@ -34,9 +32,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangeHp(int value)
     {
-        var temp = HP[0];
-
-        HP[0] += value;
+        var temp = CurrentEnemy.HP[0];
 
         var plus = Math.Abs(value);
         if(plus == Player.Instance.Damage || plus+1 == Player.Instance.Damage)
@@ -45,15 +41,21 @@ public class Enemy : MonoBehaviour
             value = -(Player.Instance.Damage*2);
         }
 
-        if (HP[0] < 0)
-            HP[0] = 0;
-        if (HP[0] > HP[1])
-            HP[0] = HP[1];
+        CurrentEnemy.HP[0] += value;
 
-        if (temp > HP[0]) //Deal damage
+        if (CurrentEnemy.HP[0] < 0)
+            CurrentEnemy.HP[0] = 0;
+        if (CurrentEnemy.HP[0] > CurrentEnemy.HP[1])
+            CurrentEnemy.HP[0] = CurrentEnemy.HP[1];
+
+        if (temp > CurrentEnemy.HP[0]) //Deal damage
         {
             StartCoroutine(DealDamageAnimation(value));
         }
+
+        #if UNITY_EDITOR
+        Debug.Log($"Deal damage {value} to enemy. His HP - {temp} -> {CurrentEnemy.HP[0]}");
+        #endif
     }
 
     public IEnumerator DealDamageAnimation(int damage)
@@ -85,18 +87,16 @@ public class Enemy : MonoBehaviour
             SecondNumber.sprite = Numbers[int.Parse(temp2)];
         }
 
-        EnemyHp.maxValue = HP[1];
+        EnemyHp.maxValue = CurrentEnemy.HP[1];
         EnemyHp.value = LastHp;
-        EnemyHp.DOValue(HP[0], 1.2f); // Поменять значение слайдера хп врага
-        LastHp = HP[0];
+        EnemyHp.DOValue(CurrentEnemy.HP[0], 1.2f); // Поменять значение слайдера хп врага
+        LastHp = CurrentEnemy.HP[0];
 
         DamageInfo.SetActive(true);
         var dmg = DamageInfo.transform.localPosition; // анимация цифр
         DamageInfo.transform.DOLocalJump(dmg, 65, 1, 0.56f);
 
         yield return new WaitForSeconds(2);
-
-        Speech.Instance.Say("Ты правда думаешь, что сможешь меня победить?",true,0.03f,-190);
     }
 
     public IEnumerator PerfectDamageAnimation()
@@ -124,6 +124,15 @@ public class Enemy : MonoBehaviour
         SecondNumber.DOColor(Color.red,0.1f);
     }
 
+    public string GetEnemyAnswer(string action)
+    {
+        var stateRelation = CurrentEnemy.StateRelation[CurrentEnemy.CurrentRelation];
+        var retortManager = stateRelation.RetortManager;
+        var allAnswers = retortManager.GetAllByAction(action);
+        var answer = allAnswers[CurrentEnemy.ACTS[action]].Answer;
+        return answer;
+    }
+
 }
 
 
@@ -147,12 +156,23 @@ public class DamageCalculator
 public class EnemyBase
 {
     public string Name {get; private set;} = "test";
+    public int[] HP = new int[]{0,0};
+    public Dictionary<string, int> ACTS = new(); 
     public int Relation = 0;
+    public string CurrentRelation;
     public Dictionary<string,StateRelationBase> StateRelation = new();
+    public string PrefabName;
 
     public EnemyBase(string name)
     {
         Name = name;
+    }
+    public void ResetACTS()
+    {
+        foreach (var act in ACTS.Keys.ToList())
+        {
+            ACTS[act] = 0;
+        }
     }
 
 }
@@ -215,6 +235,18 @@ public class RetortManagerBase //хранилище ответов
     public Dictionary<string, EnemyRetort> Retortion = new();
     public void Add(EnemyRetort enemyRetort) => Retortion.Add(enemyRetort.Name, enemyRetort);
     public EnemyRetort Get(string name) => Retortion[name];
+    public List<EnemyRetort> GetAllByAction(string actionName)
+    {
+        var temp = new List<EnemyRetort>();
+        foreach (var item in Retortion)
+        {
+            if(item.Value.TargetAction == actionName)
+            {
+                temp.Add(item.Value);
+            }
+        }
+        return temp;
+    }
     public void Clear() => Retortion.Clear();
 }
 #endregion

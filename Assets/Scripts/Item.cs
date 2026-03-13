@@ -1,8 +1,3 @@
-using System.Collections;
-using TMPro;
-using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class Item : ListenInputBase, IScene
 {
     private static Item _instance;
@@ -24,18 +19,9 @@ public class Item : ListenInputBase, IScene
 
     public override void Accept()
     {
-        if(CurrentCell == 2)
-            Speech.Instance.Say("Ээй! Откуда у тебя ПИЦЦА!?!?!?");
-        Type("Скушано...");
+        
     }
-    public override void AcceptNext()
-    {
-        FunnyButtons.Instance.Menu();
-        FunnyButtons.Instance.CanCancel = true;
-        FunnyButtons.Instance.UpdateButtonAndHeart();
-        Numbers[CurrentCell] -= 1;
-        SoundManagerUi.Instance.PlaySound("healing");
-    }
+    
     public void InitializeScene()
     {
         gameObject.SetActive(true);

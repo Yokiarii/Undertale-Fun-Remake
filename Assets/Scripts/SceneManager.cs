@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -229,8 +227,7 @@ public abstract class ListenInputBase : MonoBehaviour
 
         isSilent = false;
         next = false;
-        
-
+    
         // Заполняем линии
         for (int i = 0; i < CellObjects.Length; i++)
         {

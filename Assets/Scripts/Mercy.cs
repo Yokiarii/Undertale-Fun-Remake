@@ -22,7 +22,7 @@ public class Mercy : ListenInputBase, IScene
 
     public override void Accept()
     {
-        Answer.Instance.EnterAnswer();
+        Answer.Instance.EnterAnswer("пощадить");
         Answer.Instance.Type("Вы пытаетесь пощадить.");
     }
 

@@ -1,11 +1,21 @@
 {
     "Name": "Sharoku",
+    "PrefabName": "SharokuPrefab",
+    "CurrentRelation": "Normal",
+    "HP": [70,100],
     "Relation": 0,
+    "ACTS": {
+        "attack": 0,
+        "украсть шляпу": 0,
+        "пощадить": 0,
+        "сбежать": 0,
+        "пицца": 0
+    },
     "StateRelation": {
         "Normal": {
             "Moveset": {
                 "ListOfAttack": {
-                    "attack number onee": {
+                    "Attack 1": {
                         "Damage": 25,
                         "TimeForAttack": 4.0,
                         "Name": "attack number onee"
@@ -18,11 +28,18 @@
                         "Name": "i0", 
                         "TargetAction": "act",
                         "TargetPhase": 0,
-                        "Answer": "Вы что то сделали",
+                        "Answer": "Ты чувствуешь себя не очень.",
+                        "Speech": "Я что-то говорю!"
+                    },
+                    "i1": {
+                        "Name": "i1", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 0,
+                        "Answer": "Ты чувствуешь себя не очень.<Теперь<ты<чувствуешь<себя<очень.",
                         "Speech": "Я что-то говорю!"
                     }
                 }
             }
-        }
+        } 
     }
 }

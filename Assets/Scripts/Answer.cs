@@ -1,13 +1,16 @@
 using System.Collections;
+using NUnit.Framework.Constraints;
 using TMPro;
 using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Answer : TextGenerator
 {
     private static Answer _instance;
     public static Answer Instance => _instance;
     [SerializeField] private TextMeshProUGUI TextFieldStar;
+    public bool StaticAnswer = false;
 
     void Awake()
     {
@@ -32,9 +35,11 @@ public class Answer : TextGenerator
         IsActive = value;
     }
 
-    public void EnterAnswer() // ааа эээ 
+    public void EnterAnswer(string action, string sound = "click") // включает ансвер после действия игрока
     {
-        
+        //Сбрасываем фазу
+        AnswerPhase = 0;
+
         //переключаем на главную сцену.
         SceneManager.Instance.ChangeScene(Scenes.Menu);
 
@@ -55,10 +60,37 @@ public class Answer : TextGenerator
 
         //включаем ансвер
         SwitchActive(true);
+
+        //запускаем цикл ответов
+        DoAnswer(action, sound);
     }
-    public void ExitAnswer(bool fightAfter)
+    void FixedUpdate()
     {
-        
+        if(!StaticAnswer)
+            return;
+        if(Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.zKey.wasPressedThisFrame)
+        {
+            AnswerPhase++;
+
+            if(AnswerPhase >= BuildedText.Length)
+            {
+                ExitAnswer();
+                return;
+            }
+            Type(BuildedText[AnswerPhase],0.06f,TypingSound);
+        }
+    }
+    public void DoAnswer(string action, string sound) //хендлер ансвера после действия игрока
+    {
+        StaticAnswer = true;
+        BuildedText = GetBuildedText(Enemy.Instance.GetEnemyAnswer(action));
+        Type(BuildedText[AnswerPhase],0.06f,sound);
+    }
+    public void ExitAnswer()
+    {
+        StaticAnswer = false;
+        Fight.Instance.Init();
+        SwitchActive(false);
     }
 
 }
@@ -66,6 +98,7 @@ public class Answer : TextGenerator
 public class TextGenerator : MonoBehaviour
 {
     [SerializeField] public TextMeshProUGUI TextField;
+    protected string[] BuildedText;
     protected string CurrentText = "";
     protected string TempCurrentText = "";
     protected float DefaultDurationPerSymbol = 0.06f;
@@ -73,6 +106,7 @@ public class TextGenerator : MonoBehaviour
     protected bool IsActive = false;
     protected bool IsBreak = true;
     protected bool IsComplete = false;
+    protected int AnswerPhase = 0;
     public void Type(string text, float duration = 0.06f, string sound = "typing")
     {
         IsBreak = true;
@@ -147,5 +181,14 @@ public class TextGenerator : MonoBehaviour
         float rectWidth = TextField.rectTransform.rect.width;
 
         return preferredWidth <= rectWidth;
+    }
+    protected string[] GetBuildedText(string rawText)
+    {
+        var rawArray = rawText.Split('<');
+        if (rawArray.Length == 1)
+        {
+            return new string[] {rawText};
+        }
+        return rawArray;
     }
 }

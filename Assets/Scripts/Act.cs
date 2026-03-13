@@ -19,7 +19,7 @@ public class Act : ListenInputBase, IScene
 
     public override void Accept()
     {
-        throw new System.NotImplementedException();
+        Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
     }
 
     public void InitializeScene()

@@ -1,13 +1,9 @@
 
 using System.Collections;
-using System.IO;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System;
 
 public class Main : MonoBehaviour
 {
@@ -32,11 +28,6 @@ public class Main : MonoBehaviour
         Application.targetFrameRate = 60;
 
 
-    }
-
-    void Start()
-    {
-        Debug.Log(Data.Instance.EnemyData.Get("Sharoku").StateRelation["Normal"].Moveset.Get("attack number onee").Damage);
     }
 
     public IEnumerator ShakeCA()

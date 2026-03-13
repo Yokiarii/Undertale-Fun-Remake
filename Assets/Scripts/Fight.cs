@@ -46,6 +46,7 @@ public class Fight : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Menu);
         FunnyButtons.Instance.IsActive = true;
         FunnyButtons.Instance.UpdateButtonAndHeart();
+        FunnyButtons.Instance.CanCancel = true;
     }
 
 
