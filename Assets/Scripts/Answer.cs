@@ -11,6 +11,7 @@ public class Answer : TextGenerator
     public static Answer Instance => _instance;
     [SerializeField] private TextMeshProUGUI TextFieldStar;
     public bool StaticAnswer = false;
+    public string TempAction;
 
     void Awake()
     {
@@ -39,6 +40,8 @@ public class Answer : TextGenerator
     {
         //Сбрасываем фазу
         AnswerPhase = 0;
+
+        TempAction = action;
 
         //переключаем на главную сцену.
         SceneManager.Instance.ChangeScene(Scenes.Menu);
@@ -88,6 +91,8 @@ public class Answer : TextGenerator
     }
     public void ExitAnswer()
     {
+        Speech.Instance.Say(Enemy.Instance.GetEnemySpeech(TempAction));
+        Enemy.CurrentEnemy.RisePhaseACTS(TempAction);
         StaticAnswer = false;
         Fight.Instance.Init();
         SwitchActive(false);
@@ -125,7 +130,7 @@ public class TextGenerator : MonoBehaviour
     }
     protected IEnumerator TypingAnimation()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.05f);
         IsBreak = false;
         TextField.text = "";
 

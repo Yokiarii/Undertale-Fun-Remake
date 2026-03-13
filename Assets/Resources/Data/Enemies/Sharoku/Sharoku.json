@@ -2,7 +2,7 @@
     "Name": "Sharoku",
     "PrefabName": "SharokuPrefab",
     "CurrentRelation": "Normal",
-    "HP": [70,100],
+    "HP": [100,100],
     "Relation": 0,
     "ACTS": {
         "attack": 0,
@@ -24,19 +24,26 @@
             },
             "RetortManager": {
                 "Retortion": {
-                    "i0": {
-                        "Name": "i0", 
-                        "TargetAction": "act",
+                    "pizza": {
+                        "Name": "pizza", 
+                        "TargetAction": "пицца",
                         "TargetPhase": 0,
-                        "Answer": "Ты чувствуешь себя не очень.",
-                        "Speech": "Я что-то говорю!"
+                        "Answer": "Вы кушаете пиццу.<Вы чувствуете как вас наполняет решимость.",
+                        "Speech": "Как ты посмел есть пиццу И БЕЗ МЕНЯ!?!?!?"
+                    },
+                    "pizza 2": {
+                        "Name": "pizza 2", 
+                        "TargetAction": "пицца",
+                        "TargetPhase": 1,
+                        "Answer": "Вы кушаете пиццу.<Снова.<Вы чувствуете как вас наполняет решимость.",
+                        "Speech": "Ты придуриваешься!?!?!?АААА!!!!!"
                     },
                     "i1": {
                         "Name": "i1", 
                         "TargetAction": "украсть шляпу",
                         "TargetPhase": 0,
-                        "Answer": "Ты чувствуешь себя не очень.<Теперь<ты<чувствуешь<себя<очень.",
-                        "Speech": "Я что-то говорю!"
+                        "Answer": "Вы пытаетесь украсть шляпу!<У вас не выходит.",
+                        "Speech": "Эй!ТЫ ЧТО ДЕЛАЕШЬ!?!?!?"
                     }
                 }
             }

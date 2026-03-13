@@ -132,6 +132,14 @@ public class Enemy : MonoBehaviour
         var answer = allAnswers[CurrentEnemy.ACTS[action]].Answer;
         return answer;
     }
+    public string GetEnemySpeech(string action)
+    {
+        var stateRelation = CurrentEnemy.StateRelation[CurrentEnemy.CurrentRelation];
+        var retortManager = stateRelation.RetortManager;
+        var allAnswers = retortManager.GetAllByAction(action);
+        var answer = allAnswers[CurrentEnemy.ACTS[action]].Speech;
+        return answer;
+    }
 
 }
 
@@ -174,7 +182,12 @@ public class EnemyBase
             ACTS[act] = 0;
         }
     }
-
+    public void RisePhaseACTS(string action)
+    {
+        if(StateRelation[CurrentRelation].RetortManager.GetAllByAction(action).Count == ACTS[action] +1)
+            return;
+        ACTS[action]++;
+    }
 }
 #region StateRelationBase
 public class StateRelationBase

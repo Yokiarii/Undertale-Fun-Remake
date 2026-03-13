@@ -85,7 +85,6 @@ public abstract class ListenInputBase : MonoBehaviour
     protected bool isReady;
     protected bool isAccepting;
     protected bool isSilent;
-    protected bool next;
     [SerializeField] protected int currentCell;
     [SerializeField] protected string[] textOfCells;
     protected List<CellLine> cellLines = new List<CellLine>();
@@ -102,7 +101,6 @@ public abstract class ListenInputBase : MonoBehaviour
     public virtual bool IsReady => isReady;
     public virtual bool IsSilent => isSilent;
     public virtual int CurrentCell => currentCell;
-    public virtual bool Next => next;
     public virtual string[] TextOfCells => textOfCells;
     public virtual List<CellLine> CellLines => cellLines;
     public virtual void SetListening(bool value) => isListening = value;
@@ -164,7 +162,6 @@ public abstract class ListenInputBase : MonoBehaviour
     }
 
     public abstract void Accept();
-    public virtual void AcceptNext(){}
     public virtual void CellAcceptingInput()
     {
         if (!Keyboard.current.zKey.isPressed
@@ -172,16 +169,15 @@ public abstract class ListenInputBase : MonoBehaviour
         {
             isAccepting = false;
         }
-        if (!IsListening || IsAccepting || next) return;
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        if (!IsListening || IsAccepting ) return;
+        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.zKey.wasPressedThisFrame)
         {
             Accept();
-            isAccepting = true;
-            next = true;
-            isReady = false;
-            if(!gameObject.activeSelf)
-                return;
-            StartCoroutine(Delay());
+            //isAccepting = true;
+            //isReady = false;
+            //if(!gameObject.activeSelf)
+            //    return;
+            //StartCoroutine(Delay());
 
             if(!isSilent)
                 SoundManagerUi.Instance.PlaySound("accept");
@@ -226,7 +222,6 @@ public abstract class ListenInputBase : MonoBehaviour
         cellLines.Add(new CellLine());
 
         isSilent = false;
-        next = false;
     
         // Заполняем линии
         for (int i = 0; i < CellObjects.Length; i++)
@@ -261,18 +256,9 @@ public abstract class ListenInputBase : MonoBehaviour
     }
     public void ListenInput()
     {
-        if (!IsReady || next) return;
+        if (!IsReady) return;
         CellAcceptingInput();
         CellChangingInput();
-    }
-    public void ListenNext()
-    {
-        if(!next || !isReady)
-            return;
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
-        {
-            AcceptNext();
-        }
     }
     public void UpdateHeartStatement()
     {

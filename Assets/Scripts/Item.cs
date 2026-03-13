@@ -1,10 +1,12 @@
+using Mono.Cecil.Cil;
+
 public class Item : ListenInputBase, IScene
 {
     private static Item _instance;
     public static Item Instance => _instance;
     public Scenes Name {get;private set;} = Scenes.Items;
     public bool IsActiveRightNow {get;private set;} = false;
-    public int[] Numbers = new int[4]{2,4,1,8};
+    public int[] Numbers = new int[4]{2,4,3,8};
 
     void Awake()
     {
@@ -14,12 +16,15 @@ public class Item : ListenInputBase, IScene
     void FixedUpdate()
     {
         ListenInput();
-        ListenNext();
     }
 
     public override void Accept()
     {
-        
+        if(Numbers[CurrentCell] != 0)
+        {
+            Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
+            Numbers[CurrentCell]--;
+        }
     }
     
     public void InitializeScene()

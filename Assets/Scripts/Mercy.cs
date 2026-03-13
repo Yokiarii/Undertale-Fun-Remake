@@ -22,8 +22,7 @@ public class Mercy : ListenInputBase, IScene
 
     public override void Accept()
     {
-        Answer.Instance.EnterAnswer("пощадить");
-        Answer.Instance.Type("Вы пытаетесь пощадить.");
+        Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
     }
 
     public void InitializeScene()
