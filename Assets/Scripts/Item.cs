@@ -1,4 +1,3 @@
-using Mono.Cecil.Cil;
 
 public class Item : ListenInputBase, IScene
 {
@@ -23,6 +22,7 @@ public class Item : ListenInputBase, IScene
         if(Numbers[CurrentCell] != 0)
         {
             Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
+            Player.Instance.ChangeHP(+2);
             Numbers[CurrentCell]--;
         }
     }

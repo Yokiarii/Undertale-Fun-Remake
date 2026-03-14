@@ -163,6 +163,8 @@ public class TextGenerator : MonoBehaviour
                 currentText += c;
                 TextField.text = currentText;
                 SoundManagerUi.Instance.PlaySound(TypingSound);
+                if(c == '.')
+                    yield return new WaitForSeconds(DefaultDurationPerSymbol*3);
                 yield return new WaitForSeconds(DefaultDurationPerSymbol);
             }
             if (IsBreak || !IsActive)

@@ -36,16 +36,13 @@ public class FunnyButtons : MonoBehaviour
 
     void ButtonUpdate()
     {
-        if(Keyboard.current.enterKey.isPressed && Keyboard.current.xKey.isPressed)
-            return;
-        if(Keyboard.current.zKey.isPressed && Keyboard.current.xKey.isPressed)
-            return;
-        if(!Keyboard.current.leftArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed)
+        
+        if(!Keyboard.current.leftArrowKey.wasPressedThisFrame && !Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             IsChanging = false;
         }
 
-        if (Keyboard.current.xKey.isPressed && !IsActive 
+        if (Keyboard.current.xKey.wasPressedThisFrame && !IsActive 
             && SceneManager.Instance.CurrentScene != Scenes.Fight
             && CanCancel)
         {
@@ -58,11 +55,11 @@ public class FunnyButtons : MonoBehaviour
         if(!IsActive)
             return;
 
-        if (Keyboard.current.leftArrowKey.isPressed)
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
             ChangeCurrentButton(true);
         }
-        if (Keyboard.current.rightArrowKey.isPressed)
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             ChangeCurrentButton(false);
         }
@@ -71,7 +68,7 @@ public class FunnyButtons : MonoBehaviour
             StartCoroutine(Delay());
             return;
         }
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.zKey.isPressed)
         {
             switch (CurrentActiveButton)
             {

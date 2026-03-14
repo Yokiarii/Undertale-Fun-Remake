@@ -129,7 +129,17 @@ public class Enemy : MonoBehaviour
         var stateRelation = CurrentEnemy.StateRelation[CurrentEnemy.CurrentRelation];
         var retortManager = stateRelation.RetortManager;
         var allAnswers = retortManager.GetAllByAction(action);
-        var answer = allAnswers[CurrentEnemy.ACTS[action]].Answer;
+        string answer;
+        try
+        {
+            answer = allAnswers[CurrentEnemy.ACTS[action]].Answer;
+        }
+        catch (System.Exception)
+        {
+            answer = $"Вы совершаете действие: {action}";
+            return answer;
+            throw;
+        }
         return answer;
     }
     public string GetEnemySpeech(string action)
@@ -137,7 +147,17 @@ public class Enemy : MonoBehaviour
         var stateRelation = CurrentEnemy.StateRelation[CurrentEnemy.CurrentRelation];
         var retortManager = stateRelation.RetortManager;
         var allAnswers = retortManager.GetAllByAction(action);
-        var answer = allAnswers[CurrentEnemy.ACTS[action]].Speech;
+        string answer;
+        try
+        {
+            answer = allAnswers[CurrentEnemy.ACTS[action]].Speech;
+        }
+        catch (System.Exception)
+        {
+            answer = "...";
+            return answer;
+            throw;
+        }
         return answer;
     }
 
@@ -184,9 +204,13 @@ public class EnemyBase
     }
     public void RisePhaseACTS(string action)
     {
-        if(StateRelation[CurrentRelation].RetortManager.GetAllByAction(action).Count == ACTS[action] +1)
+        try
+        {
+            if(StateRelation[CurrentRelation].RetortManager.GetAllByAction(action).Count == ACTS[action] +1)
             return;
-        ACTS[action]++;
+            ACTS[action]++;
+        }
+        catch (System.Exception){ return; throw; }
     }
 }
 #region StateRelationBase
