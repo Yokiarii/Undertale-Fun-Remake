@@ -10,8 +10,8 @@ public class Main : MonoBehaviour
     private static Main _instance;
     public static Main Instance => _instance;
 
-    public static string Version = "Build v0.7.0-demo PC";
-    public static string Tag_Version = "demo_7";
+    public static string Version = "Build v0.8.0-demo PC";
+    public static string Tag_Version = "demo_8";
 
     public GameObject AllSpace;
     public GameObject MainCanvas;

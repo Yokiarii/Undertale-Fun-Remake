@@ -216,6 +216,7 @@ public class EnemyBase
 #region StateRelationBase
 public class StateRelationBase
 {
+    public string BaseAnswer;
     public MovesetBase Moveset {get; private set;} = new();
     public RetortManagerBase RetortManager {get; private set;} = new();
 }

@@ -179,7 +179,7 @@ public class FunnyButtons : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Menu);
         IsActive = true;
         Answer.Instance.SwitchActive(true);
-        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
+        Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
     IEnumerator Delay()
     {

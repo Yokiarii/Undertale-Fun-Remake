@@ -112,6 +112,7 @@ public class TextGenerator : MonoBehaviour
     protected bool IsBreak = true;
     protected bool IsComplete = false;
     protected int AnswerPhase = 0;
+    protected bool IsDynamic = false;
     public void Type(string text, float duration = 0.06f, string sound = "typing")
     {
         IsBreak = true;
@@ -120,7 +121,8 @@ public class TextGenerator : MonoBehaviour
         TypingSound = sound;
         CurrentText = TempCurrentText;
         IsComplete = false;
-        StopTyping();
+        if(!IsDynamic)
+            StopTyping();
         StartCoroutine(TypingAnimation());
     }
     protected void StopTyping()
@@ -163,8 +165,8 @@ public class TextGenerator : MonoBehaviour
                 currentText += c;
                 TextField.text = currentText;
                 SoundManagerUi.Instance.PlaySound(TypingSound);
-                if(c == '.')
-                    yield return new WaitForSeconds(DefaultDurationPerSymbol*3);
+                if(c == '.' || c == '!')
+                    yield return new WaitForSeconds(DefaultDurationPerSymbol*2.5F);
                 yield return new WaitForSeconds(DefaultDurationPerSymbol);
             }
             if (IsBreak || !IsActive)

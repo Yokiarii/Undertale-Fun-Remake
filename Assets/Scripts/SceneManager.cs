@@ -37,8 +37,6 @@ public class SceneManager : MonoBehaviour
         AllScenes.Add("Act",ScenesGameObjects[1].GetComponent<Act>());
         AllScenes.Add("Items",ScenesGameObjects[2].GetComponent<Item>());
         AllScenes.Add("Mercy",ScenesGameObjects[3].GetComponent<Mercy>());
-
-        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
     }
 
     public void QuitMenu()
