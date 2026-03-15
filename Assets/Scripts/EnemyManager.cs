@@ -8,6 +8,6 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         Enemy.CurrentEnemy = Data.Instance.EnemyData.Get("Sharoku");
-        Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
+        //Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
 }
