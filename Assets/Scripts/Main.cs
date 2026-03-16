@@ -40,6 +40,7 @@ public class Main : MonoBehaviour
 
     IEnumerator TempAnimation()
     {
+        TempHeartForAnimation.SetActive(true);
         yield return new WaitForSeconds(1f);
         SoundManagerUi.Instance.PlaySound("enter_fight_sound");
 
