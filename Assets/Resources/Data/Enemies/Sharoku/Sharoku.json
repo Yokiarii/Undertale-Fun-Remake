@@ -2,7 +2,7 @@
     "Name": "Sharoku",
     "PrefabName": "SharokuPrefab",
     "CurrentRelation": "Normal",
-    "HP": [100,100],
+    "HP": [1,1],
     "Relation": 0,
     "ACTS": {
         "attack": 0,
@@ -13,13 +13,13 @@
     },
     "StateRelation": {
         "Normal": {
-            "BaseAnswer": "Шароку, кажется, не рада вас видеть.",
+            "BaseAnswer": "Шароку интересно, что вы собираетесь сделать.",
             "Moveset": {
                 "ListOfAttack": {
-                    "Attack 1": {
+                    "Bomb": {
                         "Damage": 25,
-                        "TimeForAttack": 4.0,
-                        "Name": "attack number onee"
+                        "TimeForAttack": -1,
+                        "Name": "Bomb"
                     }
                 }
             },

@@ -212,6 +212,22 @@ public class EnemyBase
         }
         catch (System.Exception){ return; throw; }
     }
+    public Attack GetAttack()
+    {
+        var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack.ToList();
+        return listOfAttack[UnityEngine.Random.Range(0,listOfAttack.Count)].Value;
+    }
+    public Attack GetAttack(string name)
+    {
+        var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack;
+        return listOfAttack[name];
+    }
+    public GameObject GetAttackPrefab(string name)
+    {
+        var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack;
+        var obj = Resources.Load<GameObject>($"Data/Enemies/{Name}/Moveset/{listOfAttack[name].Name}");
+        return obj;
+    }
 }
 #region StateRelationBase
 public class StateRelationBase
