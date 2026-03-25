@@ -72,7 +72,7 @@ public class Bomb_Script : MonoBehaviour
                 }
 
                 Bomb.SetActive(false);
-                Main.Instance.AllSpace.transform.DOShakePosition(0.8f, 8, 15, 50);
+                Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
                 Fight.Instance.QuitFightExternal();
                 yield break;
@@ -95,7 +95,7 @@ public class Bomb_Script : MonoBehaviour
                 yield return new WaitForEndOfFrame();
 
                 Bomb.SetActive(false);
-                Main.Instance.AllSpace.transform.DOShakePosition(0.8f, 8, 15, 50);
+                Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
                 state = false;
             }
