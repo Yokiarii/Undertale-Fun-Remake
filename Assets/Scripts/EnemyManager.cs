@@ -3,28 +3,15 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-
-}
-public interface IHaveDialog
-{
-    public Dialog DialogCell {get;}
-}
-public class BaseEnemy
-{
-    public string Name {get; private set;}
-    public int Health {get; private set;}
-    public BaseEnemy(string name, int health)
+    private static EnemyManager _instance;
+    public static EnemyManager Instance => _instance;
+    void Awake()
     {
-        Name = name;
-        Health = health;
+        _instance = this;
     }
-}
-
-public class Dialog
-{
-    public Dictionary<int,string> Phrases {get;private set;}
-    public void AddPhrase(string newPhrase)
+    void Start()
     {
-        Phrases.Add(Phrases.Count,newPhrase);
+        Enemy.CurrentEnemy = Data.Instance.EnemyData.Get("Sharoku");
+        //Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
 }

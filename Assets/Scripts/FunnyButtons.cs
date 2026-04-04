@@ -36,16 +36,13 @@ public class FunnyButtons : MonoBehaviour
 
     void ButtonUpdate()
     {
-        if(Keyboard.current.enterKey.isPressed && Keyboard.current.xKey.isPressed)
-            return;
-        if(Keyboard.current.zKey.isPressed && Keyboard.current.xKey.isPressed)
-            return;
-        if(!Keyboard.current.leftArrowKey.isPressed && !Keyboard.current.rightArrowKey.isPressed)
+        
+        if(!Keyboard.current.leftArrowKey.wasPressedThisFrame && !Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             IsChanging = false;
         }
 
-        if (Keyboard.current.xKey.isPressed && !IsActive 
+        if (Keyboard.current.xKey.wasPressedThisFrame && !IsActive 
             && SceneManager.Instance.CurrentScene != Scenes.Fight
             && CanCancel)
         {
@@ -58,11 +55,11 @@ public class FunnyButtons : MonoBehaviour
         if(!IsActive)
             return;
 
-        if (Keyboard.current.leftArrowKey.isPressed)
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
         {
             ChangeCurrentButton(true);
         }
-        if (Keyboard.current.rightArrowKey.isPressed)
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             ChangeCurrentButton(false);
         }
@@ -71,7 +68,7 @@ public class FunnyButtons : MonoBehaviour
             StartCoroutine(Delay());
             return;
         }
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.zKey.isPressed)
         {
             switch (CurrentActiveButton)
             {
@@ -136,7 +133,7 @@ public class FunnyButtons : MonoBehaviour
         }
         IsReady = false;
     }
-    void TurnOffButtonsWithOutHeart()
+    public void TurnOffButtonsWithOutHeart()
     {
         for (int g = 0; g < Buttons.Length; g++)
         {
@@ -182,7 +179,7 @@ public class FunnyButtons : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Menu);
         IsActive = true;
         Answer.Instance.SwitchActive(true);
-        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
+        Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
     IEnumerator Delay()
     {

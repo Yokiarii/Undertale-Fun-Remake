@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,8 +13,10 @@ public class SceneManager : MonoBehaviour
     public Scenes CurrentScene = Scenes.Menu;
     public Dictionary<string,IScene> AllScenes = new Dictionary<string, IScene>();
     public Enemy CurrentEnemy;
+    public FightScene FightSceneObserver = new();
 
     public GameObject[] ScenesGameObjects = new GameObject[] { };
+    public IScene[] ScenesInterface;
 
     void Awake()
     {
@@ -25,12 +25,18 @@ public class SceneManager : MonoBehaviour
 
     void Start()
     {
+        ScenesInterface = new IScene[]
+        {
+            ScenesGameObjects[0].GetComponent<IScene>(),
+            ScenesGameObjects[1].GetComponent<IScene>(),
+            ScenesGameObjects[2].GetComponent<IScene>(),
+            ScenesGameObjects[3].GetComponent<IScene>(),
+        };
+
         AllScenes.Add("Attack",ScenesGameObjects[0].GetComponent<AttackScene>());
         AllScenes.Add("Act",ScenesGameObjects[1].GetComponent<Act>());
         AllScenes.Add("Items",ScenesGameObjects[2].GetComponent<Item>());
         AllScenes.Add("Mercy",ScenesGameObjects[3].GetComponent<Mercy>());
-
-        Answer.Instance.Type("Какой-то текст, что бы заполнить пустоту в сердце!!!");
     }
 
     public void QuitMenu()
@@ -61,6 +67,13 @@ public interface IScene
     public void InitializeScene();
     public void QuitScene();
 }
+public interface IHaveCounter
+{
+    public int Count {get;}
+    public void PhaseUp();
+    public void PhaseDown();
+    public void Return();
+}
 
 public abstract class ListenInputBase : MonoBehaviour
 {
@@ -70,7 +83,6 @@ public abstract class ListenInputBase : MonoBehaviour
     protected bool isReady;
     protected bool isAccepting;
     protected bool isSilent;
-    protected bool next;
     [SerializeField] protected int currentCell;
     [SerializeField] protected string[] textOfCells;
     protected List<CellLine> cellLines = new List<CellLine>();
@@ -87,7 +99,6 @@ public abstract class ListenInputBase : MonoBehaviour
     public virtual bool IsReady => isReady;
     public virtual bool IsSilent => isSilent;
     public virtual int CurrentCell => currentCell;
-    public virtual bool Next => next;
     public virtual string[] TextOfCells => textOfCells;
     public virtual List<CellLine> CellLines => cellLines;
     public virtual void SetListening(bool value) => isListening = value;
@@ -149,7 +160,6 @@ public abstract class ListenInputBase : MonoBehaviour
     }
 
     public abstract void Accept();
-    public virtual void AcceptNext(){}
     public virtual void CellAcceptingInput()
     {
         if (!Keyboard.current.zKey.isPressed
@@ -157,14 +167,15 @@ public abstract class ListenInputBase : MonoBehaviour
         {
             isAccepting = false;
         }
-        if (!IsListening || IsAccepting || next) return;
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
+        if (!IsListening || IsAccepting ) return;
+        if (Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.zKey.wasPressedThisFrame)
         {
             Accept();
-            isAccepting = true;
-            next = true;
-            isReady = false;
-            StartCoroutine(Delay());
+            //isAccepting = true;
+            //isReady = false;
+            //if(!gameObject.activeSelf)
+            //    return;
+            //StartCoroutine(Delay());
 
             if(!isSilent)
                 SoundManagerUi.Instance.PlaySound("accept");
@@ -209,9 +220,7 @@ public abstract class ListenInputBase : MonoBehaviour
         cellLines.Add(new CellLine());
 
         isSilent = false;
-        next = false;
-        
-
+    
         // Заполняем линии
         for (int i = 0; i < CellObjects.Length; i++)
         {
@@ -245,18 +254,9 @@ public abstract class ListenInputBase : MonoBehaviour
     }
     public void ListenInput()
     {
-        if (!IsReady || next) return;
+        if (!IsReady) return;
         CellAcceptingInput();
         CellChangingInput();
-    }
-    public void ListenNext()
-    {
-        if(!next || !isReady)
-            return;
-        if (Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
-        {
-            AcceptNext();
-        }
     }
     public void UpdateHeartStatement()
     {
@@ -320,6 +320,19 @@ public class Cell
         Text = text;
         Heart = heart;
         CellObject = cellObject;
+    }
+}
+
+public class FightScene
+{
+    public void EnterFight()
+    {
+        Fight.Instance.Init();
+
+    }
+    public void QuitFight()
+    {
+        Fight.Instance.QuitFight();
     }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Fight : MonoBehaviour
@@ -7,7 +8,8 @@ public class Fight : MonoBehaviour
     public static Fight Instance => _instance;
 
     public bool IsActive = false;
-    int TimeForFight = 6;
+    float TimeForFight = 6;
+    public List<GameObject> ActiveAttacks = new();
 
     void Awake()
     {
@@ -16,6 +18,7 @@ public class Fight : MonoBehaviour
 
     public void Init()
     {
+        SceneManager.Instance.ChangeScene(Scenes.Fight);
         Enemy.Instance.DamageInfo.SetActive(false);
 
         FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
@@ -26,17 +29,35 @@ public class Fight : MonoBehaviour
         StartCoroutine(Delay());
     }
 
+    public void SpawnAttack()
+    {
+        var attack = Enemy.CurrentEnemy.GetAttack();
+        ActiveAttacks.Add(Instantiate(Enemy.CurrentEnemy.GetAttackPrefab(attack.Name),FunnyBox.Instance.gameObject.transform));
+        TimeForFight = attack.TimeForAttack;
+    }
+
     public IEnumerator Delay()
     {
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(ProjecTilesSpawner.Instance.SpawnManyProjectTiles(10));
+        SpawnAttack();
+        if(TimeForFight == -1)
+            yield break;
         yield return new WaitForSeconds(TimeForFight);
 
         StartCoroutine(QuitFight());
     }
 
+    public void QuitFightExternal()
+    {
+        StartCoroutine(QuitFight());
+    }
+
     public IEnumerator QuitFight()
     {
+        foreach (var item in ActiveAttacks)
+        {
+            Destroy(item);
+        }
         FunnyBox.Instance.ReturnBoxSize();
         FunnyBox.Instance.TurnOffAllColliders();
         Player.Instance.PlayerGameObject.SetActive(false);
@@ -45,6 +66,8 @@ public class Fight : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Menu);
         FunnyButtons.Instance.IsActive = true;
         FunnyButtons.Instance.UpdateButtonAndHeart();
+        FunnyButtons.Instance.CanCancel = true;
+        Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
 
 

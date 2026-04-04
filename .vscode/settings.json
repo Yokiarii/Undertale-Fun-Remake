@@ -69,6 +69,8 @@
     },
     "dotnet.defaultSolution": "Undertale-Fun-Remake.slnx",
     "cSpell.words": [
+        "Moveset",
+        "Newtonsoft",
         "Rebuilder",
         "Rigidbody"
     ]

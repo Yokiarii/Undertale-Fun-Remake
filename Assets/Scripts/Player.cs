@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public string Name { get; private set; }
-    public int[] HP { get; private set; } = new int[2] { 20, 20 };
+    public int[] HP { get; private set; } = new int[2] { 30, 30 };
     public int Damage {get; private set; } = 20;
 
     public bool IsDead { get; private set; } = false;
@@ -131,5 +131,30 @@ public class Player : MonoBehaviour
     {
         SliderHP.value = HP[0];
         TextHP.text = HP[0].ToString();
+        SliderHP.maxValue = HP[1];
     }
+}
+
+public class Inventory
+{
+    
+}
+
+public class WorldItem :  IHaveCounter
+{
+    public string Name {get; private set;}
+    public int Phase = 0;
+    public string[] Answers {get; private set;}
+
+    public int Count {get;private set;} = 0;
+
+    public WorldItem(string name, object[] texts)
+    {
+        Name = name;
+        Answers = (string[]) texts;
+    }
+
+    public void PhaseUp(){Count++;}
+    public void PhaseDown() {Count--;}
+    public void Return(){Count = 0;}
 }

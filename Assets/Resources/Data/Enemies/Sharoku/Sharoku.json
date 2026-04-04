@@ -1,0 +1,60 @@
+{
+    "Name": "Sharoku",
+    "PrefabName": "SharokuPrefab",
+    "CurrentRelation": "Normal",
+    "HP": [1,1],
+    "Relation": 0,
+    "ACTS": {
+        "attack": 0,
+        "украсть шляпу": 0,
+        "пощадить": 0,
+        "сбежать": 0,
+        "пицца": 0
+    },
+    "StateRelation": {
+        "Normal": {
+            "BaseAnswer": "Шароку интересно, что вы собираетесь сделать.",
+            "Moveset": {
+                "ListOfAttack": {
+                    "Bomb": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Bomb"
+                    }
+                }
+            },
+            "RetortManager": {
+                "Retortion": {
+                    "pizza": {
+                        "Name": "pizza", 
+                        "TargetAction": "пицца",
+                        "TargetPhase": 0,
+                        "Answer": "Вы кушаете пиццу.<Вы чувствуете как вас наполняет решимость.",
+                        "Speech": "Как ты посмел есть пиццу И БЕЗ МЕНЯ!?!?!?<Ававава!!<ТЫ ПОПЛАТИШЬСЯ ЗА ЭТО!!!!"
+                    },
+                    "pizza 2": {
+                        "Name": "pizza 2", 
+                        "TargetAction": "пицца",
+                        "TargetPhase": 1,
+                        "Answer": "Вы кушаете пиццу.<Снова.<Вы чувствуете как вас наполняет решимость.",
+                        "Speech": "Ты придуриваешься!?!?!?АААА!!!!!"
+                    },
+                    "act steal": {
+                        "Name": "act steal", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 0,
+                        "Answer": "Вы пытаетесь украсть шляпу!<У вас не выходит.",
+                        "Speech": "Эй!ТЫ ЧТО ДЕЛАЕШЬ!?!?!?"
+                    },
+                    "act steal 2": {
+                        "Name": "act steal 2", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 0,
+                        "Answer": "Вы пытаетесь украсть шляпу!<Снова.<У вас не выходит.",
+                        "Speech": "Ты...<Ты сейчас..<СЕРЬЕЗНО!?!??!"
+                    }
+                }
+            }
+        } 
+    }
+}
