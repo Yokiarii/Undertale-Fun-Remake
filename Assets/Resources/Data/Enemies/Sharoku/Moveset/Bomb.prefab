@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4282701136645913348}
   - component: {fileID: 1413872857640225389}
-  - component: {fileID: 4590365321883530457}
+  - component: {fileID: 2004276016757571543}
   - component: {fileID: 7780382801908675295}
   m_Layer: 5
   m_Name: BombProjectile
@@ -28,15 +28,15 @@ RectTransform:
   m_GameObject: {fileID: 6066328257326039643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -15.68}
-  m_LocalScale: {x: 57.5, y: 57.5, z: 57.5}
+  m_LocalScale: {x: 682.6, y: 682.6, z: 682.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2146829980155316089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -130.5, y: 611.5}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -130, y: 604}
+  m_SizeDelta: {x: 0.0812, y: 0.0814}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1413872857640225389
 SpriteRenderer:
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -7446766833135062553, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &4590365321883530457
+--- !u!61 &2004276016757571543
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 90e758200bb88b641a4472f67ba414aa, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -131,17 +131,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00022394396, y: 0.0003254637}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.1, y: 0.1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.042338785, y: 0.038475327}
   m_EdgeRadius: 0
 --- !u!50 &7780382801908675295
 Rigidbody2D:
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 90e758200bb88b641a4472f67ba414aa, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -204,7 +204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000030518}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6004848707318728130

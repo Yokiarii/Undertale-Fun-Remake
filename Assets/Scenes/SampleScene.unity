@@ -1907,6 +1907,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -2734,8 +2735,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.54, y: 2.55}
-  m_Radius: 27.44
+  m_Offset: {x: 0.01, y: 2.1}
+  m_Radius: 22.48
 --- !u!50 &498515610
 Rigidbody2D:
   serializedVersion: 5
@@ -10610,6 +10611,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814496865}
   m_CullTransparentMesh: 1
+--- !u!1 &1816076089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1227496720262584842, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
+  m_PrefabInstance: {fileID: 4690838667912601659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1824258916
 GameObject:
   m_ObjectHideFlags: 0
@@ -11333,7 +11339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   DamageAnimation: {fileID: 98866532}
-  EnemyImage: {fileID: 1948512863}
+  EnemyImage: {fileID: 1816076089}
   DamageInfo: {fileID: 214933353}
   FirstNumber: {fileID: 1951269362}
   SecondNumber: {fileID: 531321193}
@@ -11525,11 +11531,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936401252}
   m_CullTransparentMesh: 1
---- !u!1 &1948512863 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4386034255854549617, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
-  m_PrefabInstance: {fileID: 4690838667912601659}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1951269360
 GameObject:
   m_ObjectHideFlags: 0
@@ -12669,6 +12670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SharokuPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4807238444032606744, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12695,11 +12700,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 453.04
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 697.92
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12731,11 +12736,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.9149
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.00072479
       objectReference: {fileID: 0}
     - target: {fileID: 9116286488782184593, guid: c21696cdf8d9dd84d83974c9561754af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
