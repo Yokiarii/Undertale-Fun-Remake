@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -262222077402619112, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: 593775677584498942, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -142,16 +142,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117998590744572059}
-  m_LocalRotation: {x: -0, y: -0, z: 0.08983382, w: -0.9959568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: -1, z: -1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4807238444032606744}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10.308}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -72.79999, y: 50.10999}
+  m_AnchoredPosition: {x: -74.685, y: 46}
   m_SizeDelta: {x: 56.66, y: 245.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8793869819292704432
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -262222077402619112, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: -8644857799635875087, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -201,6 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9116286488782184593}
+  - component: {fileID: 395597527265009461}
   m_Layer: 5
   m_Name: SharokuPrefab
   m_TagString: Untagged
@@ -228,6 +229,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &395597527265009461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227496720262584842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91aa9fb1894685b479144e5f86484fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SharokuScript
+  Hat: {fileID: 5811204937090736660}
+  Head: {fileID: 2437321539165034168}
+  Body: {fileID: 4362712560196107703}
+  Arm_Left: {fileID: 1117998590744572059}
+  Arm_Right: {fileID: 211867832842450019}
+  Leg_Left: {fileID: 2698194096742557104}
+  Leg_Right: {fileID: 4267504734240394346}
 --- !u!1 &2437321539165034168
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6467099712456396126, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: 2014436564452410273, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -368,7 +388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5655222112034971534, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: 3776132744418919184, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -443,7 +463,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5422827196565136688, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: -8385418281330889343, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -518,7 +538,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7865767396192843077, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: -5752249306888935586, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -593,7 +613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6421131307974760093, guid: d239e3f5b9bcf6547a28bdfaa18f2542, type: 3}
+  m_Sprite: {fileID: 8095985303877470621, guid: a6a090781045e4447a5c5e8f0989155d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

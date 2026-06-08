@@ -72,6 +72,7 @@
         "Moveset",
         "Newtonsoft",
         "Rebuilder",
-        "Rigidbody"
+        "Rigidbody",
+        "Sharoku"
     ]
 }

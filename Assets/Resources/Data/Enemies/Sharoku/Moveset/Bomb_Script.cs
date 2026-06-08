@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Bomb_Script : MonoBehaviour
@@ -8,10 +9,13 @@ public class Bomb_Script : MonoBehaviour
     public GameObject Bomb;
     public GameObject Particle;
     public bool IsCatch = false;
+    public Sprite[] AnimGlow;
+    
     void Start()
     {
         Debug.Log("Bomb attack is started");
         StartCoroutine(Delay());
+        StartCoroutine(AnimGlowing());
     }
     void Update()
     {
@@ -27,6 +31,7 @@ public class Bomb_Script : MonoBehaviour
         yield return new WaitForSeconds(0.50f);
         Vector2 direction = (Player.Instance.PlayerGameObject.transform.localPosition - Bomb.transform.localPosition).normalized;
         Bomb.GetComponent<Rigidbody2D>().AddForce(direction * 4f, ForceMode2D.Impulse);
+        Bomb.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-700f,700f));
         StartCoroutine(Catch());
         StartCoroutine(Timer());
     }
@@ -36,10 +41,10 @@ public class Bomb_Script : MonoBehaviour
         while (switcher)
         {
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.32f);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.25f);
 
             foreach (var hit in hits)
-            {
+            { 
                 if (hit.CompareTag("Player"))
                 {
                     Bomb.transform.SetParent(Player.Instance.PlayerGameObject.transform);
@@ -105,5 +110,17 @@ public class Bomb_Script : MonoBehaviour
     void OnDestroy()
     {
         Destroy(Bomb);
+    }
+    IEnumerator AnimGlowing()
+    {
+        var renderer = Bomb.GetComponent<SpriteRenderer>();
+        while (Bomb.activeSelf)
+        {
+            renderer.sprite = AnimGlow[0];
+            yield return new WaitForSeconds(0.5f);
+            renderer.sprite = AnimGlow[1];
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield break;
     }
 }
