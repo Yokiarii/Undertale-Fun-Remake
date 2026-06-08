@@ -41,7 +41,7 @@ public class Bomb_Script : MonoBehaviour
         while (switcher)
         {
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.25f);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.50f);
 
             foreach (var hit in hits)
             { 
@@ -49,6 +49,8 @@ public class Bomb_Script : MonoBehaviour
                 {
                     Bomb.transform.SetParent(Player.Instance.PlayerGameObject.transform);
                     Bomb.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+                    Bomb.GetComponent<Rigidbody2D>().angularVelocity = 0;
+                    Bomb.transform.eulerAngles = new Vector3(0,0,Bomb.transform.eulerAngles.z);
                     Bomb.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
                     switcher = false;
@@ -74,6 +76,7 @@ public class Bomb_Script : MonoBehaviour
                     var temp = Instantiate(Particle, transform);
                     temp.transform.position = Bomb.transform.position;
                     temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
                 }
 
                 Bomb.SetActive(false);
@@ -91,6 +94,7 @@ public class Bomb_Script : MonoBehaviour
                     var temp = Instantiate(Particle, transform);
                     temp.transform.position = Bomb.transform.position;
                     temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
                 }
 
                 var temp2 = Instantiate(Particle, transform);
