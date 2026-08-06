@@ -6,6 +6,7 @@ public class Item : ListenInputBase, IScene
     public Scenes Name {get;private set;} = Scenes.Items;
     public bool IsActiveRightNow {get;private set;} = false;
     public int[] Numbers = new int[4]{2,4,3,8};
+    public int[] HealNumber = new int[4]{1,1,1,1};
 
     void Awake()
     {
@@ -22,7 +23,7 @@ public class Item : ListenInputBase, IScene
         if(Numbers[CurrentCell] != 0)
         {
             Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
-            Player.Instance.ChangeHP(+2);
+            Player.Instance.ChangeHP(+HealNumber[CurrentCell]);
             Numbers[CurrentCell]--;
         }
     }

@@ -12,6 +12,11 @@ public class EnemyCollider : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if(Enemy.CurrentEnemy.ACTS["раск. анекдот"] == 1)
+            {
+                Player.Instance.ChangeHP(-Damage*2);
+                return;
+            }
             Player.Instance.ChangeHP(-Damage);
         }
     }

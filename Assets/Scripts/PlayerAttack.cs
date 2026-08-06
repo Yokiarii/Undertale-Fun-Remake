@@ -107,9 +107,21 @@ public class PlayerAttack : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
+        if (Enemy.CurrentEnemy.HP[0] == 0)
+        {
+            Debug.Log("enemy defeated");
+            LineStop.SetActive(false);
+            gameObject.SetActive(false);
+            Enemy.Instance.DamageInfo.SetActive(false);
+            SharokuScript.Instance.ChangeState("Death");
+
+            yield break;
+        }
+
         LineStop.SetActive(false);
         RangeImage.transform.DOScaleX(0, 0.5f); //выключает панель с атакой 
-        
+
+
         SceneManager.Instance.FightSceneObserver.EnterFight();
 
         yield return new WaitForSeconds(0.5f);
@@ -119,6 +131,10 @@ public class PlayerAttack : MonoBehaviour
 
         FunnyButtons.Instance.TurnOffButtons();
 
+    }
+    IEnumerator EnemyDeathAnimation()
+    {
+        yield break;
     }
     void FollowLine()
     {

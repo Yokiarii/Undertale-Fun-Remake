@@ -51,8 +51,10 @@ public class SharokuScript : MonoBehaviour
         ChangeState();
     }
 
-    void ChangeState()
+    public void ChangeState(string state = "Idle")
     {
+        State = state;
+
         StopAllCoroutines();
         switch (State)
         {
@@ -64,6 +66,12 @@ public class SharokuScript : MonoBehaviour
                     ShakeAnimation(item);
                 }
                 break;
+            case "Death":
+                foreach (var item in Parts)
+                {
+                    DeathAnimation(item);
+                }
+                break;
             default:
             break;
         }
@@ -72,6 +80,11 @@ public class SharokuScript : MonoBehaviour
     void ShakeAnimation(GameObject obj)
     {
         StartCoroutine(ShakeCoroutine(obj));
+    }
+
+    void DeathAnimation(GameObject obj)
+    {
+        StartCoroutine(DeathCoroutine(obj));
     }
 
     IEnumerator ShakeCoroutine(GameObject obj)
@@ -91,5 +104,16 @@ public class SharokuScript : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(ShakeCoroutine(obj)); 
+    }
+
+    IEnumerator DeathCoroutine(GameObject obj)
+    {
+
+        yield return new WaitForSeconds(3);
+        Speech.Instance.Say("Как это..", false, 0.15f);
+        yield return new WaitForSeconds(5);
+        Speech.Instance.Say("А зачем это..?", false, 0.15f);
+        yield return new WaitForSeconds(5);
+        Speech.Instance.Say("За что мне это..?", false, 0.09f);
     }
 }
