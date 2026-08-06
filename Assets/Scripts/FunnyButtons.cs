@@ -42,6 +42,23 @@ public class FunnyButtons : MonoBehaviour
             IsChanging = false;
         }
 
+        
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && !IsActive 
+            && SceneManager.Instance.CurrentScene != Scenes.Fight
+            && CanCancel)
+        {
+            Menu();
+            UpdateButtonAndHeart();
+        }
+        
+        if (Keyboard.current.backspaceKey.wasPressedThisFrame && !IsActive 
+            && SceneManager.Instance.CurrentScene != Scenes.Fight
+            && CanCancel)
+        {
+            Menu();
+            UpdateButtonAndHeart();
+        }
+
         if (Keyboard.current.xKey.wasPressedThisFrame && !IsActive 
             && SceneManager.Instance.CurrentScene != Scenes.Fight
             && CanCancel)
