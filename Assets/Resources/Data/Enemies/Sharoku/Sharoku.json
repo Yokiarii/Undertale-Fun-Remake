@@ -24,7 +24,14 @@
                     "Bomb": {
                         "Damage": 25,
                         "TimeForAttack": -1,
-                        "Name": "Bomb"
+                        "Name": "Bomb",
+                        "IsActive": true
+                    },
+                    "Pistol": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol",
+                        "IsActive": true
                     }
                 }
             },

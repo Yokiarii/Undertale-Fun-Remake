@@ -215,7 +215,22 @@ public class EnemyBase
     public Attack GetAttack()
     {
         var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack.ToList();
-        return listOfAttack[UnityEngine.Random.Range(0,listOfAttack.Count)].Value;
+        bool temp = true;
+        int attempts = 0;
+        while (temp)
+        {
+            attempts++;
+            var tempAttack = listOfAttack[UnityEngine.Random.Range(0,listOfAttack.Count)].Value;
+            if (tempAttack.IsActive)
+            {
+                return tempAttack;               
+            }
+            if(attempts > 10)
+            {
+                temp = false;
+            }
+        }
+        return null;
     }
     public Attack GetAttack(string name)
     {
@@ -250,6 +265,7 @@ public class Attack //Обычная атака. Атака босса
 {
     public string Name;
     public int Damage;
+    public bool IsActive = true;
 
     //ссылка на инициализированный объект атаки или линк
     [SerializeField] private GameObject Link;

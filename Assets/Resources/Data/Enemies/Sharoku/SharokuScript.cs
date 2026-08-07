@@ -34,6 +34,7 @@ public class SharokuScript : MonoBehaviour
     public GameObject Parts_Head;
     public GameObject Parts_Arms;
     public GameObject Parts_Legs;
+    public GameObject Parts_Body;
 
     public List<GameObject> Parts = new List<GameObject>();
 
@@ -59,12 +60,9 @@ public class SharokuScript : MonoBehaviour
         switch (State)
         {
             case "Idle":
-                foreach (var item in Parts)
-                {
-                    if(item.name == "Leg_Left" || item.name == "Leg_Right")
-                        continue;
-                    ShakeAnimation(item);
-                }
+                ShakeAnimation(Parts_Arms);
+                ShakeAnimation(Parts_Head);
+                ShakeAnimation(Parts_Body);
                 break;
             case "Death":
                 foreach (var item in Parts)
