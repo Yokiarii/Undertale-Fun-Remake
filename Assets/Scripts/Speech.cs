@@ -29,7 +29,7 @@ public class Speech : TextGenerator
             return;
         }
 
-        Type(text, duration);
+        Type(text, duration,"speak");
         if (autoClose)
             StartCoroutine(Delay());
     }

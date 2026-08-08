@@ -112,6 +112,7 @@ public class Pistol_Script_alt_1 : MonoBehaviour
     void ShootAnim()
     {
         Main.Instance.AllSpace.transform.DOShakePosition(0.2f, 4, 15, 50);
+        SoundManagerUi.Instance.PlaySound("fireshot");
         PistolModelTemp.transform.DOLocalJump(PistolModelTemp.transform.localPosition, 1f, 1, 0.2f);
         StartCoroutine(FireAnim());
         var temp = Instantiate(Bullet, SharokuScript.Instance.Arm_Left.transform);

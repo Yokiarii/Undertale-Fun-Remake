@@ -104,6 +104,7 @@ public class Pistol_Script : MonoBehaviour
     void ShootAnim()
     {
         Main.Instance.AllSpace.transform.DOShakePosition(0.2f, 4, 15, 50);
+        SoundManagerUi.Instance.PlaySound("fireshot");
         StartCoroutine(FireAnim());
         var temp = Instantiate(Bullet, SharokuScript.Instance.Arm_Left.transform);
         temp.transform.localScale = new Vector3(1.5f,1.5f);

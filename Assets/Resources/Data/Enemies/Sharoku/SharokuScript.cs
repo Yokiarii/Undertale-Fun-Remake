@@ -156,10 +156,9 @@ public class SharokuScript : MonoBehaviour
     {
 
         yield return new WaitForSeconds(3);
-        Speech.Instance.Say("Как это..", false, 0.15f);
+        Speech.Instance.Say("Ну...", false, 0.15f);
         yield return new WaitForSeconds(5);
-        Speech.Instance.Say("А зачем это..?", false, 0.15f);
-        yield return new WaitForSeconds(5);
-        Speech.Instance.Say("За что мне это..?", false, 0.09f);
+        Speech.Instance.Say("Это не круто", true, 0.15f);
+        
     }
 }
