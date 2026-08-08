@@ -11,8 +11,20 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if(Player.Instance.IsDead)
+        if (Player.Instance.IsDead)
             return;
+        if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose)
+        {
+            if (Keyboard.current.upArrowKey.isPressed)
+                Rb.AddForceY(-Speed);
+            if (Keyboard.current.downArrowKey.isPressed)
+                Rb.AddForceY(Speed);
+            if (Keyboard.current.rightArrowKey.isPressed)
+                Rb.AddForceX(-Speed);
+            if (Keyboard.current.leftArrowKey.isPressed)
+                Rb.AddForceX(Speed);
+            return;
+        }
         if (Keyboard.current.upArrowKey.isPressed)
             Rb.AddForceY(Speed);
         if (Keyboard.current.downArrowKey.isPressed)

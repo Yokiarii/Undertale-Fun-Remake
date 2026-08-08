@@ -32,6 +32,12 @@
                         "TimeForAttack": -1,
                         "Name": "Pistol",
                         "IsActive": true
+                    },
+                    "Pistol_alt_1": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol_alt_1",
+                        "IsActive": true
                     }
                 }
             },

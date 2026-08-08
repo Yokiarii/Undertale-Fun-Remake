@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Pistol_Script : MonoBehaviour
+public class Pistol_Script_alt_1 : MonoBehaviour
 {
     public GameObject MainObject;
     public GameObject Bullet;
@@ -81,19 +81,29 @@ public class Pistol_Script : MonoBehaviour
     {
 
         yield return new WaitForSeconds(2f);
-        Speech.Instance.Say("Паф.");
+        Speech.Instance.Say("Паф паф!");
+        ShootAnim();
+        yield return new WaitForSeconds(0.5f);
         ShootAnim();
         yield return new WaitForSeconds(5f);
-        Speech.Instance.Say("Паф..");
+        Speech.Instance.Say("Па-па-паф!");
+        ShootAnim();
+        yield return new WaitForSeconds(0.3f);
+        ShootAnim();
+        yield return new WaitForSeconds(0.3f);
+        ShootAnim();
+        yield return new WaitForSeconds(0.3f);
         ShootAnim();
         yield return new WaitForSeconds(3.25f);
         Speech.Instance.Say("Паф!");
         ShootAnim();
         yield return new WaitForSeconds(4f);
-        Speech.Instance.Say("Паф..Паф!");
+        Speech.Instance.Say("Паф...");
         ShootAnim();
         yield return new WaitForSeconds(0.75f);
         ShootAnim();
+        yield return new WaitForSeconds(1.5f);
+        Speech.Instance.Say("Хе");
 
         yield return new WaitForSeconds(2f);
         StartCoroutine(QuitAttack(Arm));
@@ -102,12 +112,73 @@ public class Pistol_Script : MonoBehaviour
     {
         Main.Instance.AllSpace.transform.DOShakePosition(0.2f, 4, 15, 50);
         var temp = Instantiate(Bullet, SharokuScript.Instance.Arm_Left.transform);
-        temp.transform.localScale = new Vector3(1.5f,1.5f);
-        temp.transform.localPosition = new Vector3(0,-1,-1);
-        temp.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(-10f,-15), ForceMode2D.Impulse);
+        temp.transform.localScale = new Vector3(1.7f, 1.7f);
+        temp.transform.localPosition = new Vector3(0, -1, -5);
+        temp.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(-10f, -15), ForceMode2D.Impulse);
         temp.transform.SetParent(transform);
-        temp.transform.localPosition = new Vector3(temp.transform.localPosition.x,temp.transform.localPosition.y,-1);
+        temp.transform.localPosition = new Vector3(temp.transform.localPosition.x, temp.transform.localPosition.y, -1);
+        StartCoroutine(BulletCorrector(temp));
 
+    }
+    IEnumerator BulletCorrector(GameObject Bullet)
+    {
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceY(120);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceY(120);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(420f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-320f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(320f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-320f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceY(320);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(220f);
+        yield return new WaitForSeconds(0.02f);
+        Bullet.GetComponent<Rigidbody2D>().AddForceX(-220f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < 5; i++)
+        {
+            Bullet.transform.SetParent(FunnyBox.Instance.gameObject.transform);
+            Bullet.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            Vector2 direction = (Player.Instance.PlayerGameObject.transform.localPosition - Bullet.transform.localPosition).normalized;
+            Bullet.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield break;
     }
     IEnumerator QuitAttack(Image Arm)
     {

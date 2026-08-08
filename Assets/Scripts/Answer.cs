@@ -36,6 +36,8 @@ public class Answer : TextGenerator
 
     public void EnterAnswer(string action, string sound = "click") // включает ансвер после действия игрока
     {
+        SharokuScript.Instance.CURRENT_ACTION = action;
+        
         //Сбрасываем фазу
         AnswerPhase = 0;
 
@@ -94,6 +96,24 @@ public class Answer : TextGenerator
         StaticAnswer = false;
         Fight.Instance.Init();
         SwitchActive(false);
+
+        //включаем флаг шароку со шляпой
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 1)
+        {
+            SharokuScript.Instance.FIRST_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
+        {
+            SharokuScript.Instance.SECOND_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
+        {
+            SharokuScript.Instance.THIRD_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 4)
+        {
+            SharokuScript.Instance.FOURTH_HAT_MOVEMENT.IsReady = true;
+        }
     }
 
 }

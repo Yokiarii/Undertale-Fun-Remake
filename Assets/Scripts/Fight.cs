@@ -31,6 +31,10 @@ public class Fight : MonoBehaviour
 
     public void SpawnAttack()
     {
+        if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose)
+        {
+            SharokuScript.Instance.ZABAVKA.phase++;
+        }
         var attack = Enemy.CurrentEnemy.GetAttack();
         ActiveAttacks.Add(Instantiate(Enemy.CurrentEnemy.GetAttackPrefab(attack.Name),FunnyBox.Instance.gameObject.transform));
         TimeForFight = attack.TimeForAttack;

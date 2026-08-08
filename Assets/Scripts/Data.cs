@@ -62,3 +62,10 @@ public class JsonResourceReader
         return Resources.Load(path) != null;
     }
 } 
+
+public struct FLAG
+{
+    public bool IsReady;
+    public bool IsClose;
+    public int phase;
+}

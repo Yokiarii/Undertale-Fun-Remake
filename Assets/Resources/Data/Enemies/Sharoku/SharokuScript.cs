@@ -32,11 +32,21 @@ public class SharokuScript : MonoBehaviour
 
     public GameObject FullBody;
     public GameObject Parts_Head;
-    public GameObject Parts_Arms;
+    public GameObject Parts_Right_Hand;
+    public GameObject Parts_Left_Hand;
     public GameObject Parts_Legs;
     public GameObject Parts_Body;
 
     public List<GameObject> Parts = new List<GameObject>();
+
+    public FLAG FIRST_HAT_MOVEMENT = new FLAG();
+    public FLAG SECOND_HAT_MOVEMENT = new FLAG();
+    public FLAG THIRD_HAT_MOVEMENT = new FLAG();
+    public FLAG FOURTH_HAT_MOVEMENT = new FLAG();
+    public FLAG FINAL_STAGE = new FLAG();
+    public FLAG ZABAVKA = new FLAG();
+
+    public string CURRENT_ACTION = "none";
 
     void Awake()
     {
@@ -49,7 +59,44 @@ public class SharokuScript : MonoBehaviour
         Parts.Add(Arm_Right);
         Parts.Add(Leg_Left);
         Parts.Add(Leg_Right);
+
         ChangeState();
+    }
+
+    void Start()
+    {
+        ZABAVKA.phase = 0;
+    }
+
+    void FixedUpdate()
+    {
+        if (FIRST_HAT_MOVEMENT.IsReady && !FIRST_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y);
+            FIRST_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (SECOND_HAT_MOVEMENT.IsReady && !SECOND_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y);
+            SECOND_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (THIRD_HAT_MOVEMENT.IsReady && !THIRD_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y-4);
+            THIRD_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (FOURTH_HAT_MOVEMENT.IsReady && !FOURTH_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x+4f,Hat.transform.localPosition.y-15);
+            FOURTH_HAT_MOVEMENT.IsClose = true;
+        }
+        if (ZABAVKA.phase == 2)
+        {
+            ZABAVKA.IsClose = true;
+        }
     }
 
     public void ChangeState(string state = "Idle")
@@ -60,7 +107,8 @@ public class SharokuScript : MonoBehaviour
         switch (State)
         {
             case "Idle":
-                ShakeAnimation(Parts_Arms);
+                ShakeAnimation(Parts_Right_Hand);
+                ShakeAnimation(Parts_Left_Hand);
                 ShakeAnimation(Parts_Head);
                 ShakeAnimation(Parts_Body);
                 break;

@@ -1,4 +1,7 @@
 
+
+using UnityEngine;
+
 public class Item : ListenInputBase, IScene
 {
     private static Item _instance;
@@ -25,6 +28,11 @@ public class Item : ListenInputBase, IScene
             Answer.Instance.EnterAnswer(TextOfCells[CurrentCell], "typing");
             Player.Instance.ChangeHP(+HealNumber[CurrentCell]);
             Numbers[CurrentCell]--;
+            if (TextOfCells[CurrentCell] == "забавка")
+            {
+                Debug.Log("игрок выпил забавку");
+                SharokuScript.Instance.ZABAVKA.IsReady = true;
+            }
         }
     }
     
