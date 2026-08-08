@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -25,6 +26,22 @@ public class Player : MonoBehaviour
     void Awake()
     {
         _instance = this;
+    }
+
+    void Update()
+    {
+        if (Keyboard.current.xKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.enterKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     public void ChangeName(string name) => Name = name;
