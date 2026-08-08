@@ -90,7 +90,6 @@ public class Player : MonoBehaviour
 
     IEnumerator GameOverAnimation()
     {
-
         Anim.Play("Shattered Heart");
         yield return new WaitForSeconds(2f);
 
@@ -103,8 +102,10 @@ public class Player : MonoBehaviour
         var tempObj = Main.Instance.GameOver;
         tempObj.SetActive(true);
         var temp = tempObj.GetComponent<SpriteRenderer>();
-        temp.DOFade(0.6f, 5f);
-
+        temp.DOFade(1f, 5f);
+        SoundManagerUi.Instance.PlaySound("death_song");
+        yield return new WaitForSeconds(46);
+        Application.Quit();
     }
 
     public void ReturnPLayer()

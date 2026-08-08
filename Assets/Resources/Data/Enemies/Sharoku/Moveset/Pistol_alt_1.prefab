@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pistol_Script_alt_1
   MainObject: {fileID: 3417397284670007616}
   Bullet: {fileID: 2127428177063611242, guid: 411201bb2cb41664bb532df6408cb2d8, type: 3}
+  PistolModel: {fileID: 3068494190357846824, guid: 72d6693d92e43674095309d118fac1f5, type: 3}
   OriginalArmSprite: {fileID: 0}
   IsAiming: 1
   Anim: []

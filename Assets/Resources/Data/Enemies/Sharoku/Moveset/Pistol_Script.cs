@@ -9,6 +9,8 @@ public class Pistol_Script : MonoBehaviour
 {
     public GameObject MainObject;
     public GameObject Bullet;
+    public GameObject PistolModel;
+    public GameObject PistolModelTemp;
     public Sprite OriginalArmSprite;
     public bool IsAiming = true;
     public List<Sprite> Anim = new List<Sprite>();
@@ -38,7 +40,7 @@ public class Pistol_Script : MonoBehaviour
 
         Arm.sprite = Anim[0];
         Arm.rectTransform.sizeDelta = new Vector2(20, 35);
-        Arm.transform.localScale = new Vector3(7f, 7f);
+        Arm.transform.localScale = new Vector3(8f, 8f);
 
         SharokuScript.Instance.Parts_Left_Hand.transform.SetAsLastSibling();
 
@@ -58,6 +60,7 @@ public class Pistol_Script : MonoBehaviour
         Arm.sprite = Anim[7];
         yield return new WaitForSeconds(0.07f);
         Arm.sprite = Anim[8];
+        PistolModelTemp = Instantiate(PistolModel,SharokuScript.Instance.Arm_Left.transform);
         yield return new WaitForSeconds(0.2f);
 
         StartCoroutine(Aiming(Arm.transform));
@@ -101,6 +104,7 @@ public class Pistol_Script : MonoBehaviour
     void ShootAnim()
     {
         Main.Instance.AllSpace.transform.DOShakePosition(0.2f, 4, 15, 50);
+        StartCoroutine(FireAnim());
         var temp = Instantiate(Bullet, SharokuScript.Instance.Arm_Left.transform);
         temp.transform.localScale = new Vector3(1.5f,1.5f);
         temp.transform.localPosition = new Vector3(0,-1,-1);
@@ -108,6 +112,23 @@ public class Pistol_Script : MonoBehaviour
         temp.transform.SetParent(transform);
         temp.transform.localPosition = new Vector3(temp.transform.localPosition.x,temp.transform.localPosition.y,-1);
 
+    }
+    IEnumerator FireAnim()
+    {
+        List<Transform> directChildren = new List<Transform>();
+        foreach (Transform child in PistolModelTemp.transform)
+        {
+            directChildren.Add(child);
+        }
+        directChildren[0].gameObject.SetActive(true);
+        directChildren[1].gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.06f);
+        directChildren[0].gameObject.SetActive(false);
+        directChildren[1].gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.06f);
+        directChildren[0].gameObject.SetActive(false);
+        directChildren[1].gameObject.SetActive(false);
+        yield break;
     }
     IEnumerator QuitAttack(Image Arm)
     {
@@ -117,7 +138,7 @@ public class Pistol_Script : MonoBehaviour
         Arm.rectTransform.sizeDelta = new Vector2(56.66f, 245.54f);
         Arm.transform.localScale = new Vector3(1f, 1f);
         Arm.transform.eulerAngles = new Vector3(0, 0, 0);
-
+        Destroy(PistolModelTemp);
         SharokuScript.Instance.Parts_Left_Hand.transform.SetAsFirstSibling();
 
         Debug.Log("Attack was ended.");
