@@ -24,7 +24,8 @@ public class FunnyBox : MonoBehaviour
     #region Init Boxes
     void InitBoxes()
     {
-        AddBox(522,377); // Чуть больше квадрата
+        Boxes.Add(AllColliders[0].name,new FightBox(522,377,AllColliders[0]));
+        Boxes.Add(AllColliders[1].name,new FightBox(920,377,AllColliders[1]));
     }
     #endregion
     void AddBox(float width, float height)

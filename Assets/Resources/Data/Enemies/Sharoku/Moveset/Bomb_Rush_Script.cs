@@ -3,11 +3,12 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bomb_Script : MonoBehaviour
+public class Bomb_Rush_Script : MonoBehaviour
 {
     public GameObject Bomb;
     public GameObject Particle;
     public bool IsCatch = false;
+    public bool IsLethal = true;
     public Sprite[] AnimGlow;
     
     void Start()
@@ -63,8 +64,11 @@ public class Bomb_Script : MonoBehaviour
     }
     IEnumerator Timer()
     {
+        StartCoroutine(DeathTimer());
         int time = 0;
         bool state = true;
+        if(!IsLethal)   
+            yield break;
         while (state)
         {
             if (IsCatch)
@@ -82,7 +86,6 @@ public class Bomb_Script : MonoBehaviour
                 Bomb.SetActive(false);
                 Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
-                Fight.Instance.QuitFightExternal();
                 yield break;
             }
             yield return new WaitForSeconds(1);
@@ -103,6 +106,7 @@ public class Bomb_Script : MonoBehaviour
                 temp2.GetComponent<Rigidbody2D>().AddForce(direction * 2f, ForceMode2D.Impulse);
                 yield return new WaitForEndOfFrame();
 
+
                 SoundManagerUi.Instance.PlaySound("Bomb_explosion");
                 Bomb.SetActive(false);
                 Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
@@ -110,11 +114,15 @@ public class Bomb_Script : MonoBehaviour
                 state = false;
             }
         }
-        Fight.Instance.QuitFightExternal();
     }
     void OnDestroy()
     {
         Destroy(Bomb);
+    }
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(10f);
+        Destroy(this);
     }
     IEnumerator AnimGlowing()
     {

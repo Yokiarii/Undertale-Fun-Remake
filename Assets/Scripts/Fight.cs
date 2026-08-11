@@ -21,8 +21,16 @@ public class Fight : MonoBehaviour
         SceneManager.Instance.ChangeScene(Scenes.Fight);
         Enemy.Instance.DamageInfo.SetActive(false);
 
-        FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
-        FunnyBox.Instance.TurnOnFightColliderByPreset("FightCollider3:4");
+        if(SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу" && Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 4)
+        {
+            FunnyBox.Instance.ResizeBoxByPreset("FightCollider6:4");
+            FunnyBox.Instance.TurnOnFightColliderByPreset("FightCollider6:4");
+        } else
+        {
+            FunnyBox.Instance.ResizeBoxByPreset("FightCollider3:4");
+            FunnyBox.Instance.TurnOnFightColliderByPreset("FightCollider3:4");
+        }
+
         Player.Instance.PlayerGameObject.SetActive(true);
         Player.Instance.ReturnPlayerPosition();
         
@@ -35,7 +43,10 @@ public class Fight : MonoBehaviour
         {
             SharokuScript.Instance.ZABAVKA.phase++;
         }
+
+
         var attack = Enemy.CurrentEnemy.GetAttack();
+
         ActiveAttacks.Add(Instantiate(Enemy.CurrentEnemy.GetAttackPrefab(attack.Name),FunnyBox.Instance.gameObject.transform));
         TimeForFight = attack.TimeForAttack;
     }

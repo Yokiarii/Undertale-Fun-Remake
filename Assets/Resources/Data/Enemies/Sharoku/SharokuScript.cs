@@ -97,6 +97,38 @@ public class SharokuScript : MonoBehaviour
         {
             ZABAVKA.IsClose = true;
         }
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
+        {
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol"]
+                .IsActive = false;
+
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_1"]
+                .IsActive = true;
+        }
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
+        {
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb"]
+                .IsActive = false;
+
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb_Rush_Main"]
+                .IsActive = true;
+        }
     }
 
     public void ChangeState(string state = "Idle")

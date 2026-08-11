@@ -6,7 +6,7 @@
     "Relation": 0,
     "ACTS": {
         "attack": 0,
-        "украсть шляпу": 0,
+        "украсть шляпу": 3,
         "пощадить": 0,
         "сбежать": 0,
         "пицца": 0,
@@ -25,19 +25,31 @@
                         "Damage": 25,
                         "TimeForAttack": -1,
                         "Name": "Bomb",
-                        "IsActive": false
+                        "IsActive": true
                     },
                     "Pistol": {
                         "Damage": 25,
                         "TimeForAttack": -1,
                         "Name": "Pistol",
-                        "IsActive": false
+                        "IsActive": true
                     },
                     "Pistol_alt_1": {
                         "Damage": 25,
                         "TimeForAttack": -1,
                         "Name": "Pistol_alt_1",
-                        "IsActive": true
+                        "IsActive": false
+                    },
+                    "Pistol_alt_2": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol_alt_2",
+                        "IsActive": false
+                    },
+                    "Bomb_Rush_Main": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Bomb_Rush_Main",
+                        "IsActive": false
                     }
                 }
             },
@@ -76,7 +88,14 @@
                         "TargetAction": "украсть шляпу",
                         "TargetPhase": 3,
                         "Answer": "Вы снова пытаетесь ее стащить..<Может сейчас..?!",
-                        "Speech": "Не знаю зачем тебе, но если так хочешь..<Лови!"
+                        "Speech": "..."
+                    },
+                    "act steal 5": {
+                        "Name": "act steal 4", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 4,
+                        "Answer": "...",
+                        "Speech": "..."
                     },
                     "zabavka": {
                         "Name": "zabavka", 

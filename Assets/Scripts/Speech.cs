@@ -55,7 +55,7 @@ public class Speech : TextGenerator
             TextField.text = "";
             CurrentText = "";
             TempCurrentText = "";
-            Type(BuildedText[AnswerPhase]);
+            Type(BuildedText[AnswerPhase],0.06f,"speak");
             AnswerPhase++;
             while (!IsComplete)
             {

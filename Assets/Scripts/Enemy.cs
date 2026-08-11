@@ -210,10 +210,37 @@ public class EnemyBase
             return;
             ACTS[action]++;
         }
-        catch (System.Exception){ return; throw; }
+        catch (System.Exception ex){ Debug.Log(ex); return; throw; }
     }
     public Attack GetAttack()
     {
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_1"];
+        }
+
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb_Rush_Main"];
+        }
+        
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 4 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_2"];
+        }
+
         var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack.ToList();
         bool temp = true;
         int attempts = 0;
