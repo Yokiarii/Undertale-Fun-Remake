@@ -36,7 +36,7 @@ public class VersionInfo : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Ошибка при запросе: " + request.error);
+                Debug.LogWarning("Ошибка при запросе: " + request.error);
             }
         }
     }

@@ -18,6 +18,7 @@ public class FunnyButtons : MonoBehaviour
     public bool IsChanging = false;
     public bool CanCancel = true;
     public bool IsReady = false;
+    public bool IsActiveAndroid = true;
 
     void Awake()
     {
@@ -36,22 +37,14 @@ public class FunnyButtons : MonoBehaviour
 
     void ButtonUpdate()
     {
-        
-        if(!Keyboard.current.leftArrowKey.wasPressedThisFrame && !Keyboard.current.rightArrowKey.wasPressedThisFrame)
+
+        if (!Keyboard.current.leftArrowKey.wasPressedThisFrame && !Keyboard.current.rightArrowKey.wasPressedThisFrame)
         {
             IsChanging = false;
         }
 
-        
-        if (Keyboard.current.escapeKey.wasPressedThisFrame && !IsActive 
-            && SceneManager.Instance.CurrentScene != Scenes.Fight
-            && CanCancel)
-        {
-            Menu();
-            UpdateButtonAndHeart();
-        }
-        
-        if (Keyboard.current.backspaceKey.wasPressedThisFrame && !IsActive 
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && !IsActive
             && SceneManager.Instance.CurrentScene != Scenes.Fight
             && CanCancel)
         {
@@ -59,7 +52,7 @@ public class FunnyButtons : MonoBehaviour
             UpdateButtonAndHeart();
         }
 
-        if (Keyboard.current.xKey.wasPressedThisFrame && !IsActive 
+        if (Keyboard.current.backspaceKey.wasPressedThisFrame && !IsActive
             && SceneManager.Instance.CurrentScene != Scenes.Fight
             && CanCancel)
         {
@@ -67,9 +60,17 @@ public class FunnyButtons : MonoBehaviour
             UpdateButtonAndHeart();
         }
 
-        if(IsChanging)
+        if (Keyboard.current.xKey.wasPressedThisFrame && !IsActive
+            && SceneManager.Instance.CurrentScene != Scenes.Fight
+            && CanCancel)
+        {
+            Menu();
+            UpdateButtonAndHeart();
+        }
+
+        if (IsChanging)
             return;
-        if(!IsActive)
+        if (!IsActive)
             return;
 
         if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
@@ -95,10 +96,10 @@ public class FunnyButtons : MonoBehaviour
                 case 1:
                     Act();
                     break;
-                case 2: 
+                case 2:
                     Items();
                     break;
-                case 3: 
+                case 3:
                     Mercy();
                     break;
                 default:
@@ -107,16 +108,55 @@ public class FunnyButtons : MonoBehaviour
             SoundManagerUi.Instance.PlaySound("accept");
         }
     }
-    void ChangeCurrentButton(bool negative)
+    public void ChangeCurrentButtonAndroid(int number)
+    {
+        if (!IsActive)
+        {
+            if (number == CurrentActiveButton && IsActiveAndroid)
+            {
+                Menu();
+                UpdateButtonAndHeart();
+            }
+            return;
+        }
+
+        ChangeCurrentButton(false, true, number);
+        switch (CurrentActiveButton)
+        {
+            case 0:
+                Fight();
+                break;
+            case 1:
+                Act();
+                break;
+            case 2:
+                Items();
+                break;
+            case 3:
+                Mercy();
+                break;
+            default:
+                break;
+        }
+        SoundManagerUi.Instance.PlaySound("accept");
+    }
+    void ChangeCurrentButton(bool negative, bool android = false, int number = 0)
     {
         IsChanging = true;
-        
-        CurrentActiveButton = negative ? CurrentActiveButton-1 : CurrentActiveButton+1;
-        SoundManagerUi.Instance.PlaySound("click");
 
-        if(CurrentActiveButton > 3) 
+        if (!android)
+        {
+            CurrentActiveButton = negative ? CurrentActiveButton - 1 : CurrentActiveButton + 1;
+            SoundManagerUi.Instance.PlaySound("click");
+        }
+        else
+        {
+            CurrentActiveButton = number;
+        }
+
+        if (CurrentActiveButton > 3)
             CurrentActiveButton = 0;
-        if(CurrentActiveButton < 0) 
+        if (CurrentActiveButton < 0)
             CurrentActiveButton = 3;
 
         UpdateButtonAndHeart();

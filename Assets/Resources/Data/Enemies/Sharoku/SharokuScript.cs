@@ -45,6 +45,7 @@ public class SharokuScript : MonoBehaviour
     public FLAG FOURTH_HAT_MOVEMENT = new FLAG();
     public FLAG FINAL_STAGE = new FLAG();
     public FLAG ZABAVKA = new FLAG();
+    public FLAG READY_TO_MERCY = new();
 
     public string CURRENT_ACTION = "none";
 

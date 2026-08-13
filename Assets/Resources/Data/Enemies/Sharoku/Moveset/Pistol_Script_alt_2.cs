@@ -12,13 +12,19 @@ public class Pistol_Script_alt_2 : MonoBehaviour
     public GameObject PistolModel;
     public GameObject PistolModelTemp;
     public GameObject bomb;
+    public GameObject Hat;
     public Sprite OriginalArmSprite;
     public bool IsAiming = true;
+    public bool IsHatOut = true;
+    public bool IsHatAttacking = false;
+    public bool IsHatHeal = false;
+    public bool IsStopMoving = true;
     public List<Sprite> Anim = new List<Sprite>();
     public Image Arm;
 
     void Start()
     {
+        Hat = SharokuScript.Instance.Hat;
         Arm = SharokuScript.Instance.Arm_Left.GetComponent<Image>();
         OriginalArmSprite = Arm.sprite;
         Sprite[] allSprites = Resources.LoadAll<Sprite>("SpriteAtlas/SHAROK ATL");
@@ -32,7 +38,7 @@ public class Pistol_Script_alt_2 : MonoBehaviour
         Anim.Add(System.Array.Find(allSprites, sprite => sprite.name == "Anim_Pistol_6"));
         Anim.Add(System.Array.Find(allSprites, sprite => sprite.name == "Anim_Pistol_7"));
         Anim.Add(System.Array.Find(allSprites, sprite => sprite.name == "Anim_Pistol_8"));
-        
+
         StartCoroutine(Shoot(Arm.gameObject.GetComponent<Image>()));
     }
 
@@ -68,6 +74,7 @@ public class Pistol_Script_alt_2 : MonoBehaviour
     IEnumerator Aiming(Transform Arm)
     {
         IsAiming = true;
+
         while (IsAiming)
         {
             var direction = Player.Instance.PlayerGameObject.transform.position - Arm.position;
@@ -83,49 +90,331 @@ public class Pistol_Script_alt_2 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         Speech.Instance.Say("Не знаю зачем тебе, но если так хочешь..<Лови!");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.6f);
         StartCoroutine(PistolLogic());
 
         yield return new WaitForSeconds(3f);
+        Hat.transform.SetParent(FunnyBox.Instance.gameObject.transform);
+        StartCoroutine(HatIdleAnimation());
         ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.10f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.52f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.3f);
-        ShootAnim();
-        yield return new WaitForSeconds(3f);
 
+        while (!HatColliderScript.Instance.PlayerFinallyCatch)
+        {
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.10f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.52f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.3f);
+            ShootAnim();
+            yield return new WaitForSeconds(1f);
+
+            StartCoroutine(QuitAnimAttack(Arm));
+
+            yield return new WaitForSeconds(1.5f);
+
+            yield return new WaitForSeconds(0.3f);
+            BombAttack();
+            yield return new WaitForSeconds(0.5f);
+            BombAttack();
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(PistolLogic());
+            yield return new WaitForSeconds(2f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.3f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(3f);
+
+            StartCoroutine(QuitAnimAttack(Arm));
+
+            StartCoroutine(HatAttackAnimation());
+
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+
+            yield return new WaitForSeconds(5f);
+
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+
+            BombAttack();
+            yield return new WaitForSeconds(0.1f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            BombAttack();
+            yield return new WaitForSeconds(1f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            StartCoroutine(PistolLogic());
+            yield return new WaitForSeconds(2f);
+            ShootAnim();
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.17f);
+            ShootAnim();
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            yield return new WaitForSeconds(0.1f);
+            ShootAnim();
+            yield return new WaitForSeconds(4f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            ShootAnim();
+            yield return new WaitForSeconds(3f);
+            StartCoroutine(QuitAnimAttack(Arm));
+            yield return new WaitForSeconds(1f);
+            BombAttack();
+            yield return new WaitForSeconds(0.2f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            BombAttack();
+            yield return new WaitForSeconds(4f);
+
+            StartCoroutine(HatAttackAnimation());
+
+            yield return new WaitForSeconds(5f);
+
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+
+
+            StartCoroutine(PistolLogic());
+
+            yield return new WaitForSeconds(2f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            ShootAnim();
+            yield return new WaitForSeconds(0.1f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            ShootAnim();
+            yield return new WaitForSeconds(0.1f);
+            ShootAnim();
+            yield return new WaitForSeconds(2f);
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            StartCoroutine(QuitAnimAttack(Arm));
+            yield return new WaitForSeconds(0.2f);
+            BombAttack();
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            yield return new WaitForSeconds(0.2f);
+            BombAttack();
+            if(HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(PistolLogic());
+            yield return new WaitForSeconds(1.5f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.8f);
+            StartCoroutine(QuitAnimAttack(Arm));
+
+            yield return new WaitForSeconds(3f);
+            BombAttack();
+            yield return new WaitForSeconds(2f);
+            BombAttack();
+            yield return new WaitForSeconds(1f);
+            BombAttack();
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(PistolLogic());
+            yield return new WaitForSeconds(1.5f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(0.08f);
+            ShootAnim();
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(QuitAnimAttack(Arm));
+            yield return new WaitForSeconds(1f);
+            BombAttack();
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(PistolLogic());
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        IsHatHeal = false;
+        IsHatOut = false;
+        HatColliderScript.Instance.IsHeal = true;
+
+        yield return new WaitForSeconds(2f);
+
+        Hat.transform.SetParent(Player.Instance.PlayerGameObject.transform);
+        Hat.transform.DOLocalMove(new Vector3(0,41.94f),1f).SetEase(Ease.InOutQuint);
+        Hat.transform.DOLocalRotate(new Vector3(0,0,0),1f).SetEase(Ease.InOutQuint);
+
+        yield return new WaitForSeconds(2f);
+        Speech.Instance.Say("...");
+        yield return new WaitForSeconds(5f);
+        Speech.Instance.Say("Ну чтож");
         StartCoroutine(QuitAnimAttack(Arm));
+        yield return new WaitForSeconds(5f);
+        Speech.Instance.Say("Ну, я не знаю что еще делать");
+         yield return new WaitForSeconds(4f);
+        Speech.Instance.Say("Давай на этом закончим.");
+        yield return new WaitForSeconds(6f);
+        
+        string[] tempText = new string[2]{Act.Instance.TextOfCells[1],Act.Instance.TextOfCells[2]};
+        Act.Instance.TextOfCells[0] = tempText[0];
+        Act.Instance.TextOfCells[1] = tempText[1];
+        
+        GameObject[] tempObj = new[]{Act.Instance.cellObjects[0],Act.Instance.cellObjects[1]};
+        Act.Instance.cellObjects[2].SetActive(false);
+        Act.Instance.cellObjects = tempObj;
 
-        yield return new WaitForSeconds(2f);
-        BombAttack();
-        yield return new WaitForSeconds(0.2f);
-        BombAttack();
-        yield return new WaitForSeconds(0.5f);
-        BombAttack();
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(PistolLogic());
-        yield return new WaitForSeconds(2f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.3f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(0.17f);
-        ShootAnim();
-        yield return new WaitForSeconds(3f);
+        SharokuScript.Instance.READY_TO_MERCY.IsReady = true;
 
-        StartCoroutine(QuitAnimAttack(Arm));
+        Fight.Instance.QuitFightExternal();
+    }
+    IEnumerator HatAttackAnimation()
+    {
+        if(IsHatAttacking == true)
+            yield break;
+        IsHatAttacking = true;
+        IsHatOut = false;
 
+        while(!IsStopMoving)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        StartCoroutine(HatHealingAnimation());
+        HatColliderScript.Instance.IsHeal = true;
+
+        while (HatColliderScript.Instance.IsPlayerGrabbing == false && !HatColliderScript.Instance.PlayerFinallyCatch)
+        {
+
+            float durationTime = 3;
+            Vector3 targetPos = new Vector3(0, 0);
+            var temp = true;
+
+            while (temp)
+            {
+                durationTime = UnityEngine.Random.Range(1, 2);
+                targetPos = new Vector3(UnityEngine.Random.Range(-950, 950), UnityEngine.Random.Range(-180, 780));
+
+                if (targetPos.y < 237.6 && targetPos.x > -588.54 && targetPos.x < 588.39)
+                {
+                    temp = false;
+                }
+                else
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+
+            }
+
+            if(HatColliderScript.Instance.IsPlayerGrabbing == true || HatColliderScript.Instance.PlayerFinallyCatch)
+                break;
+
+            Hat.transform
+                .DOLocalMove(targetPos, durationTime)
+                .SetEase(Ease.InOutQuint);
+            Hat.transform.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-15, 15)), durationTime)
+                .SetEase(Ease.InOutQuint);
+
+            yield return new WaitForSeconds(durationTime);
+        }
+
+        if(HatColliderScript.Instance.PlayerFinallyCatch)
+            yield break;
+
+        IsHatHeal = false;
+        IsHatAttacking = false;
+        HatColliderScript.Instance.IsHeal = false;
+        StartCoroutine(HatIdleAnimation());
+        yield break;
+    }
+    IEnumerator HatIdleAnimation()
+    {
+        IsHatOut = true;
+        while (IsHatOut && !HatColliderScript.Instance.PlayerFinallyCatch)
+        {
+
+            float durationTime = 3;
+            Vector3 targetPos = new Vector3(0, 0);
+            var temp = true;
+
+            while (temp)
+            {
+                durationTime = UnityEngine.Random.Range(5, 7);
+                
+                targetPos = new Vector3(UnityEngine.Random.Range(-950, 950), UnityEngine.Random.Range(-180, 780));
+
+                if (targetPos.y < 237.6 && targetPos.x > -588.54 && targetPos.x < 588.39)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+                else
+                {
+                    temp = false;
+                }
+
+            }
+
+            if (!IsHatOut)
+            {
+                break;
+            }
+
+            IsStopMoving = false;
+
+            Hat.transform
+                .DOLocalMove(targetPos, durationTime)
+                .SetEase(Ease.InOutQuint);
+            Hat.transform.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-15, 15)), durationTime)
+                .SetEase(Ease.InOutQuint);
+
+
+            yield return new WaitForSeconds(durationTime);
+            IsStopMoving = true;
+
+        }
+        yield break;
+    }
+    IEnumerator HatHealingAnimation()
+    {
+        IsHatHeal = true;
+        StartCoroutine(HatHealDelay());
+        while (IsHatHeal)
+        {
+            Hat.GetComponent<Image>().DOColor(Color.green, 0.5f);
+            yield return new WaitForSeconds(0.5f);
+            Hat.GetComponent<Image>().DOColor(Color.white, 0.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
+        Hat.GetComponent<Image>().DOColor(Color.red, 0.3f);
+        yield return new WaitForSeconds(0.8f);
+        Hat.GetComponent<Image>().DOColor(Color.white, 0.3f);
+        yield break;
+    }
+    IEnumerator HatHealDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        IsHatHeal = false;
+        HatColliderScript.Instance.IsPlayerGrabbing = false;
     }
     void ShootAnim()
     {
@@ -161,6 +450,10 @@ public class Pistol_Script_alt_2 : MonoBehaviour
     }
     IEnumerator BulletCorrector(GameObject Bullet)
     {
+        if (Player.Instance.HP[0] < 15)
+        {
+            yield break;
+        }
         if (UnityEngine.Random.Range(0, 100) > 50)
         {
             yield return new WaitForSeconds(0.02f);
@@ -273,7 +566,7 @@ public class Pistol_Script_alt_2 : MonoBehaviour
 
     void BombAttack(bool isLethal = true)
     {
-        var temp = Instantiate(bomb,FunnyBox.Instance.gameObject.transform);
+        var temp = Instantiate(bomb, FunnyBox.Instance.gameObject.transform);
         temp.GetComponent<Bomb_Rush_Script>().IsLethal = isLethal;
     }
 

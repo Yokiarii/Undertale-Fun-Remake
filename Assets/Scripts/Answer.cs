@@ -10,6 +10,7 @@ public class Answer : TextGenerator
     [SerializeField] private TextMeshProUGUI TextFieldStar;
     public bool StaticAnswer = false;
     public string TempAction;
+    public GameObject AcceptButtonAndroid;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class Answer : TextGenerator
 
     public void EnterAnswer(string action, string sound = "click") // включает ансвер после действия игрока
     {
+        AcceptButtonAndroid.SetActive(true);
         SharokuScript.Instance.CURRENT_ACTION = action;
         
         //Сбрасываем фазу
@@ -83,6 +85,20 @@ public class Answer : TextGenerator
             Type(BuildedText[AnswerPhase],0.06f,TypingSound);
         }
     }
+    public void AcceptAndroid()
+    {
+        if(!StaticAnswer)
+            return;
+
+        AnswerPhase++;
+
+            if(AnswerPhase >= BuildedText.Length)
+            {
+                ExitAnswer();
+                return;
+            }
+            Type(BuildedText[AnswerPhase],0.06f,TypingSound);
+    }
     public void DoAnswer(string action, string sound) //хендлер ансвера после действия игрока
     {
         StaticAnswer = true;
@@ -96,6 +112,7 @@ public class Answer : TextGenerator
         StaticAnswer = false;
         Fight.Instance.Init();
         SwitchActive(false);
+        AcceptButtonAndroid.SetActive(false);
 
         //включаем флаг шароку со шляпой
         if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 1)

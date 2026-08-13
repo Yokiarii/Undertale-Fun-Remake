@@ -82,6 +82,7 @@ public class Fight : MonoBehaviour
         FunnyButtons.Instance.IsActive = true;
         FunnyButtons.Instance.UpdateButtonAndHeart();
         FunnyButtons.Instance.CanCancel = true;
+        FunnyButtons.Instance.IsActiveAndroid = true;
         Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
     }
 

@@ -81,7 +81,7 @@ public abstract class ListenInputBase : MonoBehaviour
     protected bool isListening = true;
     protected bool isChanging;
     protected bool isReady;
-    protected bool isAccepting;
+    public bool isAccepting;
     protected bool isSilent;
     [SerializeField] protected int currentCell;
     [SerializeField] protected string[] textOfCells;
@@ -160,8 +160,22 @@ public abstract class ListenInputBase : MonoBehaviour
     }
 
     public abstract void Accept();
-    public virtual void CellAcceptingInput()
+    public virtual void CellAcceptingInput(bool android = false)
     {
+        if (android)
+        {
+            Accept();
+            //isAccepting = true;
+            //isReady = false;
+            //if(!gameObject.activeSelf)
+            //    return;
+            //StartCoroutine(Delay());
+
+            if(!isSilent)
+                SoundManagerUi.Instance.PlaySound("accept");
+
+            return;
+        }
         if (!Keyboard.current.zKey.isPressed
             && !Keyboard.current.enterKey.isPressed)
         {
@@ -304,6 +318,13 @@ public abstract class ListenInputBase : MonoBehaviour
         ChangePresence(false);
         isSilent = true;
         Answer.Instance.Type(text);
+    }
+
+    public void AcceptingAndroid(int number)
+    {
+        currentCell = number;
+        CellAcceptingInput(true);
+        FunnyButtons.Instance.IsActiveAndroid = false;
     }
 }
 public class CellLine

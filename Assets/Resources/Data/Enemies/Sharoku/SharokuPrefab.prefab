@@ -638,6 +638,9 @@ GameObject:
   - component: {fileID: 6886476840911634917}
   - component: {fileID: 2073780873804928953}
   - component: {fileID: 8617238869067682598}
+  - component: {fileID: 3211776378691745058}
+  - component: {fileID: 2189468408049949479}
+  - component: {fileID: 8418883163289256747}
   m_Layer: 5
   m_Name: Hat
   m_TagString: Untagged
@@ -702,6 +705,104 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!50 &3211776378691745058
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811204937090736660}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!68 &2189468408049949479
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811204937090736660}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 19.17163, y: 47.031128}
+  - {x: 52.14673, y: 34.35266}
+  - {x: 77.59949, y: 21.518677}
+  - {x: 78.89783, y: -9.631897}
+  - {x: 103.98718, y: -10.415405}
+  - {x: 135.89478, y: -25.413025}
+  - {x: 89.390625, y: -46.027588}
+  - {x: 54.030396, y: -30.533386}
+  - {x: 21.534546, y: -28.38855}
+  - {x: 21.58313, y: -22.243164}
+  - {x: -22.26184, y: -22.392578}
+  - {x: -84.57446, y: -39.812805}
+  - {x: -133.81396, y: -34.163757}
+  - {x: -113.84717, y: -10.7039795}
+  - {x: -79.91504, y: -3.165039}
+  - {x: -76.75049, y: 27.104248}
+  - {x: -30.973389, y: 47.248047}
+  - {x: 17.684448, y: 47.483276}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!114 &8418883163289256747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811204937090736660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048974b39765ab64a8c966815336e1b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HatColliderScript
 --- !u!1 &6619042873854185434
 GameObject:
   m_ObjectHideFlags: 0
