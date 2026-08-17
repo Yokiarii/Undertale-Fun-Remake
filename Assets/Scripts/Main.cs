@@ -29,13 +29,16 @@ public class Main : MonoBehaviour
         _instance = this;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
-        
+
         AllSpace.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     void Start()
     {
         StartCoroutine(TempAnimation());
+#if UNITY_ANDROID
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+#endif
     }
 
     IEnumerator TempAnimation()
@@ -47,21 +50,21 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         var temp = TempHeartForAnimation.GetComponent<Image>();
-        temp.DOFade(0,0.06f);
+        temp.DOFade(0, 0.06f);
         yield return new WaitForSeconds(0.06f);
-        temp.DOFade(1,0.06f);
+        temp.DOFade(1, 0.06f);
         yield return new WaitForSeconds(0.06f);
-        temp.DOFade(0,0.06f);
+        temp.DOFade(0, 0.06f);
         yield return new WaitForSeconds(0.06f);
-        temp.DOFade(1,0.06f);
+        temp.DOFade(1, 0.06f);
         yield return new WaitForSeconds(0.06f);
-        temp.DOFade(0,0.06f);
+        temp.DOFade(0, 0.06f);
         yield return new WaitForSeconds(0.06f);
-        temp.DOFade(1,0.06f);
+        temp.DOFade(1, 0.06f);
 
-        TempHeartForAnimation.transform.DOLocalMove(new Vector3(-607.9f,-481.5f,0),0.7f);
+        TempHeartForAnimation.transform.DOLocalMove(new Vector3(-607.9f, -481.5f, 0), 0.7f);
         yield return new WaitForSeconds(0.7f);
-        AllSpace.GetComponent<CanvasGroup>().DOFade(1,0.7f);
+        AllSpace.GetComponent<CanvasGroup>().DOFade(1, 0.7f);
         yield return new WaitForSeconds(0.7f);
         TempHeartForAnimation.SetActive(false);
         Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);

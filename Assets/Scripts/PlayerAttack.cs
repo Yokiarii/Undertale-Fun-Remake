@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject Line;
     public GameObject LineStop;
     public GameObject Miss;
+    public GameObject AttackButtonAndroid;
 
     public bool PlayerClick = false;
     public bool IsReady = false;
@@ -38,6 +39,9 @@ public class PlayerAttack : MonoBehaviour
         IsFollowing = true;
         StartCoroutine(Delay());
         StartLine();
+        #if UNITY_ANDROID
+        AttackButtonAndroid.SetActive(true);
+        #endif
     }
 
     void FixedUpdate()
@@ -61,8 +65,15 @@ public class PlayerAttack : MonoBehaviour
             return;
         if(Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
+            AttackButtonAndroid.SetActive(false);
             StartCoroutine(StopLine());
         }
+    }
+
+    public void AndroidAttack()
+    {
+        AttackButtonAndroid.SetActive(false);
+        StartCoroutine(StopLine());
     }
 
     IEnumerator DoMiss()

@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     bool IsTakeDamage = false;
     public Animator Anim;
     public GameObject ShatteredHeart;
+    public GameObject RestartAndroidButton;
 
     void Awake()
     {
@@ -46,6 +47,12 @@ public class Player : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    public void AndroidRestart()
+    {
+        if(IsDead)
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ChangeName(string name) => Name = name;
@@ -124,6 +131,9 @@ public class Player : MonoBehaviour
         tempObj.SetActive(true);
         var temp = tempObj.GetComponent<SpriteRenderer>();
         temp.DOFade(1f, 5f);
+        
+        RestartAndroidButton.SetActive(true);
+
         SoundManagerUi.Instance.PlaySound("death_song");
         yield return new WaitForSeconds(46);
         Application.Quit();
