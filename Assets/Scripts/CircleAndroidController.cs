@@ -40,7 +40,13 @@ public class CircleAndroidController : MonoBehaviour
             {
                 direction.Normalize();
                 Circle.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
-                Player.Instance.PlayerGameObject.GetComponent<Rigidbody2D>().linearVelocity = direction * 3;
+                if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose)
+                {
+                    Player.Instance.PlayerGameObject.GetComponent<Rigidbody2D>().linearVelocity = -direction * 3;
+                } else
+                {
+                    Player.Instance.PlayerGameObject.GetComponent<Rigidbody2D>().linearVelocity = direction * 3;
+                }
             }
             else
             {

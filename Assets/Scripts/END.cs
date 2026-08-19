@@ -97,16 +97,17 @@ public class END : MonoBehaviour
 
     IEnumerator Titles()
     {
+        Music.Instance.audio.Stop();
+
         Background.DOFade(1, 3f);
         yield return new WaitForSeconds(3f);
         Main.Instance.AllSpace.SetActive(false);
 
         yield return new WaitForSeconds(2f);
+
         Player.Instance.PlayerGameObject.transform.SetParent(Main.Instance.MainCanvas.transform);
         Player.Instance.PlayerGameObject.transform.localPosition = new Vector3(0, -150);
         Player.Instance.PlayerGameObject.SetActive(true);
-
-        
 
         string temp = "Шароку ушла";
         for (int i = 0; i < temp.Length; i++)
@@ -116,6 +117,8 @@ public class END : MonoBehaviour
                 SoundManagerUi.Instance.PlaySound("typing");
             yield return new WaitForSeconds(0.25f);
         }
+
+        Music.Instance.StartMusic(1);
 
         yield return new WaitForSeconds(3f);
 

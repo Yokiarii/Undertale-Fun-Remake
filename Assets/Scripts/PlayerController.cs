@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool isEnd = false;
     public GameObject AndroidCircle;
 
-    private  static PlayerController _instance;
+    private static PlayerController _instance;
     public static PlayerController Instance => _instance;
 
     void Awake()
@@ -23,11 +23,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _instance = this;
         Rb = GetComponent<Rigidbody2D>();
     }
 
     void OnEnable()
     {
+        if (SharokuScript.Instance.READY_TO_MERCY.IsReady)
+            isEnd = true;
         if (isMobile && Main.Instance.PlayerUsesCircle)
             AndroidCircle.SetActive(true);
     }
@@ -41,7 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Player.Instance.IsDead)
             return;
-        if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose)
+        if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose && !isMobile)
         {
             if (Keyboard.current.upArrowKey.isPressed)
                 Rb.AddForceY(-Speed);
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour
                 Rb.AddForceX(Speed);
             return;
         }
+
         if (Keyboard.current.upArrowKey.isPressed)
             Rb.AddForceY(Speed);
         if (Keyboard.current.downArrowKey.isPressed)
@@ -85,17 +89,17 @@ public class PlayerController : MonoBehaviour
             Vector2 direction = (Vector2)mouseWorldPos - (Vector2)transform.position;
             mouseWorldPos.z = transform.position.z;
 
-            if (SharokuScript.Instance.ZABAVKA.IsReady)
-            {
-                mouseWorldPos.x = -mouseWorldPos.x;
-                mouseWorldPos.y = -mouseWorldPos.y;
-            }
-
             // Нормализуем направление, чтобы скорость была одинаковой в разных направлениях
             direction.Normalize();
 
-            // Применяем силу к Rigidbody2D для движения
-            Rb.linearVelocity = direction * (Speed / 2);
+            if (SharokuScript.Instance.ZABAVKA.IsReady && !SharokuScript.Instance.ZABAVKA.IsClose)
+            {
+                Rb.linearVelocity = direction * (-Speed / 2);
+            } else
+            {
+                Rb.linearVelocity = direction * (Speed / 2);
+            }
+
         }
         else
         {

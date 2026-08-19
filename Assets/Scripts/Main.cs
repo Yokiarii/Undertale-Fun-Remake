@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -10,7 +11,8 @@ public class Main : MonoBehaviour
 {
     private static Main _instance;
     public static Main Instance => _instance;
-    public bool PlayerUsesCircle = true;
+    [NonSerialized]
+    public bool PlayerUsesCircle = false;
 
     public static string Version = "Build v0.10.0-demo PC";
     public static string Tag_Version = "demo_10";
@@ -55,6 +57,8 @@ public class Main : MonoBehaviour
 #else
         StartCoroutine(TempAnimation());
 #endif
+
+
     }
 
     public void Accept()
@@ -103,6 +107,7 @@ public class Main : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         TempHeartForAnimation.SetActive(false);
         Answer.Instance.Type(Enemy.CurrentEnemy.StateRelation[Enemy.CurrentEnemy.CurrentRelation].BaseAnswer);
+        Music.Instance.StartMusic(0);
     }
 
     public IEnumerator ShakeCA()
