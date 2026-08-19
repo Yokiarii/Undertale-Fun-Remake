@@ -36,11 +36,11 @@ public class Mercy : ListenInputBase, IScene
             FunnyButtons.Instance.TurnOffButtons();
             FunnyButtons.Instance.IsActive = false;
             FunnyButtons.Instance.CanCancel = false;
+
             isListening = false;
             isAccepting = false;
             var temp = Instantiate(END,Main.Instance.MainCanvas.transform);
             temp.transform.SetAsLastSibling();
-
 
             Debug.Log("ИГРА ОКОНЧЕНА");
             return;

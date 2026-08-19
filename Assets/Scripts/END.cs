@@ -90,7 +90,9 @@ public class END : MonoBehaviour
 
     void Start()
     {
+
         StartCoroutine(Titles());
+
     }
 
     IEnumerator Titles()
@@ -103,6 +105,8 @@ public class END : MonoBehaviour
         Player.Instance.PlayerGameObject.transform.SetParent(Main.Instance.MainCanvas.transform);
         Player.Instance.PlayerGameObject.transform.localPosition = new Vector3(0, -150);
         Player.Instance.PlayerGameObject.SetActive(true);
+
+        
 
         string temp = "Шароку ушла";
         for (int i = 0; i < temp.Length; i++)
@@ -240,16 +244,17 @@ public class END : MonoBehaviour
         while (true)
         {
             string text = "";
-            if (UnityEngine.Random.Range(0,100) > 50)  
+            if (UnityEngine.Random.Range(0, 100) > 50)
             {
-                text = $"{KazakhMaleNames[Random.Range(0,KazakhMaleNames.Length-1)]}"
-                +$" {KazakhMaleFamilyNames[Random.Range(0,KazakhMaleFamilyNames.Length-1)]}"
-                +$" - <size=28>{GameDevelopmentJobTitles[Random.Range(0,GameDevelopmentJobTitles.Length-1)]}</size>";
-            } else
+                text = $"{KazakhMaleNames[Random.Range(0, KazakhMaleNames.Length - 1)]}"
+                + $" {KazakhMaleFamilyNames[Random.Range(0, KazakhMaleFamilyNames.Length - 1)]}"
+                + $" - <size=28>{GameDevelopmentJobTitles[Random.Range(0, GameDevelopmentJobTitles.Length - 1)]}</size>";
+            }
+            else
             {
-                text = $" {KazakhFemaleNames[Random.Range(0,KazakhFemaleNames.Length-1)]}"
-                +$" {KazakhFemaleFamilyName[Random.Range(0,KazakhFemaleFamilyName.Length-1)]}"
-                +$" - <size=28>{GameDevelopmentJobTitles[Random.Range(0,GameDevelopmentJobTitles.Length-1)]}</size>";
+                text = $" {KazakhFemaleNames[Random.Range(0, KazakhFemaleNames.Length - 1)]}"
+                + $" {KazakhFemaleFamilyName[Random.Range(0, KazakhFemaleFamilyName.Length - 1)]}"
+                + $" - <size=28>{GameDevelopmentJobTitles[Random.Range(0, GameDevelopmentJobTitles.Length - 1)]}</size>";
             }
             StartTitle(text);
             yield return new WaitForSeconds(1.5f);

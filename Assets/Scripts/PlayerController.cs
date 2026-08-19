@@ -6,20 +6,37 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D Rb;
     public float Speed = 0.35f;
     private bool isMobile = false;
+    public bool isEnd = false;
+    public GameObject AndroidCircle;
 
+    private  static PlayerController _instance;
+    public static PlayerController Instance => _instance;
 
-
-    void Start()
+    void Awake()
     {
-        Rb = GetComponent<Rigidbody2D>();
-
 #if UNITY_ANDROID
         isMobile = true;
 #else
         isMobile = false;
 #endif
-
     }
+
+    void Start()
+    {
+        Rb = GetComponent<Rigidbody2D>();
+    }
+
+    void OnEnable()
+    {
+        if (isMobile && Main.Instance.PlayerUsesCircle)
+            AndroidCircle.SetActive(true);
+    }
+    void OnDisable()
+    {
+        if (isMobile && Main.Instance.PlayerUsesCircle)
+            AndroidCircle.SetActive(false);
+    }
+
     void Update()
     {
         if (Player.Instance.IsDead)
@@ -45,8 +62,14 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.leftArrowKey.isPressed)
             Rb.AddForceX(-Speed);
 
-        if (isMobile)
+        if (isMobile && !Main.Instance.PlayerUsesCircle)
+        {
             AndroidController();
+        }
+        if (isEnd && isMobile && Main.Instance.PlayerUsesCircle)
+        {
+            AndroidController();
+        }
     }
 
     public void AndroidController()
@@ -61,6 +84,12 @@ public class PlayerController : MonoBehaviour
             // Вычисляем направление от игрока к позиции мыши
             Vector2 direction = (Vector2)mouseWorldPos - (Vector2)transform.position;
             mouseWorldPos.z = transform.position.z;
+
+            if (SharokuScript.Instance.ZABAVKA.IsReady)
+            {
+                mouseWorldPos.x = -mouseWorldPos.x;
+                mouseWorldPos.y = -mouseWorldPos.y;
+            }
 
             // Нормализуем направление, чтобы скорость была одинаковой в разных направлениях
             direction.Normalize();

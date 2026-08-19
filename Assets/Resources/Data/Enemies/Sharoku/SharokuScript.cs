@@ -19,8 +19,8 @@ public class SharokuScript : MonoBehaviour
         {
             _state = value;
         }
-        
-    } 
+
+    }
 
     public GameObject Hat;
     public GameObject Head;
@@ -67,38 +67,40 @@ public class SharokuScript : MonoBehaviour
     void Start()
     {
         ZABAVKA.phase = 0;
+
+        READY_TO_MERCY.IsReady = true; //временно
     }
 
     void FixedUpdate()
     {
         if (FIRST_HAT_MOVEMENT.IsReady && !FIRST_HAT_MOVEMENT.IsClose)
         {
-            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y);
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y);
             FIRST_HAT_MOVEMENT.IsClose = true;
         }
 
         if (SECOND_HAT_MOVEMENT.IsReady && !SECOND_HAT_MOVEMENT.IsClose)
         {
-            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y);
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y);
             SECOND_HAT_MOVEMENT.IsClose = true;
         }
 
         if (THIRD_HAT_MOVEMENT.IsReady && !THIRD_HAT_MOVEMENT.IsClose)
         {
-            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x-6f,Hat.transform.localPosition.y-4);
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y - 4);
             THIRD_HAT_MOVEMENT.IsClose = true;
         }
 
         if (FOURTH_HAT_MOVEMENT.IsReady && !FOURTH_HAT_MOVEMENT.IsClose)
         {
-            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x+4f,Hat.transform.localPosition.y-15);
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x + 4f, Hat.transform.localPosition.y - 15);
             FOURTH_HAT_MOVEMENT.IsClose = true;
         }
         if (ZABAVKA.phase == 2)
         {
             ZABAVKA.IsClose = true;
         }
-        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
         {
             Enemy
                 .CurrentEnemy
@@ -114,7 +116,7 @@ public class SharokuScript : MonoBehaviour
                 .ListOfAttack["Pistol_alt_1"]
                 .IsActive = true;
         }
-        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
         {
             Enemy
                 .CurrentEnemy
@@ -152,7 +154,7 @@ public class SharokuScript : MonoBehaviour
                 }
                 break;
             default:
-            break;
+                break;
         }
     }
 
@@ -172,17 +174,17 @@ public class SharokuScript : MonoBehaviour
 
         //-->>
         obj.transform.DOLocalMove(new Vector3(
-            OriginalPosition.x + Random.Range(-1,1),
-            OriginalPosition.y + Random.Range(7,11),0),1.5f).SetEase(Ease.InOutCirc);
+            OriginalPosition.x + Random.Range(-1, 1),
+            OriginalPosition.y + Random.Range(7, 11), 0), 1.5f).SetEase(Ease.InOutCirc);
         yield return new WaitForSeconds(1.5f);
 
         //<<--
         obj.transform.DOLocalMove(new Vector3(
             OriginalPosition.x,
-            OriginalPosition.y,0),1.5f).SetEase(Ease.InOutCirc);
+            OriginalPosition.y, 0), 1.5f).SetEase(Ease.InOutCirc);
         yield return new WaitForSeconds(1.5f);
 
-        StartCoroutine(ShakeCoroutine(obj)); 
+        StartCoroutine(ShakeCoroutine(obj));
     }
 
     IEnumerator DeathCoroutine(GameObject obj)
@@ -192,6 +194,6 @@ public class SharokuScript : MonoBehaviour
         Speech.Instance.Say("Ну...", false, 0.15f);
         yield return new WaitForSeconds(5);
         Speech.Instance.Say("Это не круто", true, 0.15f);
-        
+
     }
 }

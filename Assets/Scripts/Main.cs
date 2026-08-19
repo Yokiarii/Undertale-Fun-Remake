@@ -10,6 +10,7 @@ public class Main : MonoBehaviour
 {
     private static Main _instance;
     public static Main Instance => _instance;
+    public bool PlayerUsesCircle = true;
 
     public static string Version = "Build v0.10.0-demo PC";
     public static string Tag_Version = "demo_10";
@@ -18,6 +19,9 @@ public class Main : MonoBehaviour
     public GameObject MainCanvas;
     public GameObject GameOver;
     public GameObject FightScene;
+    public GameObject OptionCanvas;
+    public Sprite[] TumblerImage;
+    public Image Tumbler;
 
     public GameObject TempHeartForAnimation;
 
@@ -33,12 +37,43 @@ public class Main : MonoBehaviour
         AllSpace.GetComponent<CanvasGroup>().alpha = 0;
     }
 
-    void Start()
+    public void SwitchTumbler()
     {
-        StartCoroutine(TempAnimation());
+        if (Tumbler.sprite == TumblerImage[0])
+        {
+            Tumbler.sprite = TumblerImage[1];
+        } else
+        {
+            Tumbler.sprite = TumblerImage[0];
+        }
+    }
+
+    void Start(){
 #if UNITY_ANDROID
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+        StartCoroutine(Option1());
+#else
+        StartCoroutine(TempAnimation());
 #endif
+    }
+
+    public void Accept()
+    {
+        if (Tumbler.sprite == TumblerImage[0])
+        {
+            PlayerUsesCircle = true;
+        } else
+        {
+            PlayerUsesCircle = false;
+        }
+        OptionCanvas.SetActive(false);
+        StartCoroutine(TempAnimation());
+    }
+
+    IEnumerator Option1()
+    {
+        OptionCanvas.SetActive(true);
+        yield break;
     }
 
     IEnumerator TempAnimation()
