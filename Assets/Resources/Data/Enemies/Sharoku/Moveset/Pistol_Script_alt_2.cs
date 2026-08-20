@@ -265,6 +265,8 @@ public class Pistol_Script_alt_2 : MonoBehaviour
         Hat.transform.DOLocalMove(new Vector3(0,41.94f),1f).SetEase(Ease.InOutQuint);
         Hat.transform.DOLocalRotate(new Vector3(0,0,0),1f).SetEase(Ease.InOutQuint);
 
+        SharokuScript.Instance.PLAYER_CATCH_HAT.IsReady = true;
+
         yield return new WaitForSeconds(2f);
         Speech.Instance.Say("...");
         yield return new WaitForSeconds(5f);

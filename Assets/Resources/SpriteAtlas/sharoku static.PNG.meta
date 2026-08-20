@@ -116,10 +116,10 @@ TextureImporter:
       name: sharoku static_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 8
-        width: 207
-        height: 525
+        x: 25
+        y: 0
+        width: 168
+        height: 497
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

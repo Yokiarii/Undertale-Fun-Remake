@@ -36,6 +36,7 @@ public class SharokuScript : MonoBehaviour
     public GameObject Parts_Left_Hand;
     public GameObject Parts_Legs;
     public GameObject Parts_Body;
+    public GameObject DeathAnim;
 
     public List<GameObject> Parts = new List<GameObject>();
 
@@ -46,6 +47,7 @@ public class SharokuScript : MonoBehaviour
     public FLAG FINAL_STAGE = new FLAG();
     public FLAG ZABAVKA = new FLAG();
     public FLAG READY_TO_MERCY = new();
+    public FLAG PLAYER_CATCH_HAT = new();
 
     public string CURRENT_ACTION = "none";
 
@@ -188,9 +190,29 @@ public class SharokuScript : MonoBehaviour
 
     IEnumerator DeathCoroutine(GameObject obj)
     {
+        DeathAnim.SetActive(true);
+
+        Head.SetActive(false);
+        Body.SetActive(false);
+        Leg_Left.SetActive(false);
+        Leg_Right.SetActive(false);
+        Arm_Left.SetActive(false);
+        Arm_Right.SetActive(false);
+
+        if (!PLAYER_CATCH_HAT.IsReady)
+        {
+            Hat.transform.SetParent(DeathAnim.transform);
+        }
+
         yield return new WaitForSeconds(3);
         Speech.Instance.Say("Ну...", false, 0.15f);
         yield return new WaitForSeconds(5);
         Speech.Instance.Say("Это не круто", true, 0.15f);
+
+        
+    }
+    IEnumerator HatAnim()
+    {
+        yield break;
     }
 }
