@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SharokuScript : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class SharokuScript : MonoBehaviour
     public GameObject Parts_Legs;
     public GameObject Parts_Body;
     public GameObject DeathAnim;
+    public GameObject RestartAndroidButton;
 
     public List<GameObject> Parts = new List<GameObject>();
 
@@ -48,6 +50,7 @@ public class SharokuScript : MonoBehaviour
     public FLAG ZABAVKA = new FLAG();
     public FLAG READY_TO_MERCY = new();
     public FLAG PLAYER_CATCH_HAT = new();
+    public FLAG SHAROKU_IS_DEAD = new();
 
     public string CURRENT_ACTION = "none";
 
@@ -70,6 +73,31 @@ public class SharokuScript : MonoBehaviour
     {
         ZABAVKA.phase = 0;
         READY_TO_MERCY.IsReady = true;
+    }
+
+    void Update()
+    {
+        if (!SHAROKU_IS_DEAD.IsReady)
+        {
+            return;
+        }
+
+        if (Keyboard.current.xKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     void FixedUpdate()
@@ -201,7 +229,7 @@ public class SharokuScript : MonoBehaviour
 
         if (!PLAYER_CATCH_HAT.IsReady)
         {
-            Hat.transform.SetParent(DeathAnim.transform);
+            Hat.transform.SetParent(Main.Instance.MainCanvas.transform);
         }
 
         yield return new WaitForSeconds(3);
@@ -209,10 +237,44 @@ public class SharokuScript : MonoBehaviour
         yield return new WaitForSeconds(5);
         Speech.Instance.Say("Это не круто", true, 0.15f);
 
-        
+        yield return new WaitForSeconds(5);
+
+        DeathAnim.GetComponent<SpriteDisassembler>().Dissolve();
+        Hat.transform.SetAsLastSibling();
+
+        if (PLAYER_CATCH_HAT.IsReady)
+        {
+            Speech.Instance.Say("Ну а шляпу то... верни...", true, 0.15f);
+        }
+
+        if (!PLAYER_CATCH_HAT.IsReady)
+        {
+            yield return new WaitForSeconds(12.3f);
+            Debug.Log("done");
+            StartCoroutine(HatAnim());
+            yield return new WaitForSeconds(7f);
+        }
+        yield return new WaitForSeconds(5f);
+        Answer.Instance.SwitchActive(true);
+        RestartAndroidButton.SetActive(true);
+        Answer.Instance.Type("Шароку больше нет, нажмите любую клавишу.");
+        SHAROKU_IS_DEAD.IsReady = true;
     }
     IEnumerator HatAnim()
     {
+        Hat.transform.DOLocalMoveY(15.4f, 10f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x + 40, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x - 80, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, -5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x + 80, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x - 40, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f).SetEase(Ease.InOutSine);
+
         yield break;
     }
 }

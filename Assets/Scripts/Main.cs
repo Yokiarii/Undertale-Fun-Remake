@@ -61,6 +61,11 @@ public class Main : MonoBehaviour
 
     }
 
+    public void AndroidRestart()
+    {  
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void Accept()
     {
         if (Tumbler.sprite == TumblerImage[0])

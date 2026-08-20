@@ -24,7 +24,8 @@ public class SpriteDisassembler : MonoBehaviour
     private GameObject fragmentsParent;
     private List<RectTransform> fragments = new List<RectTransform>();
 
-    void Start()
+
+    public void Dissolve()
     {
         imageComponent = GetComponent<Image>();
         rectTransform = GetComponent<RectTransform>();
@@ -34,10 +35,7 @@ public class SpriteDisassembler : MonoBehaviour
             Debug.LogError("Нет компонента Image на этом объекте!");
             return;
         }
-    }
 
-    public void Dissolve()
-    {
         if (fragments.Count > 0)
         {
             ClearFragments();
@@ -169,10 +167,10 @@ public class SpriteDisassembler : MonoBehaviour
     {
         foreach (var item in fragments)
         {
-            var temp = new Vector3(Random.Range(-79.2f,79.2f),Random.Range(-40.2f,-10));
+            var temp = new Vector3(Random.Range(-40.2f,40.2f),Random.Range(-40.2f,-10));
             item.gameObject.transform.DOLocalMove(new Vector3(item.gameObject.transform.localPosition.x + temp.x
-            ,item.gameObject.transform.localPosition.y + temp.y),5f).SetEase(Ease.InQuad);
-            item.GetComponent<Image>().DOFade(0,5f);
+            ,item.gameObject.transform.localPosition.y + temp.y),6f).SetEase(Ease.InQuad);
+            item.GetComponent<Image>().DOFade(0,6f).SetEase(Ease.InOutSine);
             yield return new WaitForSecondsRealtime(0.0001f);
         }
         yield break;
