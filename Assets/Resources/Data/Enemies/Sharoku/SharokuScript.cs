@@ -188,7 +188,6 @@ public class SharokuScript : MonoBehaviour
 
     IEnumerator DeathCoroutine(GameObject obj)
     {
-        Music.Instance.audio.Stop();
         yield return new WaitForSeconds(3);
         Speech.Instance.Say("Ну...", false, 0.15f);
         yield return new WaitForSeconds(5);

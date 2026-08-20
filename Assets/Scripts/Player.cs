@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public int Damage {get; private set; } = 20;
 
     public bool IsDead { get; private set; } = false;
+    bool Delay = true;
 
     private static Player _instance;
     public static Player Instance => _instance;
@@ -31,6 +33,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if(Delay)
+            return;
+        Debug.Log(Delay);
         if (Keyboard.current.xKey.wasPressedThisFrame && IsDead)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
@@ -51,6 +56,8 @@ public class Player : MonoBehaviour
 
     public void AndroidRestart()
     {
+        if(Delay)
+            return;
         if(IsDead)
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
@@ -118,6 +125,7 @@ public class Player : MonoBehaviour
 
     IEnumerator GameOverAnimation()
     {
+        Music.Instance.audio.Stop();
         Anim.Play("Shattered Heart");
         yield return new WaitForSeconds(2f);
 
@@ -135,6 +143,9 @@ public class Player : MonoBehaviour
         RestartAndroidButton.SetActive(true);
 
         SoundManagerUi.Instance.PlaySound("death_song");
+        
+        StartCoroutine(DelayDeathScreen());
+
         yield return new WaitForSeconds(46);
         Application.Quit();
     }
@@ -165,7 +176,13 @@ public class Player : MonoBehaviour
         TextHP.text = HP[0].ToString();
         SliderHP.maxValue = HP[1];
     }
+    public IEnumerator DelayDeathScreen()
+    {
+        yield return new WaitForSeconds(7);
+        Delay = false;
+    }
 }
+
 
 public class Inventory
 {

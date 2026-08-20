@@ -112,6 +112,7 @@ public class PlayerAttack : MonoBehaviour
         IsFollowing = false;
         Line.SetActive(false);
         LineStop.SetActive(true);
+        Music.Instance.audio.Stop();
         
         var deviation = LineStop.transform.position.x;
         Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation,Player.Instance.Damage)); // Отнимает хп у врага
