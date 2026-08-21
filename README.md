@@ -1,3 +1,4 @@
+
 # Undertale-Fun-Remake
 ## *Это фан поделка боя из андертейл для Krushitel. С днем рождения, что ли.*
 ## Работа делается Yokiari и Armatura. Секретно) Никому не рассказывайте) 
@@ -9,4 +10,6 @@
 ## Гифки и прочее
 ![2026-02-21 10-54-46](https://github.com/user-attachments/assets/f95475ca-b772-4245-83ff-bcfe5a493cd2)
 ![2026-02-25 01-16-34 (1)](https://github.com/user-attachments/assets/9e9d11de-6dd7-47fb-a8bf-792865763455)
+<img width="500" height="282" alt="2026-03-22 16-02-47" src="https://github.com/user-attachments/assets/9e5fc808-9512-45d9-bdb3-3a415806a988" />
+<img width="500" height="282" alt="2026-03-01 20-40-45 (1)" src="https://github.com/user-attachments/assets/e0f36426-fff5-4962-80c5-c6adc35647b0" />
 
