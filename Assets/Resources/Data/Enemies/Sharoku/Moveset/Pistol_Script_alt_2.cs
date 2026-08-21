@@ -274,7 +274,7 @@ public class Pistol_Script_alt_2 : MonoBehaviour
         StartCoroutine(QuitAnimAttack(Arm));
         yield return new WaitForSeconds(5f);
         Speech.Instance.Say("Ну, я не знаю что еще делать");
-         yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(8f);
         Speech.Instance.Say("Давай на этом закончим.");
         yield return new WaitForSeconds(6f);
         

@@ -72,7 +72,6 @@ public class SharokuScript : MonoBehaviour
     void Start()
     {
         ZABAVKA.phase = 0;
-        READY_TO_MERCY.IsReady = true;
     }
 
     void Update()
@@ -245,6 +244,7 @@ public class SharokuScript : MonoBehaviour
         if (PLAYER_CATCH_HAT.IsReady)
         {
             Speech.Instance.Say("Ну а шляпу то... верни...", true, 0.15f);
+            yield return new WaitForSeconds(12f);
         }
 
         if (!PLAYER_CATCH_HAT.IsReady)

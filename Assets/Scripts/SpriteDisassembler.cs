@@ -56,33 +56,28 @@ public class SpriteDisassembler : MonoBehaviour
         Texture2D texture = originalSprite.texture;
         Rect spriteRect = originalSprite.rect;
 
-        // Размер одного фрагмента в пикселях текстуры
         float fragmentPixelWidth = spriteRect.width / columns;
         float fragmentPixelHeight = spriteRect.height / rows;
 
-        // Получаем размер исходного спрайта в UI-координатах
         Vector2 spriteUISize = rectTransform.rect.size;
         float fragmentUIWidth = spriteUISize.x / columns;
         float fragmentUIHeight = spriteUISize.y / rows;
 
-        // Получаем pivot исходного спрайта
         Vector2 sourcePivot = rectTransform.pivot;
 
-        // СОЗДАЁМ РОДИТЕЛЬСКИЙ ОБЪЕКТ
+
         if (fragmentsParent == null)
         {
             fragmentsParent = new GameObject("FragmentsParent");
             
-            // Добавляем RectTransform
+
             RectTransform parentRect = fragmentsParent.AddComponent<RectTransform>();
-            
-            // Устанавливаем родителем Canvas
+
             fragmentsParent.transform.SetParent(transform.parent, false);
             
-            // КОПИРУЕМ ВСЕ НАСТРОЙКИ С ИСХОДНОГО IMAGE
             parentRect.anchorMin = rectTransform.anchorMin;
             parentRect.anchorMax = rectTransform.anchorMax;
-            parentRect.pivot = sourcePivot; // Важно: копируем pivot!
+            parentRect.pivot = sourcePivot; 
             parentRect.anchoredPosition = rectTransform.anchoredPosition;
             parentRect.sizeDelta = rectTransform.sizeDelta;
             parentRect.localScale = rectTransform.localScale;
@@ -90,29 +85,23 @@ public class SpriteDisassembler : MonoBehaviour
             parentRect.localPosition = new Vector3(-3f,236.55f,0);
         }
 
-        // Получаем RectTransform родителя
         RectTransform parentRectTransform = fragmentsParent.GetComponent<RectTransform>();
         
-        // Вычисляем смещение от центра родителя к его левому нижнему углу
-        // с учётом pivot родителя
         Vector2 parentSize = parentRectTransform.rect.size;
         Vector2 pivotOffset = new Vector2(
             -parentSize.x * parentRectTransform.pivot.x,
             -parentSize.y * parentRectTransform.pivot.y
         );
         
-        // Позиция левого нижнего угла родителя в локальных координатах
         Vector2 parentLeftBottom = pivotOffset;
 
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
             {
-                // Координаты пикселя в текстуре
                 float pixelX = spriteRect.x + x * fragmentPixelWidth;
                 float pixelY = spriteRect.y + y * fragmentPixelHeight;
 
-                // Создаём спрайт-фрагмент
                 Sprite fragmentSprite = Sprite.Create(
                     texture,
                     new Rect(pixelX, pixelY, fragmentPixelWidth, fragmentPixelHeight),
@@ -120,31 +109,23 @@ public class SpriteDisassembler : MonoBehaviour
                     originalSprite.pixelsPerUnit
                 );
 
-                // Создаём GameObject для фрагмента
                 GameObject fragmentObj = new GameObject($"Fragment_{x}_{y}");
                 fragmentObj.transform.SetParent(fragmentsParent.transform, false);
 
-                // Добавляем Image
                 Image fragmentImage = fragmentObj.AddComponent<Image>();
                 fragmentImage.sprite = fragmentSprite;
                 fragmentImage.raycastTarget = false;
 
-                // Настраиваем RectTransform фрагмента
                 RectTransform fragRect = fragmentObj.GetComponent<RectTransform>();
-                
-                // ВАЖНО: фрагменты используют ТОТ ЖЕ PIVOT, что и родитель
+
                 fragRect.anchorMin = new Vector2(0, 0);
                 fragRect.anchorMax = new Vector2(0, 0);
-                fragRect.pivot = sourcePivot; // Копируем pivot исходного спрайта
+                fragRect.pivot = sourcePivot; 
                 fragRect.sizeDelta = new Vector2(fragmentUIWidth, fragmentUIHeight);
 
-                // Вычисляем позицию фрагмента в локальных координатах родителя
-                // с учётом его pivot
                 float localX = parentLeftBottom.x + x * fragmentUIWidth + fragmentUIWidth / 2;
                 float localY = parentLeftBottom.y + y * fragmentUIHeight + fragmentUIHeight / 2;
-                
-                // Корректируем позицию с учётом pivot фрагмента
-                // Так как pivot фрагмента = sourcePivot, нужно сместить позицию
+
                 Vector2 fragmentPivotOffset = new Vector2(
                     -fragmentUIWidth * (sourcePivot.x - 0.5f),
                     -fragmentUIHeight * (sourcePivot.y - 0.5f)
@@ -158,7 +139,6 @@ public class SpriteDisassembler : MonoBehaviour
             }
         }
 
-        // Скрываем исходный Image
         imageComponent.enabled = false;
         StartCoroutine(AnimateFragments());
     }
