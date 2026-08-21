@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject Line;
     public GameObject LineStop;
     public GameObject Miss;
+    public GameObject AttackButtonAndroid;
 
     public bool PlayerClick = false;
     public bool IsReady = false;
@@ -38,6 +39,9 @@ public class PlayerAttack : MonoBehaviour
         IsFollowing = true;
         StartCoroutine(Delay());
         StartLine();
+        #if UNITY_ANDROID
+        AttackButtonAndroid.SetActive(true);
+        #endif
     }
 
     void FixedUpdate()
@@ -61,8 +65,15 @@ public class PlayerAttack : MonoBehaviour
             return;
         if(Keyboard.current.enterKey.isPressed || Keyboard.current.zKey.isPressed)
         {
+            AttackButtonAndroid.SetActive(false);
             StartCoroutine(StopLine());
         }
+    }
+
+    public void AndroidAttack()
+    {
+        AttackButtonAndroid.SetActive(false);
+        StartCoroutine(StopLine());
     }
 
     IEnumerator DoMiss()
@@ -101,15 +112,28 @@ public class PlayerAttack : MonoBehaviour
         IsFollowing = false;
         Line.SetActive(false);
         LineStop.SetActive(true);
+        Music.Instance.audio.Stop();
         
         var deviation = LineStop.transform.position.x;
         Enemy.Instance.ChangeHp(-DamageCalculator.CalculateDamageInt(deviation,Player.Instance.Damage)); // Отнимает хп у врага
 
         yield return new WaitForSeconds(3);
 
+        if (Enemy.CurrentEnemy.HP[0] == 0)
+        {
+            Debug.Log("enemy defeated");
+            LineStop.SetActive(false);
+            gameObject.SetActive(false);
+            Enemy.Instance.DamageInfo.SetActive(false);
+            SharokuScript.Instance.ChangeState("Death");
+
+            yield break;
+        }
+
         LineStop.SetActive(false);
         RangeImage.transform.DOScaleX(0, 0.5f); //выключает панель с атакой 
-        
+
+
         SceneManager.Instance.FightSceneObserver.EnterFight();
 
         yield return new WaitForSeconds(0.5f);
@@ -119,6 +143,10 @@ public class PlayerAttack : MonoBehaviour
 
         FunnyButtons.Instance.TurnOffButtons();
 
+    }
+    IEnumerator EnemyDeathAnimation()
+    {
+        yield break;
     }
     void FollowLine()
     {

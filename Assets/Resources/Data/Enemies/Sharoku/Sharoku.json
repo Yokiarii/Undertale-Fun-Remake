@@ -9,7 +9,12 @@
         "украсть шляпу": 0,
         "пощадить": 0,
         "сбежать": 0,
-        "пицца": 0
+        "пицца": 0,
+        "забавка": 0,
+        "мороженное": 0,
+        "бургер": 0,
+        "посм. вверх": 0,
+        "раск. анекдот": 0
     },
     "StateRelation": {
         "Normal": {
@@ -19,7 +24,32 @@
                     "Bomb": {
                         "Damage": 25,
                         "TimeForAttack": -1,
-                        "Name": "Bomb"
+                        "Name": "Bomb",
+                        "IsActive": true
+                    },
+                    "Pistol": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol",
+                        "IsActive": true
+                    },
+                    "Pistol_alt_1": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol_alt_1",
+                        "IsActive": false
+                    },
+                    "Pistol_alt_2": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Pistol_alt_2",
+                        "IsActive": false
+                    },
+                    "Bomb_Rush_Main": {
+                        "Damage": 25,
+                        "TimeForAttack": -1,
+                        "Name": "Bomb_Rush_Main",
+                        "IsActive": false
                     }
                 }
             },
@@ -30,28 +60,119 @@
                         "TargetAction": "пицца",
                         "TargetPhase": 0,
                         "Answer": "Вы кушаете пиццу.<Вы чувствуете как вас наполняет решимость.",
-                        "Speech": "Как ты посмел есть пиццу И БЕЗ МЕНЯ!?!?!?<Ававава!!<ТЫ ПОПЛАТИШЬСЯ ЗА ЭТО!!!!"
-                    },
-                    "pizza 2": {
-                        "Name": "pizza 2", 
-                        "TargetAction": "пицца",
-                        "TargetPhase": 1,
-                        "Answer": "Вы кушаете пиццу.<Снова.<Вы чувствуете как вас наполняет решимость.",
-                        "Speech": "Ты придуриваешься!?!?!?АААА!!!!!"
+                        "Speech": "..."
                     },
                     "act steal": {
                         "Name": "act steal", 
                         "TargetAction": "украсть шляпу",
                         "TargetPhase": 0,
-                        "Answer": "Вы пытаетесь украсть шляпу!<У вас не выходит.",
-                        "Speech": "Эй!ТЫ ЧТО ДЕЛАЕШЬ!?!?!?"
+                        "Answer": "Вы попробовали стащить шляпу.<Кажется она немного сдвинулась.",
+                        "Speech": "..."
                     },
                     "act steal 2": {
                         "Name": "act steal 2", 
                         "TargetAction": "украсть шляпу",
+                        "TargetPhase": 1,
+                        "Answer": "Вы снова пытаетесь украсть шляпу.<Она двинулась еще немного.",
+                        "Speech": "Так...<Ладно?"
+                    },
+                    "act steal 3": {
+                        "Name": "act steal 3", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 2,
+                        "Answer": "Шляпа продолжает сдвигаться.<Хах",
+                        "Speech": "Не, ну как бы...<Может не будешь ее трогать?"
+                    },
+                    "act steal 4": {
+                        "Name": "act steal 4", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 3,
+                        "Answer": "Вы снова пытаетесь ее стащить..<Может сейчас..?!",
+                        "Speech": "..."
+                    },
+                    "act steal 5": {
+                        "Name": "act steal 4", 
+                        "TargetAction": "украсть шляпу",
+                        "TargetPhase": 4,
+                        "Answer": "...",
+                        "Speech": "..."
+                    },
+                    "zabavka": {
+                        "Name": "zabavka", 
+                        "TargetAction": "забавка",
                         "TargetPhase": 0,
-                        "Answer": "Вы пытаетесь украсть шляпу!<Снова.<У вас не выходит.",
-                        "Speech": "Ты...<Ты сейчас..<СЕРЬЕЗНО!?!??!"
+                        "Answer": "Вы пыпили забавку!<Кажеэээ-о-о-о, круто-то как",
+                        "Speech": "Офигеть, где такое достать?"
+                    },
+                    "burger": {
+                        "Name": "burger", 
+                        "TargetAction": "бургер",
+                        "TargetPhase": 0,
+                        "Answer": "Вы съели бургер.<Вы можете быть собой довольны.",
+                        "Speech": "Приятного аппетита..?"
+                    },
+                    "ice cream": {
+                        "Name": "ice cream", 
+                        "TargetAction": "мороженное",
+                        "TargetPhase": 0,
+                        "Answer": "Вы съели мороженное.<Каааайф..",
+                        "Speech": "..."
+                    },
+                    "look": {
+                        "Name": "look", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 0,
+                        "Answer": "Вы посмотрели вверх...<Ничего не произошло.",
+                        "Speech": "..."
+                    },
+                    "look 2": {
+                        "Name": "look 2", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 1,
+                        "Answer": "Вы посмотрели вверх...<Ничего не произошло.",
+                        "Speech": "Погоди, там реально что-то интересное?"
+                    },
+                    "look 3": {
+                        "Name": "look 3", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 2,
+                        "Answer": "Вы посмотрели вверх...<Ничего не произошло.",
+                        "Speech": "..."
+                    },
+                    "joke": {
+                        "Name": "joke", 
+                        "TargetAction": "раск. анекдот",
+                        "TargetPhase": 0,
+                        "Answer": "Вы рассказываете анекдот про гоблина в ванной.<Кажется вышло не особо смешно.<Теперь атаки наносят больше урона.",
+                        "Speech": "Аа...да..?"
+                    },
+                    "joke 2": {
+                        "Name": "joke 2", 
+                        "TargetAction": "раск. анекдот",
+                        "TargetPhase": 1,
+                        "Answer": "Вы рассказываете анекдот про ванную в гоблине.<Шароку пожимает плечами.<Теперь атаки наносят меньше урона.",
+                        "Speech": "Ммм..."
+                    },
+                    "joke 3": {
+                        "Name": "joke 3", 
+                        "TargetAction": "раск. анекдот",
+                        "TargetPhase": 2,
+                        "Answer": "Вы не знаете других анекдотов.",
+                        "Speech": "..."
+                    },
+                    "escape": {
+                        "Name": "escape", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 0,
+                        "Answer": "Вы пытаетесь сбежать.<Не выходит.",
+                        "Speech": "..."
+                    },
+                    "mercy": {
+                        "Name": "mercy", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 0,
+                        "Answer": "Вы пытаетесь пощадить Шароку.",
+                        "Speech": "Не, чет не хочу пока."
                     }
                 }
             }

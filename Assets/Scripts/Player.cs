@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -11,6 +13,7 @@ public class Player : MonoBehaviour
     public int Damage {get; private set; } = 20;
 
     public bool IsDead { get; private set; } = false;
+    bool Delay = true;
 
     private static Player _instance;
     public static Player Instance => _instance;
@@ -21,10 +24,42 @@ public class Player : MonoBehaviour
     bool IsTakeDamage = false;
     public Animator Anim;
     public GameObject ShatteredHeart;
+    public GameObject RestartAndroidButton;
 
     void Awake()
     {
         _instance = this;
+    }
+
+    void Update()
+    {
+        if(Delay)
+            return;
+        Debug.Log(Delay);
+        if (Keyboard.current.xKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.enterKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && IsDead)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public void AndroidRestart()
+    {
+        if(Delay)
+            return;
+        if(IsDead)
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ChangeName(string name) => Name = name;
@@ -90,7 +125,7 @@ public class Player : MonoBehaviour
 
     IEnumerator GameOverAnimation()
     {
-
+        Music.Instance.audio.Stop();
         Anim.Play("Shattered Heart");
         yield return new WaitForSeconds(2f);
 
@@ -103,8 +138,16 @@ public class Player : MonoBehaviour
         var tempObj = Main.Instance.GameOver;
         tempObj.SetActive(true);
         var temp = tempObj.GetComponent<SpriteRenderer>();
-        temp.DOFade(0.6f, 5f);
+        temp.DOFade(1f, 5f);
+        
+        RestartAndroidButton.SetActive(true);
 
+        SoundManagerUi.Instance.PlaySound("death_song");
+        
+        StartCoroutine(DelayDeathScreen());
+
+        yield return new WaitForSeconds(46);
+        Application.Quit();
     }
 
     public void ReturnPLayer()
@@ -133,7 +176,13 @@ public class Player : MonoBehaviour
         TextHP.text = HP[0].ToString();
         SliderHP.maxValue = HP[1];
     }
+    public IEnumerator DelayDeathScreen()
+    {
+        yield return new WaitForSeconds(7);
+        Delay = false;
+    }
 }
+
 
 public class Inventory
 {

@@ -8,10 +8,13 @@ public class Bomb_Script : MonoBehaviour
     public GameObject Bomb;
     public GameObject Particle;
     public bool IsCatch = false;
+    public Sprite[] AnimGlow;
+    
     void Start()
     {
         Debug.Log("Bomb attack is started");
         StartCoroutine(Delay());
+        StartCoroutine(AnimGlowing());
     }
     void Update()
     {
@@ -27,6 +30,7 @@ public class Bomb_Script : MonoBehaviour
         yield return new WaitForSeconds(0.50f);
         Vector2 direction = (Player.Instance.PlayerGameObject.transform.localPosition - Bomb.transform.localPosition).normalized;
         Bomb.GetComponent<Rigidbody2D>().AddForce(direction * 4f, ForceMode2D.Impulse);
+        Bomb.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-700f,700f));
         StartCoroutine(Catch());
         StartCoroutine(Timer());
     }
@@ -36,14 +40,16 @@ public class Bomb_Script : MonoBehaviour
         while (switcher)
         {
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.32f);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.50f);
 
             foreach (var hit in hits)
-            {
+            { 
                 if (hit.CompareTag("Player"))
                 {
                     Bomb.transform.SetParent(Player.Instance.PlayerGameObject.transform);
                     Bomb.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+                    Bomb.GetComponent<Rigidbody2D>().angularVelocity = 0;
+                    Bomb.transform.eulerAngles = new Vector3(0,0,Bomb.transform.eulerAngles.z);
                     Bomb.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
                     switcher = false;
@@ -69,8 +75,10 @@ public class Bomb_Script : MonoBehaviour
                     var temp = Instantiate(Particle, transform);
                     temp.transform.position = Bomb.transform.position;
                     temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
                 }
 
+                SoundManagerUi.Instance.PlaySound("Bomb_explosion");
                 Bomb.SetActive(false);
                 Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
@@ -86,6 +94,7 @@ public class Bomb_Script : MonoBehaviour
                     var temp = Instantiate(Particle, transform);
                     temp.transform.position = Bomb.transform.position;
                     temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
                 }
 
                 var temp2 = Instantiate(Particle, transform);
@@ -94,6 +103,7 @@ public class Bomb_Script : MonoBehaviour
                 temp2.GetComponent<Rigidbody2D>().AddForce(direction * 2f, ForceMode2D.Impulse);
                 yield return new WaitForEndOfFrame();
 
+                SoundManagerUi.Instance.PlaySound("Bomb_explosion");
                 Bomb.SetActive(false);
                 Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
@@ -105,5 +115,17 @@ public class Bomb_Script : MonoBehaviour
     void OnDestroy()
     {
         Destroy(Bomb);
+    }
+    IEnumerator AnimGlowing()
+    {
+        var renderer = Bomb.GetComponent<SpriteRenderer>();
+        while (Bomb.activeSelf)
+        {
+            renderer.sprite = AnimGlow[0];
+            yield return new WaitForSeconds(0.5f);
+            renderer.sprite = AnimGlow[1];
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield break;
     }
 }

@@ -1,0 +1,139 @@
+using System.Collections;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Bomb_Rush_Script : MonoBehaviour
+{
+    public GameObject Bomb;
+    public GameObject Particle;
+    public bool IsCatch = false;
+    public bool IsLethal = true;
+    public Sprite[] AnimGlow;
+    
+    void Start()
+    {
+        Debug.Log("Bomb attack is started");
+        StartCoroutine(Delay());
+        StartCoroutine(AnimGlowing());
+    }
+    void Update()
+    {
+        if (Bomb.transform.localPosition.y < 139 && !IsCatch)
+        {
+            Bomb.GetComponent<Collider2D>().isTrigger = false;
+        }
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        Bomb.transform.DOLocalMoveY(Bomb.transform.localPosition.y + 20, 0.50f).SetEase(Ease.OutCirc);
+        yield return new WaitForSeconds(0.50f);
+        Vector2 direction = (Player.Instance.PlayerGameObject.transform.localPosition - Bomb.transform.localPosition).normalized;
+        Bomb.GetComponent<Rigidbody2D>().AddForce(direction * 4f, ForceMode2D.Impulse);
+        Bomb.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-700f,700f));
+        StartCoroutine(Catch());
+        StartCoroutine(Timer());
+    }
+    IEnumerator Catch()
+    {
+        var switcher = true;
+        while (switcher)
+        {
+
+            Collider2D[] hits = Physics2D.OverlapCircleAll(Bomb.transform.position, 0.50f);
+
+            foreach (var hit in hits)
+            { 
+                if (hit.CompareTag("Player"))
+                {
+                    Bomb.transform.SetParent(Player.Instance.PlayerGameObject.transform);
+                    Bomb.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+                    Bomb.GetComponent<Rigidbody2D>().angularVelocity = 0;
+                    Bomb.transform.eulerAngles = new Vector3(0,0,Bomb.transform.eulerAngles.z);
+                    Bomb.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+                    switcher = false;
+                    IsCatch = true;
+                    Bomb.GetComponent<Collider2D>().isTrigger = true;
+                    yield break;
+                }
+            }
+            yield return new WaitForFixedUpdate();
+        }
+    }
+    IEnumerator Timer()
+    {
+        StartCoroutine(DeathTimer());
+        int time = 0;
+        bool state = true;
+        if(!IsLethal)   
+            yield break;
+        while (state)
+        {
+            if (IsCatch)
+            {
+                yield return new WaitForSeconds(2);
+                for (int i = 0; i < 12; i++)
+                {
+                    var temp = Instantiate(Particle, transform);
+                    temp.transform.position = Bomb.transform.position;
+                    temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
+                }
+
+                SoundManagerUi.Instance.PlaySound("Bomb_explosion");
+                Bomb.SetActive(false);
+                Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
+                yield return new WaitForSeconds(3);
+                yield break;
+            }
+            yield return new WaitForSeconds(1);
+            time++;
+            if (time == 3)
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    var temp = Instantiate(Particle, transform);
+                    temp.transform.position = Bomb.transform.position;
+                    temp.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
+                    temp.GetComponent<Rigidbody2D>().AddTorque(Random.Range(-500f,500f));
+                }
+
+                var temp2 = Instantiate(Particle, transform);
+                temp2.transform.position = Bomb.transform.position;
+                Vector2 direction = (Player.Instance.PlayerGameObject.transform.localPosition - temp2.transform.localPosition).normalized;
+                temp2.GetComponent<Rigidbody2D>().AddForce(direction * 2f, ForceMode2D.Impulse);
+                yield return new WaitForEndOfFrame();
+
+
+                SoundManagerUi.Instance.PlaySound("Bomb_explosion");
+                Bomb.SetActive(false);
+                Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
+                yield return new WaitForSeconds(3);
+                state = false;
+            }
+        }
+    }
+    void OnDestroy()
+    {
+        Destroy(Bomb);
+    }
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(10f);
+        Destroy(this);
+    }
+    IEnumerator AnimGlowing()
+    {
+        var renderer = Bomb.GetComponent<SpriteRenderer>();
+        while (Bomb.activeSelf)
+        {
+            renderer.sprite = AnimGlow[0];
+            yield return new WaitForSeconds(0.5f);
+            renderer.sprite = AnimGlow[1];
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield break;
+    }
+}

@@ -210,12 +210,54 @@ public class EnemyBase
             return;
             ACTS[action]++;
         }
-        catch (System.Exception){ return; throw; }
+        catch (System.Exception ex){ Debug.Log(ex); return; throw; }
     }
     public Attack GetAttack()
     {
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_1"];
+        }
+
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb_Rush_Main"];
+        }
+        
+        if(Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 4 && SharokuScript.Instance.CURRENT_ACTION == "украсть шляпу")
+        {
+            return Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_2"];
+        }
+
         var listOfAttack = StateRelation[CurrentRelation].Moveset.ListOfAttack.ToList();
-        return listOfAttack[UnityEngine.Random.Range(0,listOfAttack.Count)].Value;
+        bool temp = true;
+        int attempts = 0;
+        while (temp)
+        {
+            attempts++;
+            var tempAttack = listOfAttack[UnityEngine.Random.Range(0,listOfAttack.Count)].Value;
+            if (tempAttack.IsActive)
+            {
+                return tempAttack;               
+            }
+            if(attempts > 10)
+            {
+                temp = false;
+            }
+        }
+        return null;
     }
     public Attack GetAttack(string name)
     {
@@ -250,6 +292,7 @@ public class Attack //Обычная атака. Атака босса
 {
     public string Name;
     public int Damage;
+    public bool IsActive = true;
 
     //ссылка на инициализированный объект атаки или линк
     [SerializeField] private GameObject Link;

@@ -1,0 +1,280 @@
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class SharokuScript : MonoBehaviour
+{
+    private static SharokuScript _instance;
+    public static SharokuScript Instance => _instance;
+
+    private string _state = "Idle";
+    public string State
+    {
+        get
+        {
+            return _state;
+        }
+        set
+        {
+            _state = value;
+        }
+
+    }
+
+    public GameObject Hat;
+    public GameObject Head;
+    public GameObject Body;
+    public GameObject Arm_Left;
+    public GameObject Arm_Right;
+    public GameObject Leg_Left;
+    public GameObject Leg_Right;
+
+    public GameObject FullBody;
+    public GameObject Parts_Head;
+    public GameObject Parts_Right_Hand;
+    public GameObject Parts_Left_Hand;
+    public GameObject Parts_Legs;
+    public GameObject Parts_Body;
+    public GameObject DeathAnim;
+    public GameObject RestartAndroidButton;
+
+    public List<GameObject> Parts = new List<GameObject>();
+
+    public FLAG FIRST_HAT_MOVEMENT = new FLAG();
+    public FLAG SECOND_HAT_MOVEMENT = new FLAG();
+    public FLAG THIRD_HAT_MOVEMENT = new FLAG();
+    public FLAG FOURTH_HAT_MOVEMENT = new FLAG();
+    public FLAG FINAL_STAGE = new FLAG();
+    public FLAG ZABAVKA = new FLAG();
+    public FLAG READY_TO_MERCY = new();
+    public FLAG PLAYER_CATCH_HAT = new();
+    public FLAG SHAROKU_IS_DEAD = new();
+
+    public string CURRENT_ACTION = "none";
+
+    void Awake()
+    {
+        _instance = this;
+
+        Parts.Add(Hat);
+        Parts.Add(Head);
+        Parts.Add(Body);
+        Parts.Add(Arm_Left);
+        Parts.Add(Arm_Right);
+        Parts.Add(Leg_Left);
+        Parts.Add(Leg_Right);
+
+        ChangeState();
+    }
+
+    void Start()
+    {
+        ZABAVKA.phase = 0;
+    }
+
+    void Update()
+    {
+        if (!SHAROKU_IS_DEAD.IsReady)
+        {
+            return;
+        }
+
+        if (Keyboard.current.xKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (FIRST_HAT_MOVEMENT.IsReady && !FIRST_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y);
+            FIRST_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (SECOND_HAT_MOVEMENT.IsReady && !SECOND_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y);
+            SECOND_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (THIRD_HAT_MOVEMENT.IsReady && !THIRD_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x - 6f, Hat.transform.localPosition.y - 4);
+            THIRD_HAT_MOVEMENT.IsClose = true;
+        }
+
+        if (FOURTH_HAT_MOVEMENT.IsReady && !FOURTH_HAT_MOVEMENT.IsClose)
+        {
+            Hat.transform.localPosition = new Vector3(Hat.transform.localPosition.x + 4f, Hat.transform.localPosition.y - 15);
+            FOURTH_HAT_MOVEMENT.IsClose = true;
+        }
+        if (ZABAVKA.phase == 2)
+        {
+            ZABAVKA.IsClose = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
+        {
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol"]
+                .IsActive = false;
+
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Pistol_alt_1"]
+                .IsActive = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
+        {
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb"]
+                .IsActive = false;
+
+            Enemy
+                .CurrentEnemy
+                .StateRelation[Enemy.CurrentEnemy.CurrentRelation]
+                .Moveset
+                .ListOfAttack["Bomb_Rush_Main"]
+                .IsActive = true;
+        }
+    }
+
+    public void ChangeState(string state = "Idle")
+    {
+        State = state;
+
+        StopAllCoroutines();
+        switch (State)
+        {
+            case "Idle":
+                ShakeAnimation(Parts_Right_Hand);
+                ShakeAnimation(Parts_Left_Hand);
+                ShakeAnimation(Parts_Head);
+                ShakeAnimation(Parts_Body);
+                break;
+            case "Death":
+                foreach (var item in Parts)
+                {
+                    DeathAnimation(item);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ShakeAnimation(GameObject obj)
+    {
+        StartCoroutine(ShakeCoroutine(obj));
+    }
+
+    void DeathAnimation(GameObject obj)
+    {
+        StartCoroutine(DeathCoroutine(obj));
+    }
+
+    IEnumerator ShakeCoroutine(GameObject obj)
+    {
+        var OriginalPosition = obj.transform.localPosition;
+
+        //-->>
+        obj.transform.DOLocalMove(new Vector3(
+            OriginalPosition.x + Random.Range(-1, 1),
+            OriginalPosition.y + Random.Range(7, 11), 0), 1.5f).SetEase(Ease.InOutCirc);
+        yield return new WaitForSeconds(1.5f);
+
+        //<<--
+        obj.transform.DOLocalMove(new Vector3(
+            OriginalPosition.x,
+            OriginalPosition.y, 0), 1.5f).SetEase(Ease.InOutCirc);
+        yield return new WaitForSeconds(1.5f);
+
+        StartCoroutine(ShakeCoroutine(obj));
+    }
+
+    IEnumerator DeathCoroutine(GameObject obj)
+    {
+        DeathAnim.SetActive(true);
+
+        Head.SetActive(false);
+        Body.SetActive(false);
+        Leg_Left.SetActive(false);
+        Leg_Right.SetActive(false);
+        Arm_Left.SetActive(false);
+        Arm_Right.SetActive(false);
+
+        if (!PLAYER_CATCH_HAT.IsReady)
+        {
+            Hat.transform.SetParent(Main.Instance.MainCanvas.transform);
+        }
+
+        yield return new WaitForSeconds(3);
+        Speech.Instance.Say("Ну...", false, 0.15f);
+        yield return new WaitForSeconds(5);
+        Speech.Instance.Say("Это не круто", true, 0.15f);
+
+        yield return new WaitForSeconds(5);
+
+        DeathAnim.GetComponent<SpriteDisassembler>().Dissolve();
+        Hat.transform.SetAsLastSibling();
+
+        if (PLAYER_CATCH_HAT.IsReady)
+        {
+            Speech.Instance.Say("Ну а шляпу то... верни...", true, 0.15f);
+            yield return new WaitForSeconds(12f);
+        }
+
+        if (!PLAYER_CATCH_HAT.IsReady)
+        {
+            yield return new WaitForSeconds(12.3f);
+            Debug.Log("done");
+            StartCoroutine(HatAnim());
+            yield return new WaitForSeconds(7f);
+        }
+        yield return new WaitForSeconds(5f);
+        Answer.Instance.SwitchActive(true);
+        RestartAndroidButton.SetActive(true);
+        Answer.Instance.Type("Шароку больше нет, нажмите любую клавишу.");
+        SHAROKU_IS_DEAD.IsReady = true;
+    }
+    IEnumerator HatAnim()
+    {
+        Hat.transform.DOLocalMoveY(15.4f, 10f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x + 40, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x - 80, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, -5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x + 80, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 5), 2.5f).SetEase(Ease.InOutSine);
+        yield return new WaitForSeconds(2.5f);
+        Hat.transform.DOLocalMoveX(Hat.transform.localPosition.x - 40, 2.5f).SetEase(Ease.InOutSine);
+        Hat.transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f).SetEase(Ease.InOutSine);
+
+        yield break;
+    }
+}

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fcf5fb0c74cfc764db326f38d335104b
+guid: bd00f50285c584b4d9d4603fa2aac8c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2679214406483715791
-    second: SHAROKU_SPRITE_0
+      213: 5642212434980251484
+    second: shot2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +100,7 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 47
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SHAROKU_SPRITE_0
+      name: shot2_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 0
-        width: 45
-        height: 104
+        x: 3
+        y: 3
+        width: 18
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 139dd6041b481dad0800000000000000
-      internalID: -2679214406483715791
+      spriteID: c572a4ed05a2d4e40800000000000000
+      internalID: 5642212434980251484
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SHAROKU_SPRITE_0: -2679214406483715791
+      shot2_0: 5642212434980251484
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

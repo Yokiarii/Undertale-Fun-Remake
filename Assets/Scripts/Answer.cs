@@ -1,8 +1,5 @@
 using System.Collections;
-using NUnit.Framework.Constraints;
 using TMPro;
-using Unity.VectorGraphics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +10,7 @@ public class Answer : TextGenerator
     [SerializeField] private TextMeshProUGUI TextFieldStar;
     public bool StaticAnswer = false;
     public string TempAction;
+    public GameObject AcceptButtonAndroid;
 
     void Awake()
     {
@@ -39,6 +37,9 @@ public class Answer : TextGenerator
 
     public void EnterAnswer(string action, string sound = "click") // включает ансвер после действия игрока
     {
+        AcceptButtonAndroid.SetActive(true);
+        SharokuScript.Instance.CURRENT_ACTION = action;
+        
         //Сбрасываем фазу
         AnswerPhase = 0;
 
@@ -84,6 +85,20 @@ public class Answer : TextGenerator
             Type(BuildedText[AnswerPhase],0.06f,TypingSound);
         }
     }
+    public void AcceptAndroid()
+    {
+        if(!StaticAnswer)
+            return;
+
+        AnswerPhase++;
+
+            if(AnswerPhase >= BuildedText.Length)
+            {
+                ExitAnswer();
+                return;
+            }
+            Type(BuildedText[AnswerPhase],0.06f,TypingSound);
+    }
     public void DoAnswer(string action, string sound) //хендлер ансвера после действия игрока
     {
         StaticAnswer = true;
@@ -97,6 +112,25 @@ public class Answer : TextGenerator
         StaticAnswer = false;
         Fight.Instance.Init();
         SwitchActive(false);
+        AcceptButtonAndroid.SetActive(false);
+
+        //включаем флаг шароку со шляпой
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 1)
+        {
+            SharokuScript.Instance.FIRST_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 2)
+        {
+            SharokuScript.Instance.SECOND_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 3)
+        {
+            SharokuScript.Instance.THIRD_HAT_MOVEMENT.IsReady = true;
+        }
+        if (Enemy.CurrentEnemy.ACTS["украсть шляпу"] == 4)
+        {
+            SharokuScript.Instance.FOURTH_HAT_MOVEMENT.IsReady = true;
+        }
     }
 
 }
