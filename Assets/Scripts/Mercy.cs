@@ -31,7 +31,7 @@ public class Mercy : ListenInputBase, IScene
 
     public override void Accept()
     {
-        if (SharokuScript.Instance.READY_TO_MERCY.IsReady)
+        if (SharokuScript.Instance.READY_TO_MERCY.IsReady && CurrentCell == 0)
         {
             FunnyButtons.Instance.TurnOffButtons();
             FunnyButtons.Instance.IsActive = false;

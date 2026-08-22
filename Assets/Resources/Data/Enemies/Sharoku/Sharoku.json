@@ -136,6 +136,34 @@
                         "Name": "look 3", 
                         "TargetAction": "посм. вверх",
                         "TargetPhase": 2,
+                        "Answer": "Вы посмотрели вверх...<Ничего не произошло?",
+                        "Speech": "..."
+                    },
+                    "look 4": {
+                        "Name": "look 4", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 3,
+                        "Answer": "Вы посмотрели вверх...<Может быть, если приглядеться...?<Не ничего там нет.",
+                        "Speech": "Хе."
+                    },
+                    "look 5": {
+                        "Name": "look 5", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 4,
+                        "Answer": "Вы посмотрели вверх...<Вверх посмотрел на вас.",
+                        "Speech": "Пу-пу-пу..."
+                    },
+                    "look 6": {
+                        "Name": "look 6", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 5,
+                        "Answer": "Вы посмотрели вверх...<Привет.",
+                        "Speech": "..."
+                    },
+                    "look 7": {
+                        "Name": "look 7", 
+                        "TargetAction": "посм. вверх",
+                        "TargetPhase": 6,
                         "Answer": "Вы посмотрели вверх...<Ничего не произошло.",
                         "Speech": "..."
                     },
@@ -160,11 +188,53 @@
                         "Answer": "Вы не знаете других анекдотов.",
                         "Speech": "..."
                     },
+                    "joke 4": {
+                        "Name": "joke 4", 
+                        "TargetAction": "раск. анекдот",
+                        "TargetPhase": 3,
+                        "Answer": "Вы абсолютно точно не знаете других анекдотов.",
+                        "Speech": "..."
+                    },
                     "escape": {
                         "Name": "escape", 
                         "TargetAction": "сбежать",
                         "TargetPhase": 0,
                         "Answer": "Вы пытаетесь сбежать.<Не выходит.",
+                        "Speech": "..."
+                    },
+                    "escape 2": {
+                        "Name": "escape 2", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 1,
+                        "Answer": "Вы пытаетесь сбежать.<Не выходит.<И не выйдет.",
+                        "Speech": "..."
+                    },
+                    "escape 3": {
+                        "Name": "escape 3", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 2,
+                        "Answer": "Вы пытаетесь сбежать.<Не выходит.<И не выйдет.<Никогда.",
+                        "Speech": "..."
+                    },
+                    "escape 4": {
+                        "Name": "escape 4", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 3,
+                        "Answer": "Вы пытаетесь сбежать.<Не выходит.<И не выйдет.<Никогда.<Вообще никак.",
+                        "Speech": "..."
+                    },
+                    "escape 5": {
+                        "Name": "escape 5", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 4,
+                        "Answer": "Вы пытаетесь сбежать.<Не выходит.<И не выйдет.<Никогда.<Вообще никак.<Я даже не программировал это.",
+                        "Speech": "..."
+                    },
+                    "escape 6": {
+                        "Name": "escape 6", 
+                        "TargetAction": "сбежать",
+                        "TargetPhase": 5,
+                        "Answer": "Absolute Gyaru.",
                         "Speech": "..."
                     },
                     "mercy": {
@@ -173,6 +243,48 @@
                         "TargetPhase": 0,
                         "Answer": "Вы пытаетесь пощадить Шароку.",
                         "Speech": "Не, чет не хочу пока."
+                    },
+                    "mercy 2": {
+                        "Name": "mercy 2", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 1,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Снова.",
+                        "Speech": "Э-эм.. не."
+                    },
+                    "mercy 3": {
+                        "Name": "mercy 3", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 2,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Опять.",
+                        "Speech": "..."
+                    },
+                    "mercy 4": {
+                        "Name": "mercy 4", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 3,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Опять.<Это ни к чему не приведет, хватит.",
+                        "Speech": "..."
+                    },
+                    "mercy 5": {
+                        "Name": "mercy 5", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 4,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Опять.<Может попробуешь украсть шляпу?",
+                        "Speech": "..."
+                    },
+                    "mercy 6": {
+                        "Name": "mercy 6", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 5,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Ладно, вот тебе мой секрет:<Неа, я передумал.",
+                        "Speech": "..."
+                    },
+                    "mercy 7": {
+                        "Name": "mercy 7", 
+                        "TargetAction": "пощадить",
+                        "TargetPhase": 6,
+                        "Answer": "Вы пытаетесь пощадить Шароку.<Крушитель лучший, я верю в него.",
+                        "Speech": "..."
                     }
                 }
             }

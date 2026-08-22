@@ -108,10 +108,10 @@ public class Pistol_Script : MonoBehaviour
         StartCoroutine(FireAnim());
         var temp = Instantiate(Bullet, SharokuScript.Instance.Arm_Left.transform);
         temp.transform.localScale = new Vector3(1.5f,1.5f);
-        temp.transform.localPosition = new Vector3(0,-1,-1);
+        temp.transform.localPosition = new Vector3(0,-1,-20);
         temp.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(-10f,-15), ForceMode2D.Impulse);
         temp.transform.SetParent(transform);
-        temp.transform.localPosition = new Vector3(temp.transform.localPosition.x,temp.transform.localPosition.y,-1);
+        temp.transform.localPosition = new Vector3(temp.transform.localPosition.x,temp.transform.localPosition.y,-20);
 
     }
     IEnumerator FireAnim()

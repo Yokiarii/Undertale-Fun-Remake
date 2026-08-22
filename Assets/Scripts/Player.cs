@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public Animator Anim;
     public GameObject ShatteredHeart;
     public GameObject RestartAndroidButton;
+    public GameObject HintText;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
         if(Delay)
             return;
         Debug.Log(Delay);
@@ -45,10 +47,6 @@ public class Player : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
         if (Keyboard.current.escapeKey.wasPressedThisFrame && IsDead)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
-        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
@@ -179,6 +177,7 @@ public class Player : MonoBehaviour
     public IEnumerator DelayDeathScreen()
     {
         yield return new WaitForSeconds(7);
+        HintText.SetActive(true);
         Delay = false;
     }
 }
