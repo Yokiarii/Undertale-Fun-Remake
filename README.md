@@ -7,6 +7,8 @@
 [Trello доска](https://trello.com/b/UNAG9bRa/armatale) (не актуально, в падлу стало его вести)
 ## Пояснения
 - Каждая атака должна быть прописана текстом. Каждую придется программировать и анимировать отдельно. (Префабы)
+<img width="3438" height="3292" alt="Pasted image 20260704083851" src="https://github.com/user-attachments/assets/1669abb4-bbea-44d3-8ca5-7cd23f6ce23b" />
+
 ## Гифки и прочее
 ![2026-02-21 10-54-46](https://github.com/user-attachments/assets/f95475ca-b772-4245-83ff-bcfe5a493cd2)
 ![2026-02-25 01-16-34 (1)](https://github.com/user-attachments/assets/9e9d11de-6dd7-47fb-a8bf-792865763455)
