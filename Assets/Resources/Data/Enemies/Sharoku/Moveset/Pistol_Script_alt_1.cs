@@ -84,7 +84,6 @@ public class Pistol_Script_alt_1 : MonoBehaviour
     {
 
         yield return new WaitForSeconds(2f);
-        Speech.Instance.Say("Паф паф!");
         ShootAnim();
         yield return new WaitForSeconds(0.5f);
         ShootAnim();

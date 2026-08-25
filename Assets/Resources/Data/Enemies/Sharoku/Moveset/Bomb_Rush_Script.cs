@@ -84,6 +84,7 @@ public class Bomb_Rush_Script : MonoBehaviour
 
                 SoundManagerUi.Instance.PlaySound("Bomb_explosion");
                 Bomb.SetActive(false);
+                Player.Instance.ChangeHP(-2);
                 Main.Instance.AllSpace.transform.DOShakePosition(0.5f, 6, 15, 50);
                 yield return new WaitForSeconds(3);
                 yield break;
