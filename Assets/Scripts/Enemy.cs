@@ -257,7 +257,7 @@ public class EnemyBase
                 temp = false;
             }
         }
-        return null;
+        return listOfAttack[0].Value;
     }
     public Attack GetAttack(string name)
     {

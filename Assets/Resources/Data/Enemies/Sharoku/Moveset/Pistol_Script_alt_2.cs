@@ -287,6 +287,7 @@ public class Pistol_Script_alt_2 : MonoBehaviour
         Act.Instance.cellObjects = tempObj;
 
         SharokuScript.Instance.READY_TO_MERCY.IsReady = true;
+        Enemy.CurrentEnemy.ACTS["украсть шляпу"] = 5;
 
         Fight.Instance.QuitFightExternal();
     }
